@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ChevronRight, Menu, X, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
 
 const SOCIAL_LINKS = [
@@ -17,13 +17,24 @@ const NAV_ITEMS = [
   { name: "Teams", href: "/#teams" },
   { name: "Players", href: "/#players" },
   { name: "Schedule", href: "/#schedule" },
-  { name: "Sponsors", href: "/#sponsors" },
-  { name: "News", href: "/#news" },
+  { name: "Sponsors", href: "/sponsorship" },
+  // { name: "News", href: "/#news" },
   { name: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (href: string) => {
+    if (href === "/#home") {
+      return location.pathname === "/" && (!location.hash || location.hash === "#home");
+    }
+    if (href.startsWith("/#")) {
+      return location.pathname === "/" && location.hash === href.replace("/", "");
+    }
+    return location.pathname === href;
+  };
 
   return (
     <header
@@ -36,8 +47,10 @@ export function Navbar() {
             alt="Tamil Nadu Pickleball Premier League logo"
             width={235}
             height={235}
-            className="h-10 w-auto shrink-0 sm:h-12 md:h-12 lg:h-14 xl:h-16"
+            loading="eager"
+            decoding="async"
             fetchPriority="high"
+            className="h-10 w-auto shrink-0 sm:h-12 md:h-12 lg:h-14 xl:h-16"
           />
         </Link>
 
@@ -45,14 +58,14 @@ export function Navbar() {
           aria-label="Primary"
           className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden md:flex lg:gap-x-5 xl:gap-x-7 2xl:gap-x-9"
         >
-          {NAV_ITEMS.map((item, i) => (
-            <a
+          {NAV_ITEMS.map((item) => (
+            <Link
               key={item.name}
-              href={item.href}
-              className={`nav-link whitespace-nowrap text-[9px] lg:text-[12px] xl:text-[13px] ${i === 0 ? "nav-link-active" : ""}`}
+              to={item.href}
+              className={`nav-link whitespace-nowrap text-[9px] lg:text-[12px] xl:text-[13px] ${isActive(item.href) ? "nav-link-active" : ""}`}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -90,15 +103,15 @@ export function Navbar() {
           className="animate-fade-in mx-5 mt-4 rounded-xl border border-border bg-card/95 p-5 backdrop-blur-md sm:mx-8 md:hidden"
         >
           <nav aria-label="Mobile" className="flex flex-col gap-4">
-            {NAV_ITEMS.map((item, i) => (
-              <a
+            {NAV_ITEMS.map((item) => (
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 onClick={() => setOpen(false)}
-                className={`nav-link text-sm ${i === 0 ? "nav-link-active" : ""}`}
+                className={`nav-link text-sm ${isActive(item.href) ? "nav-link-active" : ""}`}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
           <div className="mt-6 flex flex-col gap-3">

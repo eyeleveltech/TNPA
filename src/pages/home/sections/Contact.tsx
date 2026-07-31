@@ -1,4 +1,5 @@
 import { ChevronRight, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import EXPRESS_AVENUE_IMG from "@/assets/Express Avenue Atrium.webp";
 
 const CONTACTS = [
   {
@@ -175,12 +176,13 @@ export function Contact() {
               }}
             >
               <img
-                src="/images/venue-express-avenue.jpg"
+                src={EXPRESS_AVENUE_IMG}
                 alt="Express Avenue Atrium — TNPPL Season 2 venue"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="absolute inset-0 h-full w-full object-cover object-center"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-              />
-              {/* fallback grid */}
+              />{/* fallback grid */}
               <svg
                 aria-hidden
                 className="absolute inset-0 h-full w-full opacity-[0.12]"
@@ -211,26 +213,6 @@ export function Contact() {
           </div>
         </div>
 
-        {/* CTA strip */}
-        <div className="stat-card mt-8 flex flex-col items-center justify-between gap-5 rounded-2xl px-6 py-7 sm:flex-row sm:px-10">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground/75">
-              Let's build something extraordinary together.
-            </p>
-            <h3 className="display-title-extended mt-1 text-2xl sm:text-3xl">
-              <span className="text-foreground">Brand </span>
-              <span className="text-gold-gradient">Collaboration </span>
-              <span className="text-foreground">with TNPPL Season 2.</span>
-            </h3>
-          </div>
-          <a
-            href="mailto:tnstatepa@gmail.com?subject=Brand Collaboration — TNPPL Season 2"
-            className="btn-outline-light inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"
-          >
-            Brand Collaboration
-            <ChevronRight className="h-4 w-4" />
-          </a>
-        </div>
       </div>
     </section>
   );

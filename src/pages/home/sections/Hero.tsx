@@ -38,6 +38,7 @@ export function Hero() {
           loop
           muted
           playsInline
+          preload="auto"
           className="h-full w-full object-cover object-center will-change-transform"
           style={imageStyle}
         />
@@ -146,7 +147,7 @@ export function Hero() {
             </div>
 
             <p
-              className="animate-fade-up mt-6 max-w-110 text-[14px] leading-relaxed text-foreground/80 sm:text-base"
+              className="animate-fade-up mt-6 max-w-110 text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
               style={{ fontFamily: "Arial, sans-serif", animationDelay: "1300ms" }}
             >
               Experience four unforgettable days of elite competition, celebrity-owned franchises,
@@ -214,9 +215,9 @@ export function Hero() {
             style={{ fontFamily: "'PODIUM Sharp', sans-serif" }}
           >
             <span style={{ color: "#ffffff" }}>ONE </span>
-            <span style={{ color: "oklch(0.865 0.197 83)" }}>GAME. </span>
+            <span style={{ color: "oklch(0.865 0.197 83)" }}>GAME<span style={{ fontFamily: "Arial, sans-serif" }}>.</span> </span>
             <span style={{ color: "#ffffff" }}>ONE </span>
-            <span style={{ color: "oklch(0.865 0.197 83)" }}>FAMILY.</span>
+            <span style={{ color: "oklch(0.865 0.197 83)" }}>FAMILY<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
           </p>
           <span className="inline-block animate-star-pickleball text-gold text-xs sm:text-sm lg:text-base" aria-hidden="true">&#9733;</span>
         </div>

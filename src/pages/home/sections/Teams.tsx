@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
   MapPin,
+  Youtube,
 } from "lucide-react";
 
 import logoChennai from "@/assets/Team_Logos-01.webp";
@@ -24,6 +25,8 @@ type Team = {
   region: string;
   accent: string;
   logo: string | null;
+  owner: string;
+  about?: string;
 };
 
 const TEAMS: Team[] = [
@@ -33,6 +36,8 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "190 90% 62%",
     logo: logoChennai,
+    owner: "Varalaxmi Sarathkumar & Nova Lifespaces",
+    about: "Renowned Tamil Actress & Entrepreneur",
   },
   {
     name: "Kanchi Blackbucks",
@@ -40,6 +45,8 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "150 75% 52%",
     logo: logoKanchi,
+    owner: "Abhay Meganathan",
+    about: "Vice Chairman, Rajalakshmi Institutions",
   },
   {
     name: "Cuddalore Kings",
@@ -47,6 +54,8 @@ const TEAMS: Team[] = [
     region: "East",
     accent: "270 80% 65%",
     logo: logoCuddalore,
+    owner: "Chiyaan Vikram & Manuranjith Ranganathan",
+    about: "Chiyaan Vikram (Actor) & Manuranjith Ranganathan (Director, CavinKare)",
   },
   {
     name: "Twin Eagles Hosur",
@@ -54,6 +63,8 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "205 85% 62%",
     logo: logoHosur,
+    owner: "Dr. Samarjit Baskaran",
+    about: "Owner, Gorilla Smash Club",
   },
   {
     name: "Coimbatore Smashers",
@@ -61,6 +72,8 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "15 90% 60%",
     logo: logoCoimbatore,
+    owner: "Arjun Narendran & Rithika Ramakrishna",
+    about: "Arjun Narendran (Arka Motorsport) & Rithika Ramakrishna (Pickleball Champion)",
   },
   {
     name: "Kodai Tigers",
@@ -68,6 +81,8 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "32 95% 60%",
     logo: logoKodai,
+    owner: "To Be Announced",
+    about: "Official Franchise Announcement Coming Soon",
   },
   {
     name: "Ooty Bisons",
@@ -75,6 +90,8 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "128 70% 52%",
     logo: logoOoty,
+    owner: "Abhishek Murali",
+    about: "Restaurateur, Geetham Veg Restaurant",
   },
   {
     name: "Madurai All Stars",
@@ -82,6 +99,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "355 85% 58%",
     logo: logoMadurai,
+    owner: "Surya & Manikandan",
   },
   {
     name: "Nellai Warriors",
@@ -89,6 +107,8 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "175 80% 55%",
     logo: logoNellai,
+    owner: "Uttam Kothari & Keerthi Pandian",
+    about: "Uttam Kothari (Entrepreneur) & Keerthi Pandian (Tamil Film Actress)",
   },
   {
     name: "Ramnad Royals",
@@ -96,6 +116,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "198 85% 58%",
     logo: logoRamnad,
+    owner: "Naagarjun Sethupathy & Rajkumar Sethupathy",
   },
   {
     name: "Rockfort Terminatrz",
@@ -103,6 +124,8 @@ const TEAMS: Team[] = [
     region: "Central",
     accent: "22 85% 58%",
     logo: logoRockfort,
+    owner: "Atul Jain",
+    about: "Kiran Global Group",
   },
   {
     name: "Salem Super Smashers",
@@ -110,8 +133,31 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "195 85% 55%",
     logo: logoSalem,
+    owner: "Dinesh Kumar Amudhan",
+    about: "Entrepreneur, Mahendra Institutions & SKS Hospital",
   },
 ];
+
+function renderTeamName(name: string) {
+  if (name === "Twin Eagles Hosur") {
+    return (
+      <>
+        <span className="block">Twin Eagles</span>
+        <span className="block">Hosur</span>
+      </>
+    );
+  }
+  const parts = name.split(" ");
+  if (parts.length >= 2) {
+    return (
+      <>
+        <span className="block">{parts[0]}</span>
+        <span className="block">{parts.slice(1).join(" ")}</span>
+      </>
+    );
+  }
+  return name;
+}
 
 export function Teams() {
   const [active, setActive] = useState(5);
@@ -143,42 +189,58 @@ export function Teams() {
     return () => window.removeEventListener("keydown", onKey);
   }, [go]);
 
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const touchEndRef = useRef<{ x: number; y: number } | null>(null);
+  const isDraggingRef = useRef(false);
+  const [dragMoved, setDragMoved] = useState(false);
+  const [wheelCooldown, setWheelCooldown] = useState(false);
 
-  const minSwipeDistance = 40;
-
-  const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
+  const handlePointerDown = (e: React.TouchEvent | React.MouseEvent) => {
     const clientX = "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
-    setTouchStart(clientX);
-    setTouchEnd(clientX);
-    setIsDragging(true);
+    const clientY = "touches" in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    touchStartRef.current = { x: clientX, y: clientY };
+    touchEndRef.current = { x: clientX, y: clientY };
+    isDraggingRef.current = true;
+    setDragMoved(false);
   };
 
-  const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDragging) return;
+  const handlePointerMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (!isDraggingRef.current || !touchStartRef.current) return;
     const clientX = "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
-    setTouchEnd(clientX);
+    const clientY = "touches" in e ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+    touchEndRef.current = { x: clientX, y: clientY };
+
+    const dx = Math.abs(clientX - touchStartRef.current.x);
+    const dy = Math.abs(clientY - touchStartRef.current.y);
+
+    if (dx > 10) {
+      setDragMoved(true);
+    }
   };
 
-  const handleTouchEnd = () => {
-    if (!isDragging || touchStart === null || touchEnd === null) {
-      setIsDragging(false);
+  const handlePointerUp = () => {
+    if (!isDraggingRef.current || !touchStartRef.current || !touchEndRef.current) {
+      isDraggingRef.current = false;
       return;
     }
-    const distance = touchStart - touchEnd;
-    if (distance > minSwipeDistance) {
-      go(1);
-    } else if (distance < -minSwipeDistance) {
-      go(-1);
-    }
-    setIsDragging(false);
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
 
-  const current = TEAMS[active];
+    const deltaX = touchStartRef.current.x - touchEndRef.current.x;
+    const deltaY = Math.abs(touchStartRef.current.y - touchEndRef.current.y);
+
+    // Only step card if horizontal swipe distance > 25px and horizontal delta > vertical delta
+    if (Math.abs(deltaX) > 25 && Math.abs(deltaX) > deltaY) {
+      if (deltaX > 0) {
+        go(1);
+      } else {
+        go(-1);
+      }
+    }
+
+    isDraggingRef.current = false;
+    touchStartRef.current = null;
+    touchEndRef.current = null;
+    setTimeout(() => setDragMoved(false), 50);
+  };
 
   return (
     <section id="teams" className="relative overflow-hidden bg-ink py-10 sm:py-12 lg:py-14">
@@ -216,7 +278,7 @@ export function Teams() {
             <span className="text-gold-gradient block">Franchises</span>
           </h2>
           <p
-            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 sm:text-[15px]"
+            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
             style={{ fontFamily: "Arial, sans-serif" }}
           >
             Twelve city franchises. Each district, a battle ground. Each team, a community. Franchise
@@ -229,7 +291,7 @@ export function Teams() {
           {TEAMS.map((t, i) => (
             <div
               key={t.name}
-              className="stat-card flex items-center gap-3 rounded-xl p-3"
+              className="stat-card flex items-center gap-3 rounded-xl p-3 min-h-[90px]"
               style={{ borderColor: `color-mix(in oklab, hsl(${t.accent}) 35%, transparent)` }}
             >
               {t.logo ? (
@@ -255,10 +317,10 @@ export function Teams() {
               )}
               <div className="min-w-0">
                 <p className="font-display text-[11px] font-black uppercase leading-tight text-foreground">
-                  {t.name}
+                  {renderTeamName(t.name)}
                 </p>
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em]" style={{ color: `hsl(${t.accent})` }}>
-                  {t.region} Zone
+                <p className="mt-1 text-[9px] font-semibold text-foreground/80 line-clamp-2">
+                  Owner: <span className="text-gold">{t.owner}</span>
                 </p>
               </div>
             </div>
@@ -268,14 +330,24 @@ export function Teams() {
         {/* desktop: 3D carousel */}
         <div className="relative mt-14 hidden sm:block">
           <div
-            className="relative h-135 lg:h-142.5 perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onMouseDown={handleTouchStart}
-            onMouseMove={handleTouchMove}
-            onMouseUp={handleTouchEnd}
-            onMouseLeave={handleTouchEnd}
+            className="relative h-[550px] lg:h-[570px] perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
+            onTouchStart={handlePointerDown}
+            onTouchMove={handlePointerMove}
+            onTouchEnd={handlePointerUp}
+            onMouseDown={handlePointerDown}
+            onMouseMove={handlePointerMove}
+            onMouseUp={handlePointerUp}
+            onMouseLeave={handlePointerUp}
+            onWheel={(e) => {
+              if (wheelCooldown) return;
+              // Only capture horizontal scroll (trackpad side swipe / horizontal wheel) so vertical page scroll works naturally
+              if (Math.abs(e.deltaX) > 25 && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                setWheelCooldown(true);
+                if (e.deltaX > 0) go(1);
+                else go(-1);
+                setTimeout(() => setWheelCooldown(false), 250);
+              }
+            }}
           >
             {TEAMS.map((t, i) => {
               const total = TEAMS.length;
@@ -289,18 +361,21 @@ export function Teams() {
                 <button
                   key={t.name}
                   type="button"
-                  onClick={() => setActive(i)}
+                  onClick={() => {
+                    if (!dragMoved) setActive(i);
+                  }}
                   aria-label={`${t.name} franchise`}
                   aria-hidden={abs > layout.visible}
-                  className="absolute left-1/2 top-1/2 w-65 rounded-2xl border text-left transition-all duration-500 ease-out lg:w-70"
+                  className="absolute left-1/2 top-1/2 w-68 lg:w-76 h-[500px] rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
                   style={{
-                    transform: `translate(-50%, -50%) translateX(${offset * layout.spread}px) scale(${isActive ? 1 : Math.max(0.74, 0.9 - abs * 0.03)
-                      }) rotateY(${offset * -4}deg)`,
+                    transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${
+                      isActive ? 1 : 0.88
+                    })`,
                     zIndex: 20 - abs,
-                    opacity: abs > layout.visible ? 0 : isActive ? 1 : Math.max(0.35, 1 - abs * 0.18),
+                    opacity: abs > layout.visible ? 0 : isActive ? 1 : Math.max(0.35, 0.85 - abs * 0.15),
                     pointerEvents: abs > layout.visible ? "none" : "auto",
                     borderColor: isActive
-                      ? "color-mix(in oklab, var(--gold) 75%, transparent)"
+                      ? "color-mix(in oklab, var(--gold) 85%, transparent)"
                       : `color-mix(in oklab, hsl(${t.accent}) 40%, transparent)`,
                     background: `linear-gradient(165deg, color-mix(in oklab, hsl(${t.accent}) 14%, var(--ink)) 0%, var(--ink) 62%)`,
                     boxShadow: isActive
@@ -309,29 +384,19 @@ export function Teams() {
                     filter: isActive ? "none" : "saturate(0.85)",
                   }}
                 >
-                  <div className="flex h-full flex-col items-center px-5 py-6">
+                  <div className="flex h-full flex-col justify-between items-center px-5 py-5 text-center">
                     {/* header row */}
-                    <div className="flex w-full items-center justify-between">
+                    <div className="flex w-full items-center justify-between shrink-0">
                       <span className="text-[11px] font-semibold tracking-[0.18em] text-foreground/45">
                         {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span
-                        className="rounded-full px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.22em]"
-                        style={{
-                          background: `color-mix(in oklab, hsl(${t.accent}) 18%, transparent)`,
-                          color: `hsl(${t.accent})`,
-                          border: `1px solid color-mix(in oklab, hsl(${t.accent}) 35%, transparent)`,
-                        }}
-                      >
-                        {t.region} Zone
                       </span>
                     </div>
 
                     {/* logo / placeholder */}
-                    <div className="relative mt-3 grid h-36 w-full place-items-center">
+                    <div className="relative my-auto grid h-40 w-full place-items-center shrink-0">
                       {/* glow behind logo */}
                       <span
-                        className="absolute inset-0 rounded-2xl blur-3xl opacity-20"
+                        className="absolute inset-0 rounded-2xl blur-3xl opacity-25"
                         style={{ background: `hsl(${t.accent})` }}
                         aria-hidden
                       />
@@ -341,12 +406,12 @@ export function Teams() {
                           alt={`${t.name} logo`}
                           loading="eager"
                           fetchPriority="high"
-                          className="relative h-36 w-full object-contain"
-                          style={{ filter: "drop-shadow(0 6px 18px rgba(0,0,0,0.7))" }}
+                          className="relative h-40 w-full object-contain scale-105"
+                          style={{ filter: "drop-shadow(0 8px 22px rgba(0,0,0,0.75))" }}
                         />
                       ) : (
                         <span
-                          className="relative grid h-32 w-32 place-items-center rounded-2xl text-2xl font-black"
+                          className="relative grid h-32 w-32 place-items-center rounded-2xl text-3xl font-black"
                           style={{
                             border: `1px solid color-mix(in oklab, hsl(${t.accent}) 40%, transparent)`,
                             color: `hsl(${t.accent})`,
@@ -358,30 +423,39 @@ export function Teams() {
                       )}
                     </div>
 
-                    <h3 className="display-title-extended mt-3 text-center text-xl leading-tight text-foreground lg:text-2xl">
-                      {t.name}
-                    </h3>
+                    {/* Team Title */}
+                    <div className="h-12 w-full flex flex-col items-center justify-center shrink-0">
+                      <h3 className="display-title-extended text-center text-xl leading-none text-foreground lg:text-2xl">
+                        {renderTeamName(t.name)}
+                      </h3>
+                    </div>
 
                     <p
-                      className="mt-1 text-[9px] font-bold uppercase tracking-[0.28em]"
+                      className="mt-1 text-[9px] font-bold uppercase tracking-[0.28em] shrink-0"
                       style={{ color: `hsl(${t.accent})` }}
                     >
                       {t.district}
                     </p>
 
-                    <span className="my-4 h-px w-full bg-foreground/10" />
+                    <span className="my-2.5 h-px w-full bg-foreground/10 shrink-0" />
 
-                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-foreground/50">
-                      Franchise Owner
-                    </p>
-                    <p className="mt-1 text-center text-[12px] font-semibold text-foreground/65">
-                      To Be Announced
-                    </p>
-
-                    <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/55">
-                      <MapPin className="h-3.5 w-3.5" style={{ color: `hsl(${t.accent})` }} />
-                      {t.district}, Tamil Nadu
-                    </p>
+                    {/* Owner Block - Fixed Height Flex Slot */}
+                    <div className="h-20 w-full flex flex-col justify-center items-center shrink-0">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold/90">
+                        Franchise Owner
+                      </p>
+                      <p className="mt-1 text-center text-[12px] font-bold text-foreground leading-tight line-clamp-2">
+                        {t.owner}
+                      </p>
+                      {t.about && (
+                        <p
+                          className="mt-0.5 text-center text-[10px] font-medium leading-tight text-foreground/65 line-clamp-2"
+                          style={{ fontFamily: "Arial, sans-serif" }}
+                        >
+                          {t.about}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </button>
               );
@@ -441,10 +515,11 @@ export function Teams() {
             </p>
 
             <h3
-              className="display-title-extended mt-3 text-foreground"
+              className="display-title-extended mt-3 block"
               style={{ fontSize: "clamp(1.8rem, 5vw, 3.4rem)" }}
             >
-              The Grand Player Auction
+              <span className="text-white">The Grand </span>
+              <span className="text-gold-gradient">Player Auction</span>
             </h3>
 
             <div className="mt-3 flex items-center justify-center gap-3">
@@ -468,10 +543,17 @@ export function Teams() {
                 href="https://www.youtube.com/channel/UCE_hcfY87sko-R60DCXnYzg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.18em]"
+                className="btn-gold inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.18em] leading-none"
               >
-                Watch the Auction Live
-                <ChevronRight className="h-4 w-4" />
+                <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
+                    fill="currentColor"
+                  />
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="var(--gold)" />
+                </svg>
+                <span className="leading-none">Watch the Auction Live</span>
+                <ChevronRight className="h-4 w-4 shrink-0" />
               </a>
             </div>
           </div>

@@ -22,11 +22,11 @@ export function SponsorshipHero() {
             className="display-title mx-auto mt-5"
             style={{ fontSize: "clamp(2.6rem, 7vw, 5rem)" }}
           >
-            <span className="block text-foreground">Sponsorship &amp;</span>
+            <span className="block text-foreground">Sponsorship <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span></span>
             <span className="text-gold-gradient block">Partnership</span>
             <span className="block text-foreground">Opportunities</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-[15px]">
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]" style={{ fontFamily: "Arial, sans-serif" }}>
             TNPPL Season 2 is Tamil Nadu&rsquo;s biggest pickleball event. 12 franchises, 168
             players, 4 days at Express Avenue Atrium. Align your brand with the fastest-growing
             sport in India.

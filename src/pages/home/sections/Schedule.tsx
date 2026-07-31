@@ -12,6 +12,7 @@ import {
   Tv2,
   Eye,
 } from "lucide-react";
+import EXPRESS_AVENUE_IMG from "@/assets/Express Avenue Atrium.webp";
 
 const DAYS = [
   {
@@ -139,12 +140,12 @@ export function Schedule() {
                   <circle cx="200" cy="110" r="5" fill="var(--gold)" opacity="0.5" />
                 </svg>
                 <img
-                  src="/images/venue-express-avenue.jpg"
+                  src={EXPRESS_AVENUE_IMG}
                   alt="Express Avenue Atrium — TNPPL Season 2 venue"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="absolute inset-0 h-full w-full object-cover object-center"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display = "none";
-                  }}
                 />
                 <div className="absolute bottom-4 left-4 z-10">
                   <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold">Venue</p>

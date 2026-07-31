@@ -141,7 +141,17 @@ export function FAQSection() {
                 key={category}
                 id={category.toLowerCase().replace(/\s+/g, "-")}
               >
-                <h2 className="display-title text-xl text-gold sm:text-2xl">{category}</h2>
+                <h2 className="display-title text-xl text-gold sm:text-2xl">
+                  {category.includes("&") ? (
+                    <>
+                      {category.split("&")[0]}
+                      <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>
+                      {category.split("&")[1]}
+                    </>
+                  ) : (
+                    category
+                  )}
+                </h2>
                 <div className="mt-4 stat-card rounded-2xl px-6 py-2">
                   {items.map(({ q, a }) => (
                     <AccordionItem key={q} q={q} a={a} />
@@ -159,7 +169,7 @@ export function FAQSection() {
               }}
             >
               <h3 className="display-title text-xl text-foreground sm:text-2xl">
-                Still Have a Question?
+                Still Have a Question<span style={{ fontFamily: "Arial, sans-serif" }}>?</span>
               </h3>
               <p className="mx-auto mt-3 max-w-sm text-[13px] leading-relaxed text-foreground/65">
                 Reach out to the TNPPL team directly and we'll get back to you as soon as possible.

@@ -22,14 +22,7 @@ const ARTICLES = [
     accent: "45 90% 58%",
     featured: true,
   },
-  {
-    tag: "Tournament",
-    title: "Grand Player Auction at ITC Grand Chola",
-    excerpt: "Franchise owners. Top talents. One incredible auction — date to be announced.",
-    date: "Coming Soon",
-    icon: Trophy,
-    accent: "45 90% 58%",
-  },
+
   {
     tag: "Tournament",
     title: "Express Avenue Atrium Ready to Host the Action",
@@ -65,12 +58,6 @@ const ARTICLES = [
 ];
 
 export function News() {
-  const [activeTab, setActiveTab] = useState("All News");
-  const [search, setSearch] = useState("");
-
-  const featured = ARTICLES[0];
-  const rest = ARTICLES.slice(1);
-
   return (
     <section id="news" className="relative overflow-hidden bg-background py-10 sm:py-12 lg:py-14">
       {/* ambient */}
@@ -79,7 +66,7 @@ export function News() {
         className="pointer-events-none absolute inset-0 opacity-50"
         style={{
           background:
-            "radial-gradient(65% 50% at 70% 0%, color-mix(in oklab, var(--gold) 8%, transparent), transparent 70%)",
+            "radial-gradient(65% 50% at 50% 0%, color-mix(in oklab, var(--gold) 8%, transparent), transparent 70%)",
         }}
       />
 
@@ -89,7 +76,7 @@ export function News() {
           <div className="flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gold/50 sm:w-16" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              News &amp; Updates
+              Live Updates &amp; Social Feed
             </span>
             <span className="h-px w-10 bg-gold/50 sm:w-16" />
           </div>
@@ -101,62 +88,33 @@ export function News() {
             className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
             style={{ fontFamily: "Arial, sans-serif" }}
           >
-            The latest stories, announcements, and updates from the world of TNPPL Season 2.
+            Catch real-time official posts, match updates, and behind-the-scenes stories from TNPPL Season 2.
           </p>
         </div>
 
-        {/* tabs + search */}
-        <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveTab(cat)}
-                className={`rounded-lg px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-all ${
-                  activeTab === cat
-                    ? "bg-gold text-primary-foreground"
-                    : "border border-border text-foreground/65 hover:border-gold/50 hover:text-gold"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          <div className="relative w-full sm:w-56">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
-            <input
-              type="search"
-              placeholder="Search news..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border border-border bg-card/60 py-2.5 pl-9 pr-4 text-[13px] text-foreground placeholder:text-foreground/40 focus:border-gold focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* articles grid */}
-        <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:grid-rows-2 lg:gap-5">
-          {/* 100% Scrollable Instagram Feed */}
-          <div className="stat-card relative flex flex-col overflow-hidden rounded-2xl p-4 sm:p-5 lg:row-span-2">
+        {/* Large Centered Live Instagram Feed Card */}
+        <div className="mt-10 mx-auto max-w-6xl">
+          <div className="stat-card relative flex flex-col justify-between overflow-hidden rounded-2xl p-5 sm:p-7">
             {/* Header bar */}
-            <div className="flex items-center justify-between border-b border-border pb-3 mb-3">
-              <div className="flex items-center gap-2.5">
-                <div className="relative p-0.5 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 shrink-0">
+            <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
+              <div className="flex items-center gap-3.5">
+                <div className="relative p-0.5 rounded-full bg-linear-to-tr from-yellow-500 via-pink-500 to-purple-600 shrink-0">
                   <img
                     src={TNPA_LOGO}
                     alt="TNPA Instagram"
-                    className="h-9 w-9 rounded-full bg-card object-contain p-0.5"
+                    loading="eager"
+                    decoding="async"
+                    className="h-11 w-11 rounded-full bg-card object-contain p-0.5"
                   />
                 </div>
                 <div>
-                  <div className="flex items-center gap-1">
-                    <h3 className="text-xs font-bold text-foreground">tamilnadupickleball.assn</h3>
-                    <svg className="h-3.5 w-3.5 text-blue-400 fill-current" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-foreground sm:text-lg">tamilnadupickleball.assn</h3>
+                    <svg className="h-4 w-4 text-blue-400 fill-current" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
                   </div>
-                  <p className="text-[10px] text-foreground/60" style={{ fontFamily: "Arial, sans-serif" }}>
+                  <p className="text-xs text-foreground/60" style={{ fontFamily: "Arial, sans-serif" }}>
                     Official Instagram Feed • 593 Posts
                   </p>
                 </div>
@@ -165,89 +123,41 @@ export function News() {
                 href="https://www.instagram.com/tamilnadupickleball.assn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center gap-1 rounded-full px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider shrink-0"
+                className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider shrink-0"
               >
-                <Instagram className="h-3 w-3" />
-                Follow
+                <Instagram className="h-4 w-4" />
+                Follow Us
               </a>
             </div>
 
-            {/* Official Live Instagram Feed (Cropped Header + Zero White Space Below Posts) */}
-            <div className="relative w-full flex-1 h-[310px] sm:h-[320px] rounded-xl overflow-y-auto overflow-x-hidden bg-[#0a0f1d] border border-border/60 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gold/40 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-card/40">
+            {/* Official Live Instagram Feed (Exact 6 Posts - Large & Clear - Zero White Space) */}
+            <div className="relative w-full h-[380px] sm:h-[460px] lg:h-[510px] rounded-xl overflow-hidden bg-[#0a0f1d] border border-border/60 shadow-inner">
               <iframe
                 src="https://www.instagram.com/tamilnadupickleball.assn/embed/"
                 title="Tamil Nadu Pickleball Association Live Instagram Feed"
-                className="w-full border-0 bg-[#0a0f1d] -mt-[168px] h-[480px]"
+                className="w-full border-0 bg-[#0a0f1d] -mt-[170px] sm:-mt-[205px] lg:-mt-[235px] h-[570px] sm:h-[685px] lg:h-[760px]"
                 allowTransparency={true}
                 allow="encrypted-media"
-                scrolling="yes"
+                scrolling="no"
               />
             </div>
 
             {/* Footer link */}
-            <div className="mt-3 text-center border-t border-border pt-2.5">
+            <div className="mt-5 text-center border-t border-border pt-4">
               <a
                 href="https://www.instagram.com/tamilnadupickleball.assn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-widest"
+                className="btn-gold inline-flex items-center gap-2 rounded-full px-7 py-3 text-xs font-bold uppercase tracking-widest"
               >
                 View All 593+ Posts on Instagram &rarr;
               </a>
             </div>
           </div>
-
-          {/* secondary articles */}
-          {rest.map((a) => {
-            const Icon = a.icon;
-            return (
-              <div
-                key={a.title}
-                className="stat-card group flex items-start gap-4 rounded-xl p-5"
-              >
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
-                  style={{
-                    background: `color-mix(in oklab, hsl(${a.accent}) 14%, var(--card))`,
-                    border: `1px solid color-mix(in oklab, hsl(${a.accent}) 30%, transparent)`,
-                  }}
-                >
-                  <Icon
-                    className="h-6 w-6"
-                    style={{ color: `hsl(${a.accent})` }}
-                    strokeWidth={1.5}
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p
-                    className="text-[9px] font-bold uppercase tracking-[0.26em]"
-                    style={{ color: `hsl(${a.accent})` }}
-                  >
-                    {a.tag}
-                  </p>
-                  <h3 className="mt-1 text-[15px] font-bold leading-snug text-foreground">
-                    {a.title}
-                  </h3>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-foreground/60">{a.excerpt}</p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <p className="flex items-center gap-1 text-[10px] text-foreground/40">
-                      <Calendar className="h-3 w-3" />
-                      {a.date}
-                    </p>
-                    <a
-                      href="#news"
-                      className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold hover:text-gold/80"
-                    >
-                      Read More &rarr;
-                    </a>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
         </div>
 
         {/* newsletter strip */}
+        {/* 
         <div className="stat-card mt-12 grid gap-6 rounded-2xl px-6 py-8 sm:px-10 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center">
           <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gold/50 text-gold lg:flex">
             <Megaphone className="h-7 w-7" strokeWidth={1.4} aria-hidden />
@@ -278,6 +188,7 @@ export function News() {
             </button>
           </form>
         </div>
+        */}
 
 
       </div>

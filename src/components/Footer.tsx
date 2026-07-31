@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronRight, Instagram, Facebook, Youtube, Twitter, Heart } from "lucide-react";
+import { ChevronRight, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
 import LOGO_SRC from "../assets/Tnppl.webp";
 
 import TNPA_LOGO from "../assets/TNPA LOGO (1).webp";
@@ -73,9 +73,9 @@ export function Footer() {
             </div>
             <div>
               <h3 className="display-title text-2xl sm:text-3xl">
-                <span className="text-foreground">Be Part of Something Bigger.</span>
+                <span className="text-foreground">Be Part of Something Bigger<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
                 <br />
-                <span className="text-gold-gradient">One Game. One Family.</span>
+                <span className="text-gold-gradient">One Game<span style={{ fontFamily: "Arial, sans-serif" }}>.</span> One Family<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
               </h3>
             </div>
             <div className="flex flex-col items-start gap-4 sm:items-center lg:flex-row">
@@ -83,7 +83,9 @@ export function Footer() {
                 Collaborate with TNPPL and grow the game with us.
               </p>
               <a
-                href="/#contact"
+                href="https://forms.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-outline-light inline-flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"
               >
                 Brand Collaboration
@@ -96,12 +98,15 @@ export function Footer() {
 
       {/* ── Main footer ── */}
       <div className="relative mx-auto max-w-[1600px] px-5 py-14 sm:px-8 lg:px-10 xl:px-14">
-        <div className="grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)_220px] xl:grid-cols-[320px_minmax(0,1fr)_260px]">
+        <div className="grid gap-10 lg:grid-cols-[320px_1fr] xl:grid-cols-[400px_1fr]">
           {/* brand */}
           <div>
             <img
               src={LOGO_SRC}
               alt="Tamil Nadu Pickleball Premier League"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="h-24 w-auto"
             />
             <div className="mt-3 flex items-center gap-2">
@@ -148,43 +153,6 @@ export function Footer() {
               </div>
             ))}
           </div>
-
-          {/* newsletter */}
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
-              Stay Updated
-            </p>
-            <span className="mt-2 block h-px w-8 bg-gold/40" />
-            <p className="mt-4 text-[13px] leading-relaxed text-foreground/60">
-              Subscribe to our newsletter for the latest updates, news, and exclusive content.
-            </p>
-            <form
-              className="mt-5 flex gap-2"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="min-w-0 flex-1 rounded-lg border border-border bg-card/60 px-3 py-2.5 text-[12px] text-foreground placeholder:text-foreground/40 focus:border-gold focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="btn-gold flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
-                aria-label="Subscribe"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </form>
-            <label className="mt-3 flex cursor-pointer items-start gap-2">
-              <input
-                type="checkbox"
-                className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-gold"
-              />
-              <span className="text-[11px] text-foreground/55">
-                I agree to receive updates from TNPPL.
-              </span>
-            </label>
-          </div>
         </div>
       </div>
 
@@ -223,6 +191,9 @@ export function Footer() {
                   <img
                     src={TNPA_LOGO}
                     alt="Tamil Nadu Pickleball Association"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     className="h-10 w-auto opacity-80"
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                   />
@@ -250,9 +221,7 @@ export function Footer() {
             </Link>
             <span className="h-3 w-px bg-border" />
             <p className="flex items-center gap-1 text-[11px] text-foreground/45">
-              Designed with{" "}
-              <Heart className="h-3 w-3 fill-gold text-gold" aria-label="love" />
-              {" "}by{" "}
+              Designed by{" "}
               <a
                 href="https://theeyelevelstudio.com"
                 target="_blank"

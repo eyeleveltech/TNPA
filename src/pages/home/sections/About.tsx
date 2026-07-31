@@ -12,6 +12,8 @@ import sdatNewLogo from "@/assets/SDAT New English Logo.2109c9b437628e4b77e4.web
 import ipaLogoImg from "@/assets/ipa.webp";
 
 import TNPA_LOGO from "@/assets/TNPA LOGO (1).webp";
+import { Reveal } from "@/components/Reveal";
+
 const SDAT_LOGO = sdatNewLogo;
 const IPA_LOGO = ipaLogoImg;
 
@@ -78,100 +80,77 @@ export function About() {
             "radial-gradient(70% 55% at 50% 0%, color-mix(in oklab, var(--gold) 7%, transparent), transparent 70%)",
         }}
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-8 hidden h-48 w-48 lg:block"
-        style={{
-          backgroundImage:
-            "radial-gradient(color-mix(in oklab, var(--gold) 55%, transparent) 1px, transparent 1px)",
-          backgroundSize: "14px 14px",
-          opacity: 0.2,
-          maskImage: "linear-gradient(to bottom left, black, transparent)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 bottom-8 hidden h-48 w-48 lg:block"
-        style={{
-          backgroundImage:
-            "radial-gradient(color-mix(in oklab, var(--gold) 55%, transparent) 1px, transparent 1px)",
-          backgroundSize: "14px 14px",
-          opacity: 0.15,
-          maskImage: "linear-gradient(to top right, black, transparent)",
-        }}
-      />
 
       <div className="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
 
         {/* ---------- centered intro ---------- */}
-        <div className="animate-fade-up text-center">
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              About TNPPL
-            </span>
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-          </div>
+        <div className="text-center">
+          <Reveal delay={60}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                About TNPPL
+              </span>
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+            </div>
+          </Reveal>
 
-          <h2
-            className="display-title-extended mt-4 text-[clamp(2.1rem,6.2vw,4.1rem)]"
-            style={{ animationDelay: "80ms" }}
-          >
-            <span className="block text-foreground">More than a league.</span>
-            <span className="text-gold-gradient block">
-              It&rsquo;s a movement.
-            </span>
-          </h2>
+          <Reveal delay={140}>
+            <h2 className="display-title-extended mt-4 text-[clamp(2.1rem,6.2vw,4.1rem)]">
+              <span className="block text-foreground">More than a league<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
+              <span className="text-gold-gradient block">
+                It<span style={{ fontFamily: "Arial, sans-serif" }}>&rsquo;</span>s a movement<span style={{ fontFamily: "Arial, sans-serif" }}>.</span>
+              </span>
+            </h2>
+          </Reveal>
 
-          <div className="mx-auto mt-6 flex items-center justify-center gap-3" aria-hidden="true">
-            <span className="h-px w-24 bg-linear-to-r from-transparent to-gold/70" />
-            <span className="text-xs text-gold animate-star-pickleball">&#9733;</span>
-            <span className="h-px w-24 bg-linear-to-l from-transparent to-gold/70" />
-          </div>
+          <Reveal delay={220}>
+            <div className="mx-auto mt-6 flex items-center justify-center gap-3" aria-hidden="true">
+              <span className="h-px w-24 bg-linear-to-r from-transparent to-gold/70" />
+              <span className="text-xs text-gold animate-star-pickleball">&#9733;</span>
+              <span className="h-px w-24 bg-linear-to-l from-transparent to-gold/70" />
+            </div>
+          </Reveal>
 
-          <p
-            className="animate-fade-up mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-            style={{ animationDelay: "160ms", fontFamily: "Arial, sans-serif" }}
-          >
-            Twelve city franchises. Each district, a battle ground. Each team, a community.
-            Franchise identities to be unveiled at the Grand Player Auction.
-          </p>
+          <Reveal delay={300}>
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Twelve city franchises. Each district, a battle ground. Each team, a community.
+              Franchise identities to be unveiled at the Grand Player Auction.
+            </p>
+          </Reveal>
         </div>
 
         {/* ---------- feature photo ---------- */}
-        <div
-          className="animate-fade-up relative mt-12 overflow-hidden lg:mt-14"
-          style={{
-            borderRadius: "1.5rem",
-            border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)",
-            animationDelay: "340ms",
-          }}
-        >
-          <img
-            src={teamPhoto}
-            alt="TNPPL players in navy and gold jerseys celebrating together on court"
-            width={1280}
-            height={480}
-            loading="lazy"
-            className="h-56 w-full object-cover sm:h-72 lg:h-96"
-          />
-          {/* scrim */}
+        <Reveal delay={400}>
           <div
-            className="pointer-events-none absolute inset-0"
+            className="relative mt-12 overflow-hidden lg:mt-14"
             style={{
-              background:
-                "linear-gradient(to right, color-mix(in oklab, var(--ink) 65%, transparent), transparent 60%), linear-gradient(to top, color-mix(in oklab, var(--ink) 40%, transparent), transparent 40%)",
+              borderRadius: "1.5rem",
+              border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)",
             }}
-          />
-          {/* decorative diagonal stripe overlay */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(55deg, var(--gold) 0 2px, transparent 2px 18px)",
-            }}
-          />
-        </div>
+          >
+            <img
+              src={teamPhoto}
+              alt="TNPPL players in navy and gold jerseys celebrating together on court"
+              width={1280}
+              height={480}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="h-56 w-full object-cover sm:h-72 lg:h-96"
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, color-mix(in oklab, var(--ink) 65%, transparent), transparent 60%), linear-gradient(to top, color-mix(in oklab, var(--ink) 40%, transparent), transparent 40%)",
+              }}
+            />
+          </div>
+        </Reveal>
 
         {/* ---------- stats ---------- */}
         <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-0">
@@ -216,8 +195,8 @@ export function About() {
               </span>
               <div className="min-w-0">
                 <div className="flex flex-col">
-                  <p className="display-title-extended text-xl sm:text-2xl lg:text-lg xl:text-2xl text-gold leading-tight">{s.value}</p>
-                  <p className="display-title-extended text-xs sm:text-sm lg:text-xs xl:text-sm text-foreground mt-0.5 whitespace-nowrap">{s.label}</p>
+                  <p className="text-xl sm:text-2xl lg:text-lg xl:text-2xl font-bold text-gold leading-tight" style={{ fontFamily: "Arial, sans-serif" }}>{s.value}</p>
+                  <p className="text-xs sm:text-sm lg:text-xs xl:text-sm font-semibold text-foreground mt-0.5 whitespace-nowrap" style={{ fontFamily: "Arial, sans-serif" }}>{s.label}</p>
                 </div>
                 <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>{s.copy}</p>
               </div>
@@ -240,7 +219,9 @@ export function About() {
                   src={TNPA_LOGO}
                   alt="Tamil Nadu Pickleball Association logo"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-16 w-auto shrink-0"
                 />
               </div>
@@ -257,7 +238,9 @@ export function About() {
                   src={IPA_LOGO}
                   alt="Indian Pickleball Association logo"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-16 w-auto shrink-0"
                 />
               </div>
@@ -274,7 +257,9 @@ export function About() {
                   src={SDAT_LOGO}
                   alt="Sports Development Authority of Tamil Nadu logo"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-16 w-auto shrink-0"
                 />
               </div>

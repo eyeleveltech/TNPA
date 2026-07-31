@@ -221,19 +221,31 @@
 ───────────────────────────────────────────── */
 
 @utility display-title {
-  font-family: Arial, "Helvetica Neue", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 0.95;
+  font-family: "PODIUM Sharp", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.0;
   text-transform: uppercase;
 }
 
 @utility display-title-extended {
-  font-family: Arial, "Helvetica Neue", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 0.95;
+  font-family: "PODIUM Sharp", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.0;
   text-transform: uppercase;
+}
+
+/* Fallback layer — ensures all properties are applied even if @utility misses */
+@layer components {
+  .display-title,
+  .display-title-extended {
+    font-family: "PODIUM Sharp", sans-serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.0;
+    text-transform: uppercase;
+  }
 }
 
 @utility text-gold-gradient {
@@ -344,8 +356,12 @@
   color: var(--chalk);
   font-family: var(--font-secondary);
   font-weight: 700;
+  line-height: 1 !important;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition:
     transform var(--transition-smooth),
     border-color var(--transition-smooth),

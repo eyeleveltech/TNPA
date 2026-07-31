@@ -1,4 +1,4 @@
-import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe } from "lucide-react";
+import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe, Lock } from "lucide-react";
 
 export const TIERS = [
   {
@@ -18,6 +18,7 @@ export const TIERS = [
       "VIP access for 10 guests per day",
     ],
     highlight: true,
+    soldOut: true,
     icon: Trophy,
   },
   {
@@ -121,7 +122,7 @@ export function SponsorshipContent() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
           <div className="mb-12 text-center">
             <h2 className="display-title text-[clamp(1.8rem,4.5vw,3rem)] text-foreground">
-              Why Associate with <span className="text-gold-gradient">TNPPL</span>
+              Why Associate with <span className="text-gold-gradient">TNPPL<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
             </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
@@ -133,7 +134,7 @@ export function SponsorshipContent() {
                     <Icon className="h-6 w-6" strokeWidth={1.5} />
                   </div>
                   <h3 className="display-title mt-5 text-xl text-foreground">{a.title}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/65">{a.copy}</p>
+                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>{a.copy}</p>
                 </div>
               );
             })}
@@ -155,7 +156,7 @@ export function SponsorshipContent() {
             <h2 className="display-title mt-4 text-[clamp(1.8rem,4.5vw,3rem)] text-foreground">
               Find the Right <span className="text-gold-gradient">Partnership Level</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm text-foreground/65">
+            <p className="mx-auto mt-4 max-w-xl text-sm text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>
               Each tier is customized to match your brand objectives. Contact us for detailed
               packages, availability, and pricing.
             </p>
@@ -181,23 +182,46 @@ export function SponsorshipContent() {
                       : undefined
                   }
                 >
-                  {tier.highlight && (
+                  {tier.soldOut ? (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground shadow-lg">
+                        Slot Reserved
+                      </span>
+                    </div>
+                  ) : tier.highlight ? (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground">
                         Premium Slot
                       </span>
                     </div>
-                  )}
+                  ) : null}
 
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold">
-                    <Icon className="h-6 w-6" strokeWidth={1.5} />
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold">
+                      <Icon className="h-6 w-6" strokeWidth={1.5} />
+                    </div>
+                    {tier.soldOut && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gold">
+                        <Lock className="h-3 w-3" /> Reserved
+                      </span>
+                    )}
                   </div>
 
                   <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.28em] text-gold">
                     {tier.tag}
                   </p>
-                  <h3 className="display-title mt-1 text-xl text-foreground">{tier.name}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/60">
+                  <h3 className="display-title mt-1 text-xl text-foreground">
+                    {tier.name.includes("-") ? (
+                      <>
+                        {tier.name.split("-")[0]}
+                        <span style={{ fontFamily: "Arial, sans-serif" }}>-</span>
+                        {tier.name.split("-")[1]}
+                      </>
+                    ) : (
+                      tier.name
+                    )}
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>
                     {tier.description}
                   </p>
 
@@ -210,15 +234,26 @@ export function SponsorshipContent() {
                     ))}
                   </ul>
 
-                  <a
-                    href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
-                    className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-[12px] font-bold uppercase tracking-widest transition-colors ${
-                      tier.highlight ? "btn-gold" : "btn-outline-light"
-                    }`}
-                  >
-                    Enquire Now
-                    <ChevronRight className="h-4 w-4" />
-                  </a>
+                  {tier.soldOut ? (
+                    <button
+                      disabled
+                      aria-disabled="true"
+                      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-gold/30 bg-gold/10 px-5 py-3 text-[12px] font-bold uppercase tracking-widest text-gold/75"
+                    >
+                      <Lock className="h-3.5 w-3.5" />
+                      Slot Reserved
+                    </button>
+                  ) : (
+                    <a
+                      href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
+                      className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-[12px] font-bold uppercase tracking-widest transition-colors ${
+                        tier.highlight ? "btn-gold" : "btn-outline-light"
+                      }`}
+                    >
+                      Enquire Now
+                      <ChevronRight className="h-4 w-4" />
+                    </a>
+                  )}
                 </div>
               );
             })}
@@ -230,9 +265,9 @@ export function SponsorshipContent() {
       <section className="border-t border-border py-16 sm:py-20">
         <div className="mx-auto max-w-[1600px] px-5 text-center sm:px-8 lg:px-10 xl:px-14">
           <h2 className="display-title text-[clamp(1.9rem,4.5vw,3.2rem)] text-foreground">
-            Ready to be part of <span className="text-gold-gradient">something bigger?</span>
+            Ready to be part of <span className="text-gold-gradient">something bigger<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/65 sm:text-[15px]">
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]" style={{ fontFamily: "Arial, sans-serif" }}>
             Reach out to explore the right partnership for your brand. We will share the full
             sponsorship deck, availability matrix, and custom options.
           </p>

@@ -72,7 +72,17 @@ export function RulesContent() {
                 >
                   <Icon className="h-6 w-6" style={{ color: `hsl(${color})` }} strokeWidth={1.5} />
                 </div>
-                <h2 className="display-title text-xl text-foreground sm:text-2xl">{title}</h2>
+                <h2 className="display-title text-xl text-foreground sm:text-2xl">
+                  {title.includes("&") ? (
+                    <>
+                      {title.split("&")[0]}
+                      <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>
+                      {title.split("&")[1]}
+                    </>
+                  ) : (
+                    title
+                  )}
+                </h2>
               </div>
               <ul className="mt-6 space-y-3">
                 {rules.map((rule, i) => (

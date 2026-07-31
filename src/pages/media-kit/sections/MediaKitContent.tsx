@@ -96,7 +96,17 @@ export function MediaKitContent() {
                 >
                   <Icon className="h-5 w-5" style={{ color: `hsl(${color})` }} strokeWidth={1.5} />
                 </div>
-                <h3 className="display-title text-lg text-foreground">{category}</h3>
+                <h3 className="display-title text-lg text-foreground">
+                  {category.includes("&") ? (
+                    <>
+                      {category.split("&")[0]}
+                      <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>
+                      {category.split("&")[1]}
+                    </>
+                  ) : (
+                    category
+                  )}
+                </h3>
               </div>
               <ul className="mt-5 space-y-3">
                 {items.map(({ name, size }) => (

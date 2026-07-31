@@ -6,7 +6,7 @@ import { Teams } from "./sections/Teams";
 import { Players } from "./sections/Players";
 import { Schedule } from "./sections/Schedule";
 import { Sponsors } from "./sections/Sponsors";
-import { News } from "./sections/News";
+// import { News } from "./sections/News";
 import { Contact } from "./sections/Contact";
 
 export default function IndexPage() {
@@ -23,7 +23,7 @@ export default function IndexPage() {
       <Players />
       <Schedule />
       <Sponsors />
-      <News />
+      {/* <News /> */}
       <Contact />
       <Footer />
     </main>

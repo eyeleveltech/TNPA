@@ -116,7 +116,9 @@ export function FormatDetails() {
           {/* Pools */}
           <div className="stat-card col-span-full rounded-2xl p-6 sm:p-8 lg:col-span-2">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold">Pool Structure</p>
-            <h3 className="display-title mt-2 text-xl text-foreground">12 Teams — 2 Pools of 6</h3>
+            <h3 className="display-title mt-2 text-xl text-foreground">
+              <span style={{ fontFamily: "Arial, sans-serif" }}>12</span> Teams <span style={{ fontFamily: "Arial, sans-serif" }}> — </span> <span style={{ fontFamily: "Arial, sans-serif" }}>2</span> Pools of <span style={{ fontFamily: "Arial, sans-serif" }}>6</span>
+            </h3>
             <div className="mt-5 grid grid-cols-2 gap-4">
               {["Pool A", "Pool B"].map((pool) => (
                 <div
@@ -163,8 +165,8 @@ export function FormatDetails() {
                 <div key={cat} className="flex items-center justify-between">
                   <span className="text-[13px] text-foreground/70">{cat}</span>
                   <span
-                    className="font-display text-xl"
-                    style={{ color: `hsl(${color})` }}
+                    className="text-xl font-bold"
+                    style={{ color: `hsl(${color})`, fontFamily: "Arial, sans-serif" }}
                   >
                     {count}
                   </span>
@@ -172,7 +174,7 @@ export function FormatDetails() {
               ))}
               <div className="mt-2 border-t border-border pt-3 flex items-center justify-between">
                 <span className="text-[13px] font-bold text-foreground">Total</span>
-                <span className="font-display text-2xl text-gold">168</span>
+                <span className="text-2xl font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
               </div>
             </div>
           </div>
@@ -181,7 +183,9 @@ export function FormatDetails() {
         {/* Squad composition */}
         <div className="stat-card mt-5 rounded-2xl p-6 sm:p-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold">Per Team</p>
-          <h3 className="display-title mt-2 text-xl text-foreground">Squad Composition — 14 Players</h3>
+          <h3 className="display-title mt-2 text-xl text-foreground">
+            Squad Composition <span style={{ fontFamily: "Arial, sans-serif" }}> — </span> <span style={{ fontFamily: "Arial, sans-serif" }}>14</span> Players
+          </h3>
           <p className="mt-2 text-[13px] text-foreground/55">
             Each team is led by a Team Captain appointed by the Franchise Owner. All final
             decisions on team sheet rest with the Captain.
@@ -203,7 +207,7 @@ export function FormatDetails() {
                   border: `1px solid color-mix(in oklab, hsl(${color}) ${border ? 55 : 25}%, transparent)`,
                 }}
               >
-                <span className="font-display text-2xl" style={{ color: `hsl(${color})` }}>
+                <span className="text-2xl font-bold" style={{ color: `hsl(${color})`, fontFamily: "Arial, sans-serif" }}>
                   {count}
                 </span>
                 <span className="text-[13px] text-foreground/70">{label}</span>
@@ -247,7 +251,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Super Doubles &amp; <span className="text-gold-gradient">Super Singles</span>
+          Super Doubles <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span> <span className="text-gold-gradient">Super Singles</span>
         </h2>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-2">
@@ -274,7 +278,7 @@ export function FormatDetails() {
               ))}
             </div>
             <div className="mt-5 flex items-center gap-3 rounded-lg border border-gold/30 px-4 py-3">
-              <span className="font-display text-2xl text-gold">25</span>
+              <span className="text-2xl font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>25</span>
               <span className="text-[12px] text-foreground/60">Rally points to win</span>
             </div>
           </div>
@@ -334,7 +338,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Fair Play &amp; <span className="text-gold-gradient">Equal Opportunity</span>
+          Fair Play <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span> <span className="text-gold-gradient">Equal Opportunity</span>
         </h2>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -358,7 +362,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Knock-Out Stage <span className="text-gold-gradient">Match Format</span>
+          Knock<span style={{ fontFamily: "Arial, sans-serif" }}>-</span>Out Stage <span className="text-gold-gradient">Match Format</span>
         </h2>
         <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-foreground/60">
           From the Quarter Finals onward, each Tie has 9 matches. If a team reaches{" "}
@@ -368,7 +372,7 @@ export function FormatDetails() {
 
         <div className="stat-card mt-8 rounded-2xl p-6 sm:p-8">
           <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.22em] text-gold/60">
-            Every Tie &mdash; Nine Battles &mdash; One Winner
+            Every Tie <span style={{ fontFamily: "Arial, sans-serif" }}>&mdash;</span> Nine Battles <span style={{ fontFamily: "Arial, sans-serif" }}>&mdash;</span> One Winner
           </p>
           <MatchTable
             matches={KO_MATCHES}
@@ -453,7 +457,7 @@ export function FormatDetails() {
                   className="rounded-xl border border-gold/30 p-4 text-center"
                   style={{ background: "color-mix(in oklab, var(--gold) 6%, var(--card))" }}
                 >
-                  <p className="font-display text-sm text-gold">{stage}</p>
+                  <p className="text-sm font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>{stage}</p>
                   <p className="mt-1 text-[11px] text-foreground/50">{desc}</p>
                 </div>
               ))}

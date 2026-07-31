@@ -1,4 +1,4 @@
-import { ChevronRight, Medal, Users2, Star, Trophy } from "lucide-react";
+import { ChevronRight, Medal, Users2, Star, Trophy, Instagram } from "lucide-react";
 
 const SQUAD_STATS = [
   {
@@ -91,7 +91,7 @@ export function Players() {
                   Season 2 Squad Format
                 </p>
                 <h2 className="display-title-extended mt-3 text-4xl leading-none sm:text-5xl">
-                  <span className="block text-foreground">168</span>
+                  <span className="block text-foreground" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
                   <span className="text-gold-gradient block">Elite Athletes</span>
                 </h2>
 
@@ -192,7 +192,7 @@ export function Players() {
             </h2>
 
             <p
-              className="mt-5 max-w-md text-sm leading-relaxed text-foreground/70 sm:text-[15px]"
+              className="mt-5 max-w-md text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
               style={{ fontFamily: "Arial, sans-serif" }}
             >
               From district champions to national-level talent, 168 pickleball players will
@@ -258,10 +258,11 @@ export function Players() {
             href="https://www.instagram.com/tamilnadupickleball.assn"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline-light inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em]"
+            className="btn-outline-light inline-flex items-center justify-center gap-3 rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em] leading-none"
           >
-            Follow for Player Updates
-            <ChevronRight className="h-4 w-4" />
+            <Instagram className="h-4 w-4 text-white shrink-0" />
+            <span className="leading-none">Follow for Player Updates</span>
+            <ChevronRight className="h-4 w-4 shrink-0" />
           </a>
         </div>
       </div>

@@ -16,7 +16,7 @@ export function RulesHero() {
             </span>
           </div>
           <h1 className="display-title mt-4 text-[clamp(2.6rem,7vw,4.8rem)] text-foreground">
-            Rules &amp;{" "}
+            Rules <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>{" "}
             <span className="text-gold-gradient">Regulations</span>
           </h1>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-foreground/65">

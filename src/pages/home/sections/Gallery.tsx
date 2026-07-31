@@ -155,6 +155,8 @@ export function Gallery() {
               <img
                 src={img.img}
                 alt={img.label}
+                loading="eager"
+                decoding="async"
                 className="absolute inset-0 h-full w-full object-cover object-center"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).style.display = "none";
