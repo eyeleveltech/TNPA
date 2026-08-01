@@ -16,12 +16,11 @@ const STRIP = [
   { eyebrow: "Dates", value: "17–20 Sep 2026", icon: Calendar },
 ];
 
-const SPONSOR_LOGOS = [
-  { name: "CavinKare", src: SPONSOR_CAVINS, label: "Title Sponsor" },
-  { name: "GTB", src: SPONSOR_GTB, label: "Co Sponsor" },
-  { name: "Indian Bank", src: SPONSOR_INDIANBANK, label: "Co Sponsor" },
-  { name: "Pix Pe", src: SPONSOR_PIXPE, label: "Led Partner" },
-  { name: "Rizzfitt", src: SPONSOR_RIZZFITT, label: "Tech Partner" },
+const SPONSOR_GROUPS = [
+  { label: "Title Sponsor", logos: [{ name: "CavinKare", src: SPONSOR_CAVINS }] },
+  { label: "Co Sponsors", logos: [{ name: "GTB", src: SPONSOR_GTB }, { name: "Indian Bank", src: SPONSOR_INDIANBANK }] },
+  { label: "Led Partner", logos: [{ name: "Pix Pe", src: SPONSOR_PIXPE }] },
+  { label: "Tech Partner", logos: [{ name: "Rizzfitt", src: SPONSOR_RIZZFITT }] },
 ];
 
 
@@ -249,7 +248,7 @@ export function Hero() {
             WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           }}
         >
-          <div className="flex items-center py-3 sm:py-4">
+          <div className="flex items-center pt-3 pb-1.5 sm:pt-4 sm:pb-2">
             <div
               className="flex shrink-0 items-start"
               style={{
@@ -258,28 +257,31 @@ export function Hero() {
             >
               {/* Repeat logos 4x for seamless infinite loop */}
               {Array.from({ length: 4 }).flatMap((_, setIdx) =>
-                SPONSOR_LOGOS.map((logo, i) => (
+                SPONSOR_GROUPS.map((group, i) => (
                   <div
-                    key={`${logo.name}-${setIdx}-${i}`}
-                    className="mx-6 flex shrink-0 flex-col items-center gap-2 sm:mx-8 lg:mx-10"
+                    key={`group-${setIdx}-${i}`}
+                    className="mx-6 flex shrink-0 flex-col items-center sm:mx-8 lg:mx-10"
                   >
                     <span
                       className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
                       style={{ fontFamily: "Arial, sans-serif" }}
                     >
-                      {logo.label}
+                      {group.label}
                     </span>
-                    <div className="flex h-16 w-full items-center justify-center sm:h-20 lg:h-24">
-                      <img
-                        src={logo.src}
-                        alt={logo.name}
-                        loading="eager"
-                        className={`w-auto object-contain ${
-                          logo.name === "CavinKare"
-                            ? "h-full max-w-44 sm:max-w-52 lg:max-w-64"
-                            : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
-                        }`}
-                      />
+                    <div className="mt-0.5 flex h-12 w-full items-center justify-center gap-8 sm:mt-1 sm:h-14 sm:gap-10 lg:mt-1.5 lg:h-16 lg:gap-12">
+                      {group.logos.map(logo => (
+                        <img
+                          key={logo.name}
+                          src={logo.src}
+                          alt={logo.name}
+                          loading="eager"
+                          className={`w-auto object-contain ${
+                            logo.name === "CavinKare"
+                              ? "-my-2 h-16 max-w-56 sm:-my-3 sm:h-20 sm:max-w-68 lg:-my-4 lg:h-24 lg:max-w-80"
+                              : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
+                          }`}
+                        />
+                      ))}
                     </div>
                   </div>
                 ))
