@@ -238,11 +238,6 @@ export function Schedule() {
                   <div
                     key={d.day}
                     className="stat-card grid grid-cols-[auto_auto_minmax(0,1fr)] items-center gap-4 rounded-2xl px-5 py-5 sm:grid-cols-[auto_auto_minmax(0,1fr)_auto] sm:gap-6 sm:px-6"
-                    style={
-                      i === DAYS.length - 1
-                        ? { borderColor: "color-mix(in oklab, var(--gold) 50%, transparent)" }
-                        : {}
-                    }
                   >
                     {/* day number */}
                     <div className="text-center">
@@ -333,7 +328,7 @@ export function Schedule() {
                 {/* luxury ring icon */}
                 <span
                   className={`relative grid h-14 w-14 place-items-center rounded-full ${
-                    statsInView ? "animate-icon-intro" : ""
+                    statsInView ? "animate-icon-loop" : ""
                   }`}
                   style={{ animationDelay: statsInView ? `${80 + i * 110}ms` : "0ms" }}
                 >

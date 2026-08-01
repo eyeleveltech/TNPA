@@ -67,6 +67,14 @@ To exercise these rights, contact us at tnstatepa@gmail.com with the subject "Pr
 ];
 
 export function PrivacyContent() {
+  const renderTitle = (text: string) => {
+    return text.split(/([&-])/).map((part, i) => {
+      if (part === '&') return <strong key={i} className="font-bold" style={{ fontFamily: "Arial, sans-serif" }}>&amp;</strong>;
+      if (part === '-') return <strong key={i} className="font-bold" style={{ fontFamily: "Arial, sans-serif" }}>-</strong>;
+      return part;
+    });
+  };
+
   return (
     <section className="py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
@@ -83,7 +91,7 @@ export function PrivacyContent() {
                   href={`#${title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`}
                   className="block text-[12px] text-foreground/50 transition-colors hover:text-gold"
                 >
-                  {title.includes("&") ? <>{title.split("&")[0]}<strong className="font-bold">&amp;</strong>{title.split("&")[1]}</> : title}
+                  {renderTitle(title)}
                 </a>
               ))}
             </div>
@@ -97,7 +105,7 @@ export function PrivacyContent() {
                 id={title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}
                 className="stat-card rounded-2xl p-6 sm:p-8"
               >
-                <h2 className="display-title text-lg text-foreground sm:text-xl">{title.includes("&") ? <>{title.split("&")[0]}<strong className="font-bold">&amp;</strong>{title.split("&")[1]}</> : title}</h2>
+                <h2 className="display-title text-lg uppercase text-gold sm:text-xl">{renderTitle(title)}</h2>
                 <div className="mt-4 space-y-3">
                   {body.split("\n\n").map((para, i) => (
                     <p key={i} className="whitespace-pre-line text-[14px] leading-relaxed text-foreground/65">

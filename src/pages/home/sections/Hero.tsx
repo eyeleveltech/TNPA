@@ -17,11 +17,11 @@ const STRIP = [
 ];
 
 const SPONSOR_LOGOS = [
-  { name: "CavinKare", src: SPONSOR_CAVINS },
-  { name: "GTB", src: SPONSOR_GTB },
-  { name: "Indian Bank", src: SPONSOR_INDIANBANK },
-  { name: "Pix Pe", src: SPONSOR_PIXPE },
-  { name: "Rizzfitt", src: SPONSOR_RIZZFITT },
+  { name: "CavinKare", src: SPONSOR_CAVINS, label: "Title Sponsor" },
+  { name: "GTB", src: SPONSOR_GTB, label: "Co Sponsor" },
+  { name: "Indian Bank", src: SPONSOR_INDIANBANK, label: "Co Sponsor" },
+  { name: "Pix Pe", src: SPONSOR_PIXPE, label: "Led Partner" },
+  { name: "Rizzfitt", src: SPONSOR_RIZZFITT, label: "Tech Partner" },
 ];
 
 
@@ -96,7 +96,7 @@ export function Hero() {
         <div className="flex flex-1 items-center pt-12 sm:pt-16 lg:pt-20">
           <div className="w-full max-w-full sm:max-w-160 lg:max-w-[50%] xl:max-w-[46%]">
             <div
-              className="animate-fade-up mb-2 flex items-center gap-2 sm:gap-4 lg:gap-5"
+              className="animate-fade-up mb-2 flex items-start gap-2 sm:gap-4 lg:gap-5"
               style={{ animationDelay: "20ms" }}
             >
               <img
@@ -183,25 +183,26 @@ export function Hero() {
               className="animate-fade-up mt-7 flex flex-col items-start gap-4"
               style={{ animationDelay: "1500ms" }}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex w-[280px] sm:w-[320px] items-center gap-3">
+                <span className="h-px flex-1 bg-gold/30" />
                 <span
-                  className="text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/50"
+                  className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/50 whitespace-nowrap"
                   style={{ fontFamily: "Arial, sans-serif" }}
                 >
                   Co-Sponsored By
                 </span>
-                <span className="h-px w-10 bg-gold/30" />
+                <span className="h-px flex-1 bg-gold/30" />
               </div>
-              <div className="flex items-center gap-5 sm:gap-6">
+              <div className="flex w-[280px] sm:w-[320px] items-center justify-center gap-5 sm:gap-6">
                 <img
                   src={SPONSOR_GTB}
                   alt="GTB"
-                  className="h-10 w-auto max-w-32.5 object-contain sm:h-12 sm:max-w-37.5"
+                  className="h-12 w-auto max-w-36 object-contain sm:h-14 sm:max-w-44"
                 />
                 <img
                   src={SPONSOR_INDIANBANK}
                   alt="Indian Bank"
-                  className="h-10 w-auto max-w-32.5 object-contain sm:h-12 sm:max-w-37.5"
+                  className="h-12 w-auto max-w-36 object-contain sm:h-14 sm:max-w-44"
                 />
               </div>
             </div>
@@ -250,7 +251,7 @@ export function Hero() {
         >
           <div className="flex items-center py-3 sm:py-4">
             <div
-              className="flex shrink-0 items-center"
+              className="flex shrink-0 items-start"
               style={{
                 animation: "sponsor-scroll 24s linear infinite",
               }}
@@ -258,17 +259,29 @@ export function Hero() {
               {/* Repeat logos 4x for seamless infinite loop */}
               {Array.from({ length: 4 }).flatMap((_, setIdx) =>
                 SPONSOR_LOGOS.map((logo, i) => (
-                  <img
+                  <div
                     key={`${logo.name}-${setIdx}-${i}`}
-                    src={logo.src}
-                    alt={logo.name}
-                    loading="eager"
-                    className={`mx-6 w-auto shrink-0 object-contain sm:mx-8 lg:mx-10 ${
-                      logo.name === "CavinKare"
-                        ? "h-12 max-w-35 sm:h-16 sm:max-w-45 lg:h-20 lg:max-w-50"
-                        : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
-                    }`}
-                  />
+                    className="mx-6 flex shrink-0 flex-col items-center gap-2 sm:mx-8 lg:mx-10"
+                  >
+                    <span
+                      className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
+                      style={{ fontFamily: "Arial, sans-serif" }}
+                    >
+                      {logo.label}
+                    </span>
+                    <div className="flex h-16 w-full items-center justify-center sm:h-20 lg:h-24">
+                      <img
+                        src={logo.src}
+                        alt={logo.name}
+                        loading="eager"
+                        className={`w-auto object-contain ${
+                          logo.name === "CavinKare"
+                            ? "h-full max-w-44 sm:max-w-52 lg:max-w-64"
+                            : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
+                        }`}
+                      />
+                    </div>
+                  </div>
                 ))
               )}
             </div>

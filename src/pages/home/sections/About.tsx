@@ -177,7 +177,7 @@ export function About() {
               {/* luxury double-ring icon */}
               <span
                 className={`relative grid h-12 w-12 sm:h-16 sm:w-16 lg:h-12 lg:w-12 xl:h-16 xl:w-16 shrink-0 place-items-center rounded-full ${
-                  inView ? "animate-icon-intro" : ""
+                  inView ? "animate-icon-loop" : ""
                 }`}
                 style={{ animationDelay: inView ? `${80 + i * 110}ms` : "0ms" }}
               >

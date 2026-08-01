@@ -32,7 +32,14 @@ export function SponsorshipHero() {
             sport in India.
           </p>
           <a
-            href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
+            href="/#contact"
+            onClick={(e) => {
+              sessionStorage.setItem('focusCollab', 'true');
+              const el = document.getElementById('contact-name');
+              if (el) {
+                setTimeout(() => el.focus({ preventScroll: true }), 50);
+              }
+            }}
             className="btn-gold mt-8 inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em]"
           >
             Talk to Us About Sponsorship
