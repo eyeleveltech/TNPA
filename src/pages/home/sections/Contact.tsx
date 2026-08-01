@@ -6,11 +6,12 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (window.location.hash === "#contact-name") {
+    if (sessionStorage.getItem('focusCollab') === 'true') {
+      sessionStorage.removeItem('focusCollab');
       const el = document.getElementById("contact-name");
       if (el) {
         setTimeout(() => {
-          el.focus();
+          el.focus({ preventScroll: true });
         }, 500);
       }
     }

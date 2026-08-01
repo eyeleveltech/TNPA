@@ -83,11 +83,12 @@ export function Footer() {
                 Collaborate with TNPA and grow the game with us.
               </p>
               <a
-                href="/#contact-name"
+                href="/#contact"
                 onClick={(e) => {
+                  sessionStorage.setItem('focusCollab', 'true');
                   const el = document.getElementById('contact-name');
                   if (el) {
-                    setTimeout(() => el.focus(), 50);
+                    setTimeout(() => el.focus({ preventScroll: true }), 50);
                   }
                 }}
                 className="btn-outline-light inline-flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"

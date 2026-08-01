@@ -108,11 +108,12 @@ export function Navbar() {
         <div className="flex shrink-0 items-center gap-2 lg:gap-3">
           <div className="hidden items-center gap-2 lg:flex lg:gap-3">
             <a
-              href="/#contact-name"
+              href="/#contact"
               onClick={(e) => {
+                sessionStorage.setItem('focusCollab', 'true');
                 const el = document.getElementById('contact-name');
                 if (el) {
-                  setTimeout(() => el.focus(), 50);
+                  setTimeout(() => el.focus({ preventScroll: true }), 50);
                 }
               }}
               className="btn-gold inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[9px] font-bold uppercase tracking-[0.06em] lg:gap-2 lg:px-5 lg:py-3 lg:text-[12px] lg:tracking-[0.08em] xl:px-6"
@@ -160,12 +161,13 @@ export function Navbar() {
           </nav>
           <div className="mt-6 flex flex-col gap-3">
             <a
-              href="/#contact-name"
+              href="/#contact"
               onClick={(e) => {
                 setOpen(false);
+                sessionStorage.setItem('focusCollab', 'true');
                 const el = document.getElementById('contact-name');
                 if (el) {
-                  setTimeout(() => el.focus(), 50);
+                  setTimeout(() => el.focus({ preventScroll: true }), 50);
                 }
               }}
               className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[13px] font-bold uppercase tracking-[0.08em]"
