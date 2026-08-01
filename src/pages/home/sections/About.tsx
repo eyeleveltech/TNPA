@@ -6,7 +6,7 @@ import {
   Users,
 } from "lucide-react";
 
-import teamPhoto from "@/assets/TEAM.jpg.webp";
+import teamPhoto from "@/assets/TEAM-optimized.webp";
 
 import sdatNewLogo from "@/assets/SDAT New English Logo.2109c9b437628e4b77e4.webp";
 import ipaLogoImg from "@/assets/ipa.webp";

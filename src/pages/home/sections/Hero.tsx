@@ -25,7 +25,7 @@ const SPONSOR_LOGOS = [
 ];
 
 
-import HERO_VIDEO from "@/assets/TNPPL  VID  V2  .mp4";
+import HERO_VIDEO from "@/assets/hero.mp4";
 
 export function Hero() {
   const { mx, my, scrollY } = useParallax();
