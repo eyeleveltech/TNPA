@@ -83,7 +83,7 @@ export function PrivacyContent() {
                   href={`#${title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`}
                   className="block text-[12px] text-foreground/50 transition-colors hover:text-gold"
                 >
-                  {title}
+                  {title.includes("&") ? <>{title.split("&")[0]}<strong className="font-bold">&amp;</strong>{title.split("&")[1]}</> : title}
                 </a>
               ))}
             </div>
@@ -97,7 +97,7 @@ export function PrivacyContent() {
                 id={title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}
                 className="stat-card rounded-2xl p-6 sm:p-8"
               >
-                <h2 className="display-title text-lg text-foreground sm:text-xl">{title}</h2>
+                <h2 className="display-title text-lg text-foreground sm:text-xl">{title.includes("&") ? <>{title.split("&")[0]}<strong className="font-bold">&amp;</strong>{title.split("&")[1]}</> : title}</h2>
                 <div className="mt-4 space-y-3">
                   {body.split("\n\n").map((para, i) => (
                     <p key={i} className="whitespace-pre-line text-[14px] leading-relaxed text-foreground/65">

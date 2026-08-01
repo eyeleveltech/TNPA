@@ -96,11 +96,11 @@ export function MediaKitContent() {
                 >
                   <Icon className="h-5 w-5" style={{ color: `hsl(${color})` }} strokeWidth={1.5} />
                 </div>
-                <h3 className="display-title text-lg text-foreground">
+                <h3 className="display-title text-lg text-gold">
                   {category.includes("&") ? (
                     <>
                       {category.split("&")[0]}
-                      <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>
+                      <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>&amp;</span>
                       {category.split("&")[1]}
                     </>
                   ) : (

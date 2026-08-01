@@ -25,8 +25,8 @@ type Team = {
   region: string;
   accent: string;
   logo: string | null;
-  owner: string;
-  about?: string;
+  owner: React.ReactNode;
+  about?: React.ReactNode;
 };
 
 const TEAMS: Team[] = [
@@ -36,8 +36,8 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "190 90% 62%",
     logo: logoChennai,
-    owner: "Varalaxmi Sarathkumar & Nova Lifespaces",
-    about: "Renowned Tamil Actress & Entrepreneur",
+    owner: <>Varalaxmi Sarathkumar <strong className="font-bold">&amp;</strong> Nova Lifespaces (Co-owner)</>,
+    about: "Varalaxmi Sarathkumar is a renowned Tamil actress and entrepreneur.",
   },
   {
     name: "Kanchi Blackbucks",
@@ -45,8 +45,8 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "150 75% 52%",
     logo: logoKanchi,
-    owner: "Abhay Meganathan",
-    about: "Vice Chairman, Rajalakshmi Institutions",
+    owner: "Mr. Abhay Meganathan",
+    about: "Vice Chairman, Rajalakshmi Institutions.",
   },
   {
     name: "Cuddalore Kings",
@@ -54,8 +54,8 @@ const TEAMS: Team[] = [
     region: "East",
     accent: "270 80% 65%",
     logo: logoCuddalore,
-    owner: "Chiyaan Vikram & Manuranjith Ranganathan",
-    about: "Chiyaan Vikram (Actor) & Manuranjith Ranganathan (Director, CavinKare)",
+    owner: <>Chiyaan Vikram <strong className="font-bold">&amp;</strong> Manuranjith Ranganathan</>,
+    about: <>Chiyaan Vikram (Actor) <strong className="font-bold">&amp;</strong> Manuranjith Ranganathan (Director, CavinKare)</>,
   },
   {
     name: "Twin Eagles Hosur",
@@ -64,7 +64,7 @@ const TEAMS: Team[] = [
     accent: "205 85% 62%",
     logo: logoHosur,
     owner: "Dr. Samarjit Baskaran",
-    about: "Owner, Gorilla Smash Club",
+    about: "Owner, Gorilla Smash Club.",
   },
   {
     name: "Coimbatore Smashers",
@@ -72,8 +72,8 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "15 90% 60%",
     logo: logoCoimbatore,
-    owner: "Arjun Narendran & Rithika Ramakrishna",
-    about: "Arjun Narendran (Arka Motorsport) & Rithika Ramakrishna (Pickleball Champion)",
+    owner: <>Arjun Narendran <strong className="font-bold">&amp;</strong> Rithika Ramakrishna</>,
+    about: <>Arjun Narendran (Arka Motorsport) <strong className="font-bold">&amp;</strong> Rithika Ramakrishna (Pickleball Champion)</>,
   },
   {
     name: "Kodai Tigers",
@@ -81,7 +81,7 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "32 95% 60%",
     logo: logoKodai,
-    owner: "To Be Announced",
+    owner: "Mohamed Gani Faizal",
     about: "Official Franchise Announcement Coming Soon",
   },
   {
@@ -99,16 +99,16 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "355 85% 58%",
     logo: logoMadurai,
-    owner: "Surya & Manikandan",
+    owner: <>Surya <strong className="font-bold">&amp;</strong> MV Manikandan</>,
   },
   {
-    name: "Nellai Warriors",
+    name: "Nellai Superstars",
     district: "Tirunelveli",
     region: "South",
     accent: "175 80% 55%",
     logo: logoNellai,
-    owner: "Uttam Kothari & Keerthi Pandian",
-    about: "Uttam Kothari (Entrepreneur) & Keerthi Pandian (Tamil Film Actress)",
+    owner: <>Uttam Kothari <strong className="font-bold">&amp;</strong> Keerthi Pandian</>,
+    about: "UTTAM KOTHARI - Entrepreneur. Keerthi Pandian - Tamil film actress.",
   },
   {
     name: "Ramnad Royals",
@@ -116,7 +116,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "198 85% 58%",
     logo: logoRamnad,
-    owner: "Naagarjun Sethupathy & Rajkumar Sethupathy",
+    owner: <>Naagarjun Sethupathy <strong className="font-bold">&amp;</strong> Sneha Sethupathy</>,
   },
   {
     name: "Rockfort Terminatrz",
@@ -134,7 +134,7 @@ const TEAMS: Team[] = [
     accent: "195 85% 55%",
     logo: logoSalem,
     owner: "Dinesh Kumar Amudhan",
-    about: "Entrepreneur, Mahendra Institutions & SKS Hospital",
+    about: <>Entrepreneur; Chiseling Narratives <strong className="font-bold">&amp;</strong> Building Brands; associated with Mahendra Institutions and SKS Hospital.</>,
   },
 ];
 
@@ -291,7 +291,7 @@ export function Teams() {
           {TEAMS.map((t, i) => (
             <div
               key={t.name}
-              className="stat-card flex items-center gap-3 rounded-xl p-3 min-h-[90px]"
+              className="stat-card flex items-center gap-3 rounded-xl p-3 min-h-22.5"
               style={{ borderColor: `color-mix(in oklab, hsl(${t.accent}) 35%, transparent)` }}
             >
               {t.logo ? (
@@ -330,7 +330,7 @@ export function Teams() {
         {/* desktop: 3D carousel */}
         <div className="relative mt-14 hidden sm:block">
           <div
-            className="relative h-[550px] lg:h-[570px] perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
+            className="relative h-137.5 lg:h-142.5 perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
             onTouchStart={handlePointerDown}
             onTouchMove={handlePointerMove}
             onTouchEnd={handlePointerUp}
@@ -366,7 +366,7 @@ export function Teams() {
                   }}
                   aria-label={`${t.name} franchise`}
                   aria-hidden={abs > layout.visible}
-                  className="absolute left-1/2 top-1/2 w-68 lg:w-76 h-[500px] rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
+                  className="absolute left-1/2 top-1/2 w-68 lg:w-76 h-125 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
                   style={{
                     transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${
                       isActive ? 1 : 0.88
@@ -440,21 +440,13 @@ export function Teams() {
                     <span className="my-2.5 h-px w-full bg-foreground/10 shrink-0" />
 
                     {/* Owner Block - Fixed Height Flex Slot */}
-                    <div className="h-20 w-full flex flex-col justify-center items-center shrink-0">
+                    <div className="h-16 w-full flex flex-col justify-center items-center shrink-0">
                       <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold/90">
                         Franchise Owner
                       </p>
                       <p className="mt-1 text-center text-[12px] font-bold text-foreground leading-tight line-clamp-2">
                         {t.owner}
                       </p>
-                      {t.about && (
-                        <p
-                          className="mt-0.5 text-center text-[10px] font-medium leading-tight text-foreground/65 line-clamp-2"
-                          style={{ fontFamily: "Arial, sans-serif" }}
-                        >
-                          {t.about}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </button>

@@ -1,25 +1,49 @@
-import { ChevronRight, Instagram, Mail, MapPin, Phone } from "lucide-react";
-import EXPRESS_AVENUE_IMG from "@/assets/Express Avenue Atrium.webp";
-
-const CONTACTS = [
-  {
-    name: "Dr Kavya Somesh",
-    phone: "+91 98944 27793",
-    tel: "+919894427793",
-  },
-  {
-    name: "Yogesh Ramchandani",
-    phone: "+91 98841 30737",
-    tel: "+919884130737",
-  },
-  {
-    name: "Ganesh",
-    phone: "+91 98841 30625",
-    tel: "+919884130625",
-  },
-];
+import { ChevronRight, Instagram, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Contact() {
+  const [result, setResult] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hash === "#contact-name") {
+      const el = document.getElementById("contact-name");
+      if (el) {
+        setTimeout(() => {
+          el.focus();
+        }, 500);
+      }
+    }
+  }, []);
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setResult("Sending...");
+    
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", "c7a4369a-4d6b-470c-aea4-fc31383c2643");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Message sent successfully!");
+        (event.target as HTMLFormElement).reset();
+      } else {
+        setResult(data.message || "An error occurred.");
+      }
+    } catch (error) {
+      setResult("Something went wrong!");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <section id="contact" className="relative overflow-hidden bg-ink py-10 sm:py-12 lg:py-14">
       {/* ambient */}
@@ -59,157 +83,127 @@ export function Contact() {
           </div>
         </div>
 
-        {/* ── Contact cards + Sidebar ── */}
-        <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
-
-          {/* Contact persons */}
+        {/* ── Contact Layout ── */}
+        <div className="mx-auto mt-12 max-w-5xl grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+          
+          {/* Left: Info Cards */}
           <div className="space-y-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/50">
-              Speak Directly with TNPPL
-            </p>
-            {CONTACTS.map((c) => (
-              <div key={c.name} className="stat-card flex items-center justify-between rounded-2xl px-5 py-5 sm:px-6">
-                <div>
-                  <p className="text-[13px] font-bold text-foreground">{c.name}</p>
-                  <a
-                    href={`tel:${c.tel}`}
-                    className="mt-0.5 flex items-center gap-1.5 text-[13px] text-foreground/70 transition-colors hover:text-gold"
-                  >
-                    <Phone className="h-3.5 w-3.5 text-gold" strokeWidth={1.5} />
-                    {c.phone}
-                  </a>
-                </div>
-                <a
-                  href={`tel:${c.tel}`}
-                  className="btn-outline-light inline-flex w-32 shrink-0 items-center justify-center gap-2 rounded-full py-2.5 text-[11px] font-bold uppercase tracking-widest"
-                >
-                  Call
-                  <Phone className="h-3 w-3" />
-                </a>
-              </div>
-            ))}
-
             {/* Email */}
-            <div className="stat-card flex items-center justify-between rounded-2xl px-5 py-5 sm:px-6">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-gold">Email</p>
-                <a
-                  href="mailto:tnstatepa@gmail.com"
-                  className="mt-1 flex items-center gap-1.5 text-[13px] text-foreground/85 transition-colors hover:text-gold"
-                >
-                  <Mail className="h-3.5 w-3.5 text-gold" strokeWidth={1.5} />
-                  tnstatepa@gmail.com
-                </a>
-              </div>
+            <div className="stat-card flex flex-col justify-center rounded-2xl px-6 py-6">
+              <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-gold/80 mb-3">Direct Email</p>
               <a
                 href="mailto:tnstatepa@gmail.com"
-                className="btn-gold inline-flex w-32 shrink-0 items-center justify-center gap-2 rounded-full py-2.5 text-[11px] font-bold uppercase tracking-widest"
+                className="flex items-center gap-3 text-[14px] font-medium text-foreground transition-colors hover:text-gold group"
               >
-                Email Us
-                <ChevronRight className="h-3 w-3" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 transition-colors group-hover:bg-gold/10 group-hover:ring-gold/30">
+                  <Mail className="h-4 w-4 text-gold" strokeWidth={1.5} />
+                </div>
+                tnstatepa@gmail.com
               </a>
             </div>
 
             {/* Instagram */}
-            <div className="stat-card flex items-center justify-between rounded-2xl px-5 py-5 sm:px-6">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-gold">Instagram</p>
-                <a
-                  href="https://www.instagram.com/tamilnadupickleball.assn/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 flex items-center gap-1.5 text-[13px] text-foreground/85 transition-colors hover:text-gold"
-                >
-                  <Instagram className="h-3.5 w-3.5 text-gold" strokeWidth={1.5} />
-                  @tamilnadupickleball.assn
-                </a>
-              </div>
+            <div className="stat-card flex flex-col justify-center rounded-2xl px-6 py-6">
+              <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-gold/80 mb-3">Instagram</p>
               <a
                 href="https://www.instagram.com/tamilnadupickleball.assn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-outline-light inline-flex w-32 shrink-0 items-center justify-center gap-2 rounded-full py-2.5 text-[11px] font-bold uppercase tracking-widest"
+                className="flex items-center gap-3 text-[14px] font-medium text-foreground transition-colors hover:text-gold group"
               >
-                Follow
-                <ChevronRight className="h-3 w-3" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 transition-colors group-hover:bg-gold/10 group-hover:ring-gold/30">
+                  <Instagram className="h-4 w-4 text-gold" strokeWidth={1.5} />
+                </div>
+                @tamilnadupickleball.assn
               </a>
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="flex flex-col gap-5">
-            {/* Venue card */}
-            <div className="stat-card rounded-2xl p-6">
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">Venue</p>
-              <h3 className="display-title-extended mt-2 text-2xl text-foreground sm:text-3xl">
-                Express Avenue Atrium
-              </h3>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/55">
-                Royapettah, Chennai
-              </p>
-              <span className="mt-4 block h-1 w-10 rounded-full bg-gold" />
-              <div className="mt-5 space-y-3">
-                <div className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-foreground/50">Location</p>
-                    <p className="text-[13px] text-foreground/85">Central Atrium, Express Avenue Mall</p>
-                    <p className="text-[12px] text-foreground/55">Chennai, Tamil Nadu</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-foreground/50">Dates</p>
-                    <p className="text-[13px] text-foreground/85">17 – 20 September 2026</p>
-                    <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-gold">Entry is free</p>
-                  </div>
-                </div>
+          {/* Right: Contact Form UI */}
+          <div className="stat-card rounded-2xl p-6 sm:p-8">
+            <h3 className="mb-6 text-[13px] font-bold uppercase tracking-widest text-gold">Collaboration Form</h3>
+            <form className="space-y-4" onSubmit={onSubmit}>
+              <div className="space-y-1.5">
+                <label htmlFor="contact-name" className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">Name</label>
+                <input 
+                  id="contact-name"
+                  name="name"
+                  type="text" 
+                  placeholder="Your full name" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  required
+                />
               </div>
-            </div>
 
-            {/* Venue photo */}
-            <div
-              className="relative h-48 overflow-hidden rounded-2xl"
-              style={{
-                background: "linear-gradient(135deg, color-mix(in oklab, var(--gold) 8%, var(--card)), var(--card))",
-              }}
-            >
-              <img
-                src={EXPRESS_AVENUE_IMG}
-                alt="Express Avenue Atrium — TNPPL Season 2 venue"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                className="absolute inset-0 h-full w-full object-cover object-center"
-              />{/* fallback grid */}
-              <svg
-                aria-hidden
-                className="absolute inset-0 h-full w-full opacity-[0.12]"
-                viewBox="0 0 400 220"
-                fill="none"
-              >
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <line key={`h${i}`} x1="0" y1={i * 24} x2="400" y2={i * 24} stroke="white" strokeWidth="0.5" />
-                ))}
-                {Array.from({ length: 18 }).map((_, i) => (
-                  <line key={`v${i}`} x1={i * 24} y1="0" x2={i * 24} y2="220" stroke="white" strokeWidth="0.5" />
-                ))}
-                <circle cx="200" cy="110" r="18" fill="var(--gold)" opacity="0.9" />
-              </svg>
-              <div
-                className="absolute right-4 bottom-4 rounded-xl px-4 py-2 text-center"
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid color-mix(in oklab, var(--gold) 40%, transparent)",
-                }}
-              >
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-gold">
-                  Express Avenue Atrium
-                </p>
-                <p className="mt-0.5 text-[9px] text-foreground/55">Royapettah, Chennai</p>
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">Company Name</label>
+                <input 
+                  name="company"
+                  type="text" 
+                  placeholder="Your company" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                />
               </div>
-            </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">Email ID</label>
+                  <input 
+                    name="email"
+                    type="email" 
+                    placeholder="john@example.com" 
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">Phone Number</label>
+                  <input 
+                    name="phone"
+                    type="tel" 
+                    placeholder="+91 98765 43210" 
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">City</label>
+                <input 
+                  name="city"
+                  type="text" 
+                  placeholder="Your city" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  required
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70">Collaboration Details</label>
+                <textarea 
+                  name="message"
+                  placeholder="What type of collaboration do you want to have?" 
+                  rows={4}
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  required
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-gold mt-2 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[13px] font-bold uppercase tracking-widest transition-transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+                {!isSubmitting && <ChevronRight className="h-4 w-4" />}
+              </button>
+              {result && (
+                <p className={`mt-3 text-center text-[13px] font-medium ${result.includes("success") ? "text-green-400" : "text-gold"}`}>
+                  {result}
+                </p>
+              )}
+            </form>
           </div>
         </div>
 

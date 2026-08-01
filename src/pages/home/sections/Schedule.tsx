@@ -62,10 +62,10 @@ const DAYS = [
 ];
 
 const BOTTOM_STATS = [
-  { value: "~1,000+", label: "Spectators", sub: "Expected", icon: Eye },
+  { value: "1,000+", label: "Spectators", sub: "Expected", icon: Eye },
   { value: "6", label: "Courts", sub: "Running Simultaneously", icon: LayoutGrid },
   { value: "Champions", label: "Title on the Line", sub: "TNPPL Season 2 Trophy", icon: Trophy },
-  { value: "Live", label: "Live Action", sub: "Streaming & Coverage", icon: Tv2 },
+  { value: "Live", label: "Live Action", sub: <>Streaming <strong className="font-bold">&amp;</strong> Coverage</>, icon: Tv2 },
 ];
 
 export function Schedule() {
@@ -344,7 +344,7 @@ export function Schedule() {
                   }} />
                   <Icon className="relative h-6 w-6 text-gold" strokeWidth={1.4} aria-hidden />
                 </span>
-                <p className="font-display text-2xl text-gold sm:text-3xl">{s.value}</p>
+                <p className="font-display text-2xl font-bold text-gold sm:text-3xl">{s.value}</p>
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/85">
                   {s.label}
                 </p>

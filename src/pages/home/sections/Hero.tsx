@@ -1,13 +1,29 @@
 import { ChevronRight, Trophy, Users, Award, MapPin, Calendar } from "lucide-react";
 import { useParallax } from "@/hooks/useParallax";
 
+import SPONSOR_CAVINS from "@/assets/Cavins Logo_2-01.webp";
+import SPONSOR_GTB from "@/assets/GTB.webp";
+import SPONSOR_INDIANBANK from "@/assets/INDIANB.NS_BIG-f675f730.webp";
+import SPONSOR_PIXPE from "@/assets/PIX PE LOGO (BB).webp";
+import SPONSOR_RIZZFITT from "@/assets/rizzfitt_svg.webp";
+import LOGO_S2 from "@/assets/TNPPL_S2_logo.webp";
+
 const STRIP = [
   { eyebrow: "Teams", value: "12 Franchises", icon: Trophy },
   { eyebrow: "Players", value: "168 Players", icon: Users },
-  { eyebrow: "Prize", value: "₹30L Prize Pool", icon: Award },
+  { eyebrow: "Prize", value: "₹36L Prize Pool", icon: Award },
   { eyebrow: "Venue", value: "Express Avenue, Chennai", icon: MapPin },
   { eyebrow: "Dates", value: "17–20 Sep 2026", icon: Calendar },
 ];
+
+const SPONSOR_LOGOS = [
+  { name: "CavinKare", src: SPONSOR_CAVINS },
+  { name: "GTB", src: SPONSOR_GTB },
+  { name: "Indian Bank", src: SPONSOR_INDIANBANK },
+  { name: "Pix Pe", src: SPONSOR_PIXPE },
+  { name: "Rizzfitt", src: SPONSOR_RIZZFITT },
+];
+
 
 import HERO_VIDEO from "@/assets/TNPPL  VID  V2  .mp4";
 
@@ -77,16 +93,31 @@ export function Hero() {
 
 
       <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col px-5 pb-10 sm:px-8 sm:pb-12 lg:px-10 lg:pb-14 xl:px-14">
-        <div className="flex flex-1 items-center pt-24 sm:pt-28 lg:pt-37.5">
+        <div className="flex flex-1 items-center pt-12 sm:pt-16 lg:pt-20">
           <div className="w-full max-w-full sm:max-w-160 lg:max-w-[50%] xl:max-w-[46%]">
-            <p
+            <div
+              className="animate-fade-up mb-2 flex items-center gap-2 sm:gap-4 lg:gap-5"
+              style={{ animationDelay: "20ms" }}
+            >
+              <img
+                src={SPONSOR_CAVINS}
+                alt="Cavins"
+                className="h-20 w-auto object-contain sm:h-28 lg:h-36 xl:h-44"
+              />
+              <img
+                src={LOGO_S2}
+                alt="TNPPL Season 2"
+                className="h-20 w-auto object-contain sm:h-28 lg:h-36 xl:h-44"
+              />
+            </div>
+            {/* <p
               className="animate-fade-up font-display text-xs tracking-[0.4em] text-foreground/85 sm:text-sm"
               style={{ animationDelay: "60ms" }}
             >
               SEASON 2
-            </p>
+            </p> */}
 
-            <h1
+            {/* <h1
               id="hero-title"
               className="mt-4 flex flex-col w-max"
               style={{
@@ -116,35 +147,8 @@ export function Hero() {
               >
                 Premier Pickleball League
               </span>
-            </h1>
+            </h1> */}
 
-            <div
-              className="mt-7 flex items-center gap-3"
-              aria-hidden="true"
-            >
-              <span
-                className="h-px bg-linear-to-r from-transparent to-gold/70 w-16 sm:w-24"
-                style={{
-                  animation: "tn-line-grow-right 0.7s 980ms cubic-bezier(0.22, 1, 0.36, 1) both",
-                  transformOrigin: "left center",
-                }}
-              />
-              <span
-                className="text-gold"
-                style={{
-                  animation: "tn-star-pop 0.55s 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
-                }}
-              >
-                <span className="inline-block animate-star-pickleball">&#9733;</span>
-              </span>
-              <span
-                className="h-px flex-1 bg-linear-to-l from-transparent to-gold/70"
-                style={{
-                  animation: "tn-line-grow-left 0.7s 980ms cubic-bezier(0.22, 1, 0.36, 1) both",
-                  transformOrigin: "right center",
-                }}
-              />
-            </div>
 
             <p
               className="animate-fade-up mt-6 max-w-110 text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
@@ -173,6 +177,34 @@ export function Hero() {
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
+
+            {/* Co-Sponsored By */}
+            <div
+              className="animate-fade-up mt-7 flex flex-col items-start gap-4"
+              style={{ animationDelay: "1500ms" }}
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/50"
+                  style={{ fontFamily: "Arial, sans-serif" }}
+                >
+                  Co-Sponsored By
+                </span>
+                <span className="h-px w-10 bg-gold/30" />
+              </div>
+              <div className="flex items-center gap-5 sm:gap-6">
+                <img
+                  src={SPONSOR_GTB}
+                  alt="GTB"
+                  className="h-10 w-auto max-w-32.5 object-contain sm:h-12 sm:max-w-37.5"
+                />
+                <img
+                  src={SPONSOR_INDIANBANK}
+                  alt="Indian Bank"
+                  className="h-10 w-auto max-w-32.5 object-contain sm:h-12 sm:max-w-37.5"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -185,7 +217,7 @@ export function Hero() {
             backdropFilter: "blur(12px)",
           }}
         >
-          <dl className="grid grid-cols-2 divide-y divide-gold/10 sm:grid-cols-3 lg:grid-cols-5 sm:divide-y-0 sm:divide-x sm:divide-gold/10">
+          <dl className="grid grid-cols-2 gap-y-4 gap-x-2 sm:grid-cols-3 lg:grid-cols-5 sm:gap-0 sm:divide-x sm:divide-gold/10">
             {STRIP.map(({ eyebrow, value, icon: Icon }) => (
               <div
                 key={eyebrow}
@@ -204,24 +236,46 @@ export function Hero() {
             ))}
           </dl>
         </div>
-
+        {/* ── Sponsor Logo Marquee ── */}
         <div
-          className="animate-fade-up mt-8 flex items-center justify-center gap-3 sm:gap-4"
-          style={{ animationDelay: "1820ms" }}
+          className="animate-fade-up mt-8 overflow-hidden rounded-xl"
+          style={{
+            animationDelay: "1820ms",
+            border: "1px solid color-mix(in oklab, var(--gold) 12%, transparent)",
+            background: "color-mix(in oklab, var(--ink) 55%, transparent)",
+            backdropFilter: "blur(10px)",
+            maskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+          }}
         >
-          <span className="inline-block animate-star-pickleball text-gold text-xs sm:text-sm lg:text-base" aria-hidden="true">&#9733;</span>
-          <p
-            className="text-center text-lg uppercase tracking-[0.06em] sm:text-3xl lg:text-[2.5rem] sm:tracking-widest"
-            style={{ fontFamily: "'PODIUM Sharp', sans-serif" }}
-          >
-            <span style={{ color: "#ffffff" }}>ONE </span>
-            <span style={{ color: "oklch(0.865 0.197 83)" }}>GAME<span style={{ fontFamily: "Arial, sans-serif" }}>.</span> </span>
-            <span style={{ color: "#ffffff" }}>ONE </span>
-            <span style={{ color: "oklch(0.865 0.197 83)" }}>FAMILY<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
-          </p>
-          <span className="inline-block animate-star-pickleball text-gold text-xs sm:text-sm lg:text-base" aria-hidden="true">&#9733;</span>
+          <div className="flex items-center py-3 sm:py-4">
+            <div
+              className="flex shrink-0 items-center"
+              style={{
+                animation: "sponsor-scroll 24s linear infinite",
+              }}
+            >
+              {/* Repeat logos 4x for seamless infinite loop */}
+              {Array.from({ length: 4 }).flatMap((_, setIdx) =>
+                SPONSOR_LOGOS.map((logo, i) => (
+                  <img
+                    key={`${logo.name}-${setIdx}-${i}`}
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="eager"
+                    className={`mx-6 w-auto shrink-0 object-contain sm:mx-8 lg:mx-10 ${
+                      logo.name === "CavinKare"
+                        ? "h-12 max-w-35 sm:h-16 sm:max-w-45 lg:h-20 lg:max-w-50"
+                        : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
+                    }`}
+                  />
+                ))
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+

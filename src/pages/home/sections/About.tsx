@@ -126,7 +126,7 @@ export function About() {
         {/* ---------- feature photo ---------- */}
         <Reveal delay={400}>
           <div
-            className="relative mt-12 overflow-hidden lg:mt-14"
+            className="relative mt-8 overflow-hidden lg:mt-10"
             style={{
               borderRadius: "1.5rem",
               border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)",
@@ -137,9 +137,8 @@ export function About() {
               alt="TNPPL players in navy and gold jerseys celebrating together on court"
               width={1280}
               height={480}
-              loading="eager"
+              loading="lazy"
               decoding="async"
-              fetchPriority="high"
               className="h-56 w-full object-cover sm:h-72 lg:h-96"
             />
             <div
@@ -151,6 +150,20 @@ export function About() {
             />
           </div>
         </Reveal>
+
+        {/* ONE GAME. ONE FAMILY. tagline */}
+        <div className="mt-8 mb-6 flex items-center justify-center gap-3 text-center">
+          <span className="text-xs text-gold animate-star-pickleball">★</span>
+          <h3 className="display-title text-2xl sm:text-3xl lg:text-4xl">
+            <span className="text-foreground">One </span>
+            <span className="text-gold-gradient">Game</span>
+            <span className="text-foreground" style={{ fontFamily: "Arial, sans-serif" }}>. </span>
+            <span className="text-foreground">One </span>
+            <span className="text-gold-gradient">Family</span>
+            <span className="text-foreground" style={{ fontFamily: "Arial, sans-serif" }}>.</span>
+          </h3>
+          <span className="text-xs text-gold animate-star-pickleball">★</span>
+        </div>
 
         {/* ---------- stats ---------- */}
         <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-0">

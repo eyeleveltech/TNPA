@@ -35,7 +35,7 @@ const IMAGES = [
   {
     label: "Serve & Smash",
     accent: "300 80% 62%",
-    span: "col-span-1 row-span-1",
+    span: "col-span-1 md:col-span-1 md:row-span-1",
     caption: "Match Action",
     img: "/images/gallery-04.jpg",
   },
@@ -195,7 +195,9 @@ export function Gallery() {
                   >
                     {img.caption}
                   </p>
-                  <p className="mt-0.5 text-[13px] font-semibold text-foreground">{img.label}</p>
+                  <p className="mt-0.5 text-[13px] font-semibold text-foreground">
+                    {img.label.includes("&") ? <>{img.label.split("&")[0]}<strong className="font-bold">&amp;</strong>{img.label.split("&")[1]}</> : img.label}
+                  </p>
                 </div>
               </div>
             </div>

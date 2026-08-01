@@ -7,6 +7,7 @@ import MediaKitPage from "./pages/media-kit";
 import PrivacyPage from "./pages/privacy";
 import RulesPage from "./pages/rules";
 import SponsorshipPage from "./pages/sponsorship";
+import { BackToTop } from "./components/BackToTop";
 
 function ScrollToHash() {
   const location = useLocation();
@@ -40,6 +41,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToHash />
+      <BackToTop />
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/faq" element={<FAQPage />} />

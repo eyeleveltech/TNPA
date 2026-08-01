@@ -745,3 +745,9 @@
     filter: drop-shadow(0 0 2px var(--gold));
   }
 }
+
+/* ── Sponsor marquee ── */
+@keyframes sponsor-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

@@ -25,7 +25,7 @@ export const KO_MATCHES = [
 
 export const FAIR_PLAY_RULES = [
   { num: "01", rule: "No player plays more than 2 matches in a Tie." },
-  { num: "02", rule: "Standard matches = 11 service points (win by 1). Super Singles & Super Doubles = 25 rally points (win by 1)." },
+  { num: "02", rule: <>Standard matches = 11 service points (win by 1). Super Singles <strong className="font-bold">&amp;</strong> Super Doubles = 25 rally points (win by 1).</> },
   { num: "03", rule: "All 6 unique players must feature across the 3 Men's Open Doubles matches." },
   { num: "04", rule: "1 Under-18 player (boy or girl) is mandatory in every squad." },
   { num: "05", rule: "Men's Singles player cannot play in Super Singles." },
@@ -251,7 +251,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Super Doubles <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span> <span className="text-gold-gradient">Super Singles</span>
+          Super Doubles <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>&amp;</span> <span className="text-gold-gradient">Super Singles</span>
         </h2>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-2">

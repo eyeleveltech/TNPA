@@ -128,7 +128,7 @@ export function FAQSection() {
                   href={`#${category.toLowerCase().replace(/\s+/g, "-")}`}
                   className="block text-[13px] text-foreground/55 transition-colors hover:text-gold"
                 >
-                  {category}
+                  {category.includes("&") ? <>{category.split("&")[0]}<strong className="font-bold">&amp;</strong>{category.split("&")[1]}</> : category}
                 </a>
               ))}
             </div>
@@ -145,7 +145,7 @@ export function FAQSection() {
                   {category.includes("&") ? (
                     <>
                       {category.split("&")[0]}
-                      <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span>
+                      <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>&amp;</span>
                       {category.split("&")[1]}
                     </>
                   ) : (

@@ -131,11 +131,11 @@ export function News() {
             </div>
 
             {/* Official Live Instagram Feed (Exact 6 Posts - Large & Clear - Zero White Space) */}
-            <div className="relative w-full h-[380px] sm:h-[460px] lg:h-[510px] rounded-xl overflow-hidden bg-[#0a0f1d] border border-border/60 shadow-inner">
+            <div className="relative w-full h-95 sm:h-115 lg:h-127.5 rounded-xl overflow-hidden bg-[#0a0f1d] border border-border/60 shadow-inner">
               <iframe
                 src="https://www.instagram.com/tamilnadupickleball.assn/embed/"
                 title="Tamil Nadu Pickleball Association Live Instagram Feed"
-                className="w-full border-0 bg-[#0a0f1d] -mt-[170px] sm:-mt-[205px] lg:-mt-[235px] h-[570px] sm:h-[685px] lg:h-[760px]"
+                className="w-full border-0 bg-[#0a0f1d] -mt-42.5 sm:-mt-51.25 lg:-mt-58.75 h-142.5 sm:h-171.25 lg:h-190"
                 allowTransparency={true}
                 allow="encrypted-media"
                 scrolling="no"

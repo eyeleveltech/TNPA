@@ -15,7 +15,7 @@ const FOOTER_LINKS = {
   ],
   Partners: [
     { label: "Sponsorship Opportunities", href: "/sponsorship" },
-    { label: "Brand Collaboration", href: "/#contact" },
+    { label: "Brand Collaboration", href: "/#contact-name" },
     { label: "Franchise Enquiries", href: "/#contact" },
   ],
   Support: [
@@ -80,7 +80,7 @@ export function Footer() {
             </div>
             <div className="flex flex-col items-start gap-4 sm:items-center lg:flex-row">
               <p className="text-[13px] text-foreground/65">
-                Collaborate with TNPPL and grow the game with us.
+                Collaborate with TNPA and grow the game with us.
               </p>
               <a
                 href="https://forms.google.com/"
@@ -132,21 +132,13 @@ export function Footer() {
                 <ul className="mt-4 space-y-2.5">
                   {links.map(({ label, href }) => (
                     <li key={label}>
-                      {href.startsWith("/") && !href.includes("#") ? (
-                        <Link
-                          to={href}
-                          className="text-[13px] text-foreground/60 transition-colors hover:text-gold"
-                        >
-                          {label}
-                        </Link>
-                      ) : (
-                        <a
-                          href={href}
-                          className="text-[13px] text-foreground/60 transition-colors hover:text-gold"
-                        >
-                          {label}
-                        </a>
-                      )}
+                      <Link
+                        to={href}
+                        className="group flex items-center gap-2 text-[13px] font-medium text-foreground/70 transition-colors hover:text-gold"
+                      >
+                        <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition-all group-hover:opacity-100" />
+                        {label.includes("&") ? <>{label.split("&")[0]}<strong className="font-bold">&amp;</strong>{label.split("&")[1]}</> : label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -163,7 +155,7 @@ export function Footer() {
             {/* social */}
             <div>
               <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-gold">
-                Follow TNPPL
+                Follow TNPA
               </p>
               <div className="flex gap-2.5">
                 {SOCIAL.map(({ label, Icon, href }) => (
