@@ -11,7 +11,7 @@ import LOGO_S2 from "@/assets/TNPPL_S2_logo.webp";
 const STRIP = [
   { eyebrow: "Teams", value: "12 Franchises", icon: Trophy },
   { eyebrow: "Players", value: "168 Players", icon: Users },
-  { eyebrow: "Prize", value: "₹36L Prize Pool", icon: Award },
+  { eyebrow: "Prize", value: "₹30L Prize Pool", icon: Award },
   { eyebrow: "Venue", value: "Express Avenue, Chennai", icon: MapPin },
   { eyebrow: "Dates", value: "17–20 Sep 2026", icon: Calendar },
 ];

@@ -20,7 +20,7 @@ const SQUAD_STATS = [
     icon: Star,
   },
   {
-    value: "₹36L",
+    value: "₹30L",
     label: "Prize Pool",
     copy: "Total prize money on the line across TNPPL Season 2.",
     icon: Trophy,
@@ -248,7 +248,7 @@ export function Players() {
             <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-foreground/50">Day 4</p>
             <p className="font-display text-4xl font-black text-gold">Final</p>
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/80">Championship</p>
-            <p className="text-[12px] text-foreground/55">One champion. ₹36L prize pool on the line.</p>
+            <p className="text-[12px] text-foreground/55">One champion. ₹30L prize pool on the line.</p>
           </div>
         </div>
 
