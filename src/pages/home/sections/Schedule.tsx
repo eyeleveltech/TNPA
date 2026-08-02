@@ -359,6 +359,14 @@ export function Schedule() {
           </p>
           <a
             href="#contact"
+            onClick={() => {
+              sessionStorage.setItem("focusCollab", "true");
+              const el = document.getElementById("contact-name");
+              if (el) {
+                setTimeout(() => el.focus({ preventScroll: true }), 100);
+                setTimeout(() => el.focus({ preventScroll: true }), 500);
+              }
+            }}
             className="btn-gold mt-5 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.12em]"
           >
             Plan Your Visit
