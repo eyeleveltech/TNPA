@@ -35,8 +35,13 @@ export function FormatHero() {
               <div key={label} className="stat-card flex items-center gap-3 rounded-xl px-5 py-4">
                 <Icon className="h-5 w-5 text-gold" strokeWidth={1.5} />
                 <div>
-                  <p className="font-display text-2xl leading-none text-gold">{value}</p>
-                  <p className="mt-0.5 text-[10px] uppercase tracking-[0.18em] text-foreground/55">{label}</p>
+                  <p
+                    className="text-2xl sm:text-3xl font-black leading-none text-gold"
+                    style={{ fontFamily: "Arial, sans-serif" }}
+                  >
+                    {value}
+                  </p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-foreground/75">{label}</p>
                 </div>
               </div>
             ))}

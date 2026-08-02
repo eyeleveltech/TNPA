@@ -50,7 +50,7 @@ export const QF_BRACKETS = [
 
 function Cell({ val }: { val: number | null }) {
   if (val === null) return <td className="border border-border/30 px-4 py-3 text-center text-foreground/30 text-sm">—</td>;
-  return <td className="border border-border/30 px-4 py-3 text-center text-sm font-bold text-gold">{val}</td>;
+  return <td className="border border-border/30 px-4 py-3 text-center text-sm font-black text-gold">{val}</td>;
 }
 
 function MatchTable({
@@ -126,7 +126,7 @@ export function FormatDetails() {
                   className="rounded-xl border border-gold/30 p-4 text-center"
                   style={{ background: "color-mix(in oklab, var(--gold) 5%, var(--card))" }}
                 >
-                  <p className="font-display text-lg text-gold">{pool}</p>
+                  <p className="text-xl font-black text-gold">{pool}</p>
                   <p className="mt-1 text-[12px] text-foreground/60">6 Teams</p>
                   <p className="mt-3 flex items-center justify-center gap-1.5 flex-wrap">
                     {Array.from({ length: 6 }).map((_, i) => (
@@ -174,7 +174,7 @@ export function FormatDetails() {
               ))}
               <div className="mt-2 border-t border-border pt-3 flex items-center justify-between">
                 <span className="text-[13px] font-bold text-foreground">Total</span>
-                <span className="text-2xl font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
+                <span className="text-2xl font-black text-gold" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
               </div>
             </div>
           </div>
@@ -278,7 +278,7 @@ export function FormatDetails() {
               ))}
             </div>
             <div className="mt-5 flex items-center gap-3 rounded-lg border border-gold/30 px-4 py-3">
-              <span className="text-2xl font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>25</span>
+              <span className="text-2xl font-black text-gold" style={{ fontFamily: "Arial, sans-serif" }}>25</span>
               <span className="text-[12px] text-foreground/60">Rally points to win</span>
             </div>
           </div>
@@ -457,7 +457,7 @@ export function FormatDetails() {
                   className="rounded-xl border border-gold/30 p-4 text-center"
                   style={{ background: "color-mix(in oklab, var(--gold) 6%, var(--card))" }}
                 >
-                  <p className="text-sm font-bold text-gold" style={{ fontFamily: "Arial, sans-serif" }}>{stage}</p>
+                  <p className="text-sm font-black text-gold" style={{ fontFamily: "Arial, sans-serif" }}>{stage}</p>
                   <p className="mt-1 text-[11px] text-foreground/50">{desc}</p>
                 </div>
               ))}
