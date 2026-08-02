@@ -281,6 +281,9 @@ export function SponsorshipContent() {
             </a>
             <a
               href="/#contact"
+              onClick={() => {
+                sessionStorage.setItem("focusCollab", "true");
+              }}
               className="btn-outline-light inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em]"
             >
               Call Us Directly
