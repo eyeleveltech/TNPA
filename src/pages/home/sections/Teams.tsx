@@ -532,7 +532,7 @@ export function Teams() {
 
             <div className="mt-8 flex justify-center">
               <a
-                href="https://www.youtube.com/channel/UCE_hcfY87sko-R60DCXnYzg"
+                href="https://www.youtube.com/live/aSpkMbhuvU4"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gold inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.18em] leading-none"
