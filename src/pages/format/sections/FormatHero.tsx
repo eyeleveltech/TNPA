@@ -37,7 +37,7 @@ export function FormatHero() {
                 <div>
                   <p
                     className="text-2xl sm:text-3xl font-black leading-none text-gold"
-                    style={{ fontFamily: "Arial, sans-serif" }}
+                    style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}
                   >
                     {value}
                   </p>

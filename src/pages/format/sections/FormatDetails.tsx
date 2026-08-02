@@ -50,7 +50,14 @@ export const QF_BRACKETS = [
 
 function Cell({ val }: { val: number | null }) {
   if (val === null) return <td className="border border-border/30 px-4 py-3 text-center text-foreground/30 text-sm">—</td>;
-  return <td className="border border-border/30 px-4 py-3 text-center text-sm font-black text-gold">{val}</td>;
+  return (
+    <td
+      className="border border-border/30 px-4 py-3 text-center text-sm font-black text-gold"
+      style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}
+    >
+      {val}
+    </td>
+  );
 }
 
 function MatchTable({
@@ -117,7 +124,7 @@ export function FormatDetails() {
           <div className="stat-card col-span-full rounded-2xl p-6 sm:p-8 lg:col-span-2">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold">Pool Structure</p>
             <h3 className="display-title mt-2 text-xl text-foreground">
-              <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>12</span> Teams <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}> — </span> <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>2</span> Pools of <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>6</span>
+              <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>12</span> Teams — <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>2</span> Pools of <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>6</span>
             </h3>
             <div className="mt-5 grid grid-cols-2 gap-4">
               {["Pool A", "Pool B"].map((pool) => (
@@ -174,7 +181,7 @@ export function FormatDetails() {
               ))}
               <div className="mt-2 border-t border-border pt-3 flex items-center justify-between">
                 <span className="text-[13px] font-bold text-foreground">Total</span>
-                <span className="text-2xl font-black text-gold" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
+                <span className="text-2xl font-black text-gold" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>168</span>
               </div>
             </div>
           </div>
@@ -184,7 +191,7 @@ export function FormatDetails() {
         <div className="stat-card mt-5 rounded-2xl p-6 sm:p-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold">Per Team</p>
           <h3 className="display-title mt-2 text-xl text-foreground">
-            Squad Composition <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}> — </span> <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>14</span> Players
+            Squad Composition — <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>14</span> Players
           </h3>
           <p className="mt-2 text-[13px] text-foreground/55">
             Each team is led by a Team Captain appointed by the Franchise Owner. All final
@@ -251,7 +258,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Super Doubles <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>&amp;</span> <span className="text-gold-gradient">Super Singles</span>
+          Super Doubles <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>&amp;</span> <span className="text-gold-gradient">Super Singles</span>
         </h2>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-2">
@@ -278,7 +285,7 @@ export function FormatDetails() {
               ))}
             </div>
             <div className="mt-5 flex items-center gap-3 rounded-lg border border-gold/30 px-4 py-3">
-              <span className="text-2xl font-black text-gold" style={{ fontFamily: "Arial, sans-serif" }}>25</span>
+              <span className="text-2xl font-black text-gold" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>25</span>
               <span className="text-[12px] text-foreground/60">Rally points to win</span>
             </div>
           </div>
@@ -338,7 +345,7 @@ export function FormatDetails() {
           </span>
         </div>
         <h2 className="display-title mt-3 text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
-          Fair Play <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>&amp;</span> <span className="text-gold-gradient">Equal Opportunity</span>
+          Fair Play <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>&amp;</span> <span className="text-gold-gradient">Equal Opportunity</span>
         </h2>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -400,7 +407,7 @@ export function FormatDetails() {
               Qualification
             </p>
             <h3 className="display-title mt-2 text-xl text-foreground">
-              Top <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>4</span> Per Pool
+              Top <span style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}>4</span> Per Pool
             </h3>
             <p className="mt-3 text-[13px] text-foreground/55">
               Ranked by:
