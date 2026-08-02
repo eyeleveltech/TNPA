@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChevronRight, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
-import LOGO_SRC from "../assets/Tnppl.webp";
+import LOGO_SRC from "../assets/TNPPL_S2_logo.webp";
 
 import TNPA_LOGO from "../assets/TNPA LOGO (1).webp";
 import IPA_LOGO from "../assets/ipa.webp";
@@ -114,13 +114,6 @@ export function Footer() {
               fetchPriority="high"
               className="h-24 w-auto"
             />
-            <div className="mt-3 flex items-center gap-2">
-              <span className="h-px w-8 bg-gold/50" />
-              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold">
-                Season 2
-              </span>
-              <span className="h-px w-8 bg-gold/50" />
-            </div>
 
             <p className="mt-5 max-w-65 text-[13px] leading-relaxed text-foreground/60">
               The ultimate pickleball showdown in Tamil Nadu. 12 franchises. 168 players. 4 days of
