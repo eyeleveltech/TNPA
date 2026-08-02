@@ -176,35 +176,6 @@ export function Hero() {
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
-
-            {/* Co-Sponsored By */}
-            <div
-              className="animate-fade-up mt-7 flex flex-col items-start gap-4"
-              style={{ animationDelay: "1500ms" }}
-            >
-              <div className="flex w-70 sm:w-80 items-center gap-3">
-                <span className="h-px flex-1 bg-gold/30" />
-                <span
-                  className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/50 whitespace-nowrap"
-                  style={{ fontFamily: "Arial, sans-serif" }}
-                >
-                  Co-Sponsored By
-                </span>
-                <span className="h-px flex-1 bg-gold/30" />
-              </div>
-              <div className="flex w-70 sm:w-80 items-center justify-center gap-5 sm:gap-6">
-                <img
-                  src={SPONSOR_GTB}
-                  alt="GTB"
-                  className="h-12 w-auto max-w-36 object-contain sm:h-14 sm:max-w-44"
-                />
-                <img
-                  src={SPONSOR_INDIANBANK}
-                  alt="Indian Bank"
-                  className="h-12 w-auto max-w-36 object-contain sm:h-14 sm:max-w-44"
-                />
-              </div>
-            </div>
           </div>
         </div>
 
