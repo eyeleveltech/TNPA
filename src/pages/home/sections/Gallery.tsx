@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Camera, ChevronRight } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 const CATEGORIES = [
   "All Moments",
@@ -81,23 +82,29 @@ export function Gallery() {
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         {/* heading */}
         <div className="text-center">
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Gallery
-            </span>
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-          </div>
-          <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-            <span className="block text-foreground">Relive</span>
-            <span className="text-gold-gradient block">The Action</span>
-          </h2>
-          <p
-            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            Unforgettable moments, fierce rivalries, and non-stop energy. A glimpse of TNPPL Season 2.
-          </p>
+          <Reveal delay={60}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                Gallery
+              </span>
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+            </div>
+          </Reveal>
+          <Reveal delay={140}>
+            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
+              <span className="block text-foreground">Relive</span>
+              <span className="text-gold-gradient block">The Action</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={220}>
+            <p
+              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Unforgettable moments, fierce rivalries, and non-stop energy. A glimpse of TNPPL Season 2.
+            </p>
+          </Reveal>
           <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
             <span className="h-px w-20 bg-gold/40" />
             <span className="text-xs text-gold animate-star-pickleball">★</span>

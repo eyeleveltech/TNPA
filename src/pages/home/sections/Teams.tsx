@@ -5,6 +5,7 @@ import {
   MapPin,
   Youtube,
 } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 import logoChennai from "@/assets/Team_Logos-01.webp";
 import logoCoimbatore from "@/assets/Team_Logos-02.webp";
@@ -266,32 +267,38 @@ export function Teams() {
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         {/* heading */}
         <div className="text-center">
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              12 Franchises
-            </span>
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-          </div>
-          <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-            <span className="block text-foreground">District</span>
-            <span className="text-gold-gradient block">Franchises</span>
-          </h2>
-          <p
-            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            Twelve city franchises. Each district, a battle ground. Each team, a community. Franchise
-            identities unveiled at the Grand Player Auction.
-          </p>
+          <Reveal delay={60}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                12 Franchises
+              </span>
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+            </div>
+          </Reveal>
+          <Reveal delay={140}>
+            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
+              <span className="block text-foreground">District</span>
+              <span className="text-gold-gradient block">Franchises</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={220}>
+            <p
+              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Twelve city franchises. Each district, a battle ground. Each team, a community. Franchise
+              identities unveiled at the Grand Player Auction.
+            </p>
+          </Reveal>
         </div>
 
         {/* mobile: logo grid */}
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:hidden">
+        <div className="mt-10 grid grid-cols-2 gap-2.5 sm:hidden">
           {TEAMS.map((t, i) => (
             <div
               key={t.name}
-              className="stat-card flex items-center gap-3 rounded-xl p-3 min-h-22.5"
+              className="stat-card flex items-center gap-2 rounded-xl p-2.5 min-h-20 overflow-hidden"
               style={{ borderColor: `color-mix(in oklab, hsl(${t.accent}) 35%, transparent)` }}
             >
               {t.logo ? (
@@ -300,7 +307,7 @@ export function Teams() {
                   alt={`${t.name} logo`}
                   loading="eager"
                   fetchPriority="high"
-                  className="h-14 w-14 shrink-0 object-contain"
+                  className="h-11 w-11 shrink-0 object-contain"
                   style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.7))" }}
                 />
               ) : (
@@ -315,11 +322,11 @@ export function Teams() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
               )}
-              <div className="min-w-0">
-                <p className="font-display text-[11px] font-black uppercase leading-tight text-foreground">
+              <div className="min-w-0 flex-1 overflow-hidden">
+                <p className="font-display text-[9.5px] font-black uppercase leading-tight text-foreground wrap-break-word">
                   {renderTeamName(t.name)}
                 </p>
-                <p className="mt-1 text-[9px] font-semibold text-foreground/80 line-clamp-2">
+                <p className="mt-1 text-[8.5px] font-semibold text-foreground/80 line-clamp-2">
                   Owner: <span className="text-gold">{t.owner}</span>
                 </p>
               </div>

@@ -1,5 +1,6 @@
 import { ChevronRight, Instagram, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Reveal } from "@/components/Reveal";
 
 export function Contact() {
   const [result, setResult] = useState("");
@@ -69,23 +70,29 @@ export function Contact() {
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         {/* heading */}
         <div className="text-center">
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Get in Touch
-            </span>
-            <span className="h-px w-10 bg-gold/50 sm:w-16" />
-          </div>
-          <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-            <span className="text-foreground">Connect with </span>
-            <span className="text-gold-gradient">TNPPL</span>
-          </h2>
-          <p
-            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            For partnership enquiries, media requests, or general information — reach us directly.
-          </p>
+          <Reveal delay={60}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                Get in Touch
+              </span>
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+            </div>
+          </Reveal>
+          <Reveal delay={140}>
+            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
+              <span className="text-foreground">Connect with </span>
+              <span className="text-gold-gradient">TNPPL</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={220}>
+            <p
+              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              For partnership enquiries, media requests, or general information — reach us directly.
+            </p>
+          </Reveal>
           <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
             <span className="h-px w-20 bg-gold/40" />
             <span className="text-xs text-gold animate-star-pickleball">★</span>

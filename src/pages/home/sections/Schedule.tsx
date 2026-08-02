@@ -12,6 +12,7 @@ import {
   Tv2,
   Eye,
 } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 import EXPRESS_AVENUE_IMG from "@/assets/Express Avenue Atrium.webp";
 
 const DAYS = [
@@ -202,26 +203,32 @@ export function Schedule() {
 
           {/* ── Timeline ── */}
           <div>
-            <div className="flex items-center gap-3">
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-                Tournament Schedule
-              </span>
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            </div>
+            <Reveal delay={60}>
+              <div className="flex items-center gap-3">
+                <span className="h-px w-10 bg-gold/50 sm:w-16" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                  Tournament Schedule
+                </span>
+                <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              </div>
+            </Reveal>
 
-            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6vw,4rem)]">
-              <span className="block text-foreground">Mark Your</span>
-              <span className="text-gold-gradient block">Calendar</span>
-            </h2>
+            <Reveal delay={140}>
+              <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6vw,4rem)]">
+                <span className="block text-foreground">Mark Your</span>
+                <span className="text-gold-gradient block">Calendar</span>
+              </h2>
+            </Reveal>
 
-            <p
-              className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              Four days of non-stop action, intense rivalries, and championship moments. Here's how
-              Season 2 unfolds.
-            </p>
+            <Reveal delay={220}>
+              <p
+                className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+                style={{ fontFamily: "Arial, sans-serif" }}
+              >
+                Four days of non-stop action, intense rivalries, and championship moments. Here's how
+                Season 2 unfolds.
+              </p>
+            </Reveal>
 
             <div
               className="mt-4 flex items-center gap-3"

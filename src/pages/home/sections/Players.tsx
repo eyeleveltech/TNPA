@@ -1,4 +1,5 @@
 import { ChevronRight, Medal, Users2, Star, Trophy, Instagram } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 const SQUAD_STATS = [
   {
@@ -178,26 +179,32 @@ export function Players() {
 
           {/* Right: heading + stat grid */}
           <div className="flex flex-col justify-center">
-            <div className="flex items-center gap-3">
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-                The Players
-              </span>
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            </div>
+            <Reveal delay={60}>
+              <div className="flex items-center gap-3">
+                <span className="h-px w-10 bg-gold/50 sm:w-16" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                  The Players
+                </span>
+                <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              </div>
+            </Reveal>
 
-            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-              <span className="block text-foreground">The Heart of</span>
-              <span className="text-gold-gradient block">TNPPL</span>
-            </h2>
+            <Reveal delay={140}>
+              <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
+                <span className="block text-foreground">The Heart of</span>
+                <span className="text-gold-gradient block">TNPPL</span>
+              </h2>
+            </Reveal>
 
-            <p
-              className="mt-5 max-w-md text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              From district champions to national-level talent, 168 pickleball players will
-              represent Tamil Nadu's finest. Different districts. One goal.
-            </p>
+            <Reveal delay={220}>
+              <p
+                className="mt-5 max-w-md text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+                style={{ fontFamily: "Arial, sans-serif" }}
+              >
+                From district champions to national-level talent, 168 pickleball players will
+                represent Tamil Nadu's finest. Different districts. One goal.
+              </p>
+            </Reveal>
 
             <div className="mt-3 flex items-center gap-3" aria-hidden>
               <span className="h-px w-20 bg-gold/40" />
