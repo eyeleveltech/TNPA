@@ -367,10 +367,10 @@ export function Schedule() {
                 setTimeout(() => el.focus({ preventScroll: true }), 500);
               }
             }}
-            className="btn-gold mt-5 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.12em]"
+            className="btn-gold mt-5 inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] sm:px-8 sm:py-3.5 sm:text-sm"
           >
             Plan Your Visit
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
         </div>
       </div>

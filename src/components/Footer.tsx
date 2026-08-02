@@ -112,7 +112,7 @@ export function Footer() {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-24 w-auto"
+              className="h-20 w-auto sm:h-24"
             />
 
             <p className="mt-5 max-w-65 text-[13px] leading-relaxed text-foreground/60">

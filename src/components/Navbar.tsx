@@ -85,7 +85,7 @@ export function Navbar() {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-10 w-auto shrink-0 scale-125 lg:scale-100 origin-left sm:h-12 md:h-12 lg:h-14 xl:h-16"
+              className="h-9 w-auto shrink-0 origin-left sm:h-11 md:h-12 lg:h-14 xl:h-16"
             />
           </Link>
         </div>

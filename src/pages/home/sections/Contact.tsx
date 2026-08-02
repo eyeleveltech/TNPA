@@ -140,7 +140,7 @@ export function Contact() {
                   name="name"
                   type="text" 
                   placeholder="Your full name" 
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                   required
                 />
               </div>
@@ -151,7 +151,7 @@ export function Contact() {
                   name="company"
                   type="text" 
                   placeholder="Your company" 
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                 />
               </div>
 
@@ -162,7 +162,7 @@ export function Contact() {
                     name="email"
                     type="email" 
                     placeholder="john@example.com" 
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                     required
                   />
                 </div>
@@ -172,7 +172,7 @@ export function Contact() {
                     name="phone"
                     type="tel" 
                     placeholder="+91 98765 43210" 
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                     required
                   />
                 </div>
@@ -184,7 +184,7 @@ export function Contact() {
                   name="city"
                   type="text" 
                   placeholder="Your city" 
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                   required
                 />
               </div>
@@ -195,7 +195,7 @@ export function Contact() {
                   name="message"
                   placeholder="What type of collaboration do you want to have?" 
                   rows={4}
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50" 
                   required
                 />
               </div>

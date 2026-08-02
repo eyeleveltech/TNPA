@@ -92,7 +92,7 @@ export function Hero() {
 
 
       <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col px-5 pb-10 sm:px-8 sm:pb-12 lg:px-10 lg:pb-14 xl:px-14">
-        <div className="flex flex-1 items-center pt-12 sm:pt-16 lg:pt-20">
+        <div className="flex flex-1 items-start sm:items-center pt-8 sm:pt-16 lg:pt-20">
           <div className="w-full max-w-full sm:max-w-160 lg:max-w-[50%] xl:max-w-[46%]">
             <div
               className="animate-fade-up mb-2 flex items-start gap-2 sm:gap-4 lg:gap-5"
@@ -101,12 +101,12 @@ export function Hero() {
               <img
                 src={SPONSOR_CAVINS}
                 alt="Cavins"
-                className="h-20 w-auto object-contain sm:h-28 lg:h-36 xl:h-44"
+                className="h-16 w-auto object-contain sm:h-24 lg:h-36 xl:h-44"
               />
               <img
                 src={LOGO_S2}
                 alt="TNPPL Season 2"
-                className="h-20 w-auto object-contain sm:h-28 lg:h-36 xl:h-44"
+                className="h-16 w-auto object-contain sm:h-24 lg:h-36 xl:h-44"
               />
             </div>
             {/* <p
@@ -158,22 +158,22 @@ export function Hero() {
             </p>
 
             <div
-              className="animate-fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4"
+              className="animate-fade-up mt-5 sm:mt-8 flex flex-row flex-wrap items-center gap-3 sm:gap-4"
               style={{ animationDelay: "1400ms" }}
             >
               <a
                 href="#about"
-                className="btn-gold inline-flex w-full items-center justify-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em] sm:w-auto"
+                className="btn-gold inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
               >
                 <span>Explore Season 2</span>
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden="true" />
               </a>
               <a
                 href="#schedule"
-                className="btn-outline-light inline-flex w-full items-center justify-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em] sm:w-auto"
+                className="btn-outline-light inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
               >
                 <span>View Schedule</span>
-                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -189,17 +189,17 @@ export function Hero() {
           }}
         >
           <dl className="grid grid-cols-2 gap-y-4 gap-x-2 sm:grid-cols-3 lg:grid-cols-5 sm:gap-0 sm:divide-x sm:divide-gold/10">
-            {STRIP.map(({ eyebrow, value, icon: Icon }) => (
+            {STRIP.map(({ eyebrow, value, icon: Icon }, index) => (
               <div
                 key={eyebrow}
-                className="flex items-center gap-3.5 px-4 py-5 sm:px-5 sm:py-6"
+                className={`flex items-center gap-3.5 px-4 py-5 sm:px-5 sm:py-6 ${index === 4 ? "col-span-2 sm:col-span-1 justify-center sm:justify-start" : ""}`}
               >
                 <Icon className="h-4 w-4 shrink-0 text-gold" />
                 <div className="min-w-0 flex-1">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold/75">
                     {eyebrow}
                   </dt>
-                  <dd className="mt-0.5 truncate text-[12px] font-semibold uppercase leading-tight text-foreground/90 sm:text-[13px]">
+                  <dd className="mt-0.5 text-[12px] font-semibold uppercase leading-tight text-foreground/90 sm:text-[13px]">
                     {value}
                   </dd>
                 </div>

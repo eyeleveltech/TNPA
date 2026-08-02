@@ -271,23 +271,23 @@ export function SponsorshipContent() {
             Reach out to explore the right partnership for your brand. We will share the full
             sponsorship deck, availability matrix, and custom options.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
             <a
               href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
-              className="btn-gold inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em]"
+              className="btn-gold inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
             >
               Email Us
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </a>
             <a
               href="/#contact"
               onClick={() => {
                 sessionStorage.setItem("focusCollab", "true");
               }}
-              className="btn-outline-light inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.08em]"
+              className="btn-outline-light inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
             >
               Call Us Directly
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </a>
           </div>
           <p className="mt-6 text-xs text-foreground/40">
