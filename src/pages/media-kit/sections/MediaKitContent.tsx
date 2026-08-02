@@ -1,14 +1,45 @@
 import { Download, Mail, ChevronRight, Image, FileText, Film } from "lucide-react";
+import ASSET_PRIMARY_LOGO from "@/assets/TNPPL_S2_logo_blue.webp";
+import ASSET_REVERSED_LOGO from "@/assets/TNPPL_S2_logo.webp";
+import ASSET_TNPA_LOGO from "@/assets/TNPA LOGO (1).webp";
 
-export const ASSETS = [
+type AssetItem = {
+  name: string;
+  size: string;
+  downloadUrl?: string;
+  fileName?: string;
+};
+
+export const ASSETS: {
+  category: string;
+  icon: any;
+  color: string;
+  items: AssetItem[];
+  note: string;
+}[] = [
   {
     category: "Logos & Brand Identity",
     icon: Image,
     color: "45 90% 58%",
     items: [
-      { name: "TNPPL Primary Logo (PNG)", size: "Transparent background, multiple sizes" },
-      { name: "TNPPL Logo Reversed (White on Dark)", size: "For dark backgrounds" },
-      { name: "TNPA Official Logo", size: "Organizing body" },
+      {
+        name: "TNPPL Primary Logo",
+        size: "Transparent background, multiple sizes",
+        downloadUrl: ASSET_PRIMARY_LOGO,
+        fileName: "TNPPL_Primary_Logo.webp",
+      },
+      {
+        name: "TNPPL Logo Reversed (White on Dark)",
+        size: "For dark backgrounds",
+        downloadUrl: ASSET_REVERSED_LOGO,
+        fileName: "TNPPL_Logo_Reversed.webp",
+      },
+      {
+        name: "TNPA Official Logo",
+        size: "Organizing body",
+        downloadUrl: ASSET_TNPA_LOGO,
+        fileName: "TNPA_Official_Logo.webp",
+      },
     ],
     note: "Available on request — email tnstatepa@gmail.com",
   },
@@ -108,13 +139,43 @@ export function MediaKitContent() {
                 </h3>
               </div>
               <ul className="mt-5 space-y-3">
-                {items.map(({ name, size }) => (
-                  <li key={name} className="flex items-start justify-between gap-3 border-b border-border pb-3 last:border-0 last:pb-0">
+                {items.map((item) => (
+                  <li key={item.name} className="flex items-center justify-between gap-3 border-b border-border pb-3 last:border-0 last:pb-0">
                     <div>
-                      <p className="text-[13px] font-semibold text-foreground">{name}</p>
-                      <p className="text-[11px] text-foreground/50">{size}</p>
+                      {item.downloadUrl ? (
+                        <a
+                          href={item.downloadUrl}
+                          download={item.fileName || item.name}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group block"
+                        >
+                          <p className="text-[13px] font-semibold text-foreground group-hover:text-gold transition-colors">
+                            {item.name}
+                          </p>
+                          <p className="text-[11px] text-foreground/50">{item.size}</p>
+                        </a>
+                      ) : (
+                        <>
+                          <p className="text-[13px] font-semibold text-foreground">{item.name}</p>
+                          <p className="text-[11px] text-foreground/50">{item.size}</p>
+                        </>
+                      )}
                     </div>
-                    <Download className="h-4 w-4 shrink-0 text-foreground/30 mt-0.5" />
+                    {item.downloadUrl ? (
+                      <a
+                        href={item.downloadUrl}
+                        download={item.fileName || item.name}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold hover:bg-gold hover:text-ink transition-all duration-200 cursor-pointer shadow-sm"
+                        title={`Download ${item.name}`}
+                      >
+                        <Download className="h-4 w-4" />
+                      </a>
+                    ) : (
+                      <Download className="h-4 w-4 shrink-0 text-foreground/30 mt-0.5" />
+                    )}
                   </li>
                 ))}
               </ul>
