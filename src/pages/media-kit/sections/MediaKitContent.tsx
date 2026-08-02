@@ -8,7 +8,6 @@ export const ASSETS = [
     items: [
       { name: "TNPPL Primary Logo (PNG)", size: "Transparent background, multiple sizes" },
       { name: "TNPPL Logo Reversed (White on Dark)", size: "For dark backgrounds" },
-      { name: "TNPPL Badge / Emblem", size: "Square format for social media" },
       { name: "TNPA Official Logo", size: "Organizing body" },
     ],
     note: "Available on request — email tnstatepa@gmail.com",
