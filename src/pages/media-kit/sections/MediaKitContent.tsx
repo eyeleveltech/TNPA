@@ -173,9 +173,7 @@ export function MediaKitContent() {
                       >
                         <Download className="h-4 w-4" />
                       </a>
-                    ) : (
-                      <Download className="h-4 w-4 shrink-0 text-foreground/30 mt-0.5" />
-                    )}
+                    ) : null}
                   </li>
                 ))}
               </ul>
