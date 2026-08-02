@@ -6,15 +6,24 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('focusCollab') === 'true') {
-      sessionStorage.removeItem('focusCollab');
-      const el = document.getElementById("contact-name");
-      if (el) {
-        setTimeout(() => {
-          el.focus({ preventScroll: true });
-        }, 500);
+    const focusIfRequested = () => {
+      if (sessionStorage.getItem('focusCollab') === 'true') {
+        sessionStorage.removeItem('focusCollab');
+        const el = document.getElementById("contact-name");
+        if (el) {
+          setTimeout(() => {
+            el.focus({ preventScroll: true });
+          }, 300);
+          setTimeout(() => {
+            el.focus({ preventScroll: true });
+          }, 700);
+        }
       }
-    }
+    };
+
+    focusIfRequested();
+    window.addEventListener("hashchange", focusIfRequested);
+    return () => window.removeEventListener("hashchange", focusIfRequested);
   }, []);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

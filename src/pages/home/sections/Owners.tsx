@@ -15,6 +15,7 @@ import mohamedImg from "@/assets/mohamed_gani_faizal.webp";
 import sarveshImg from "@/assets/sarvesh_shashi.webp";
 import abishekImg from "@/assets/abishek_murali.webp";
 import atulImg from "@/assets/atul_jain.webp";
+import abhayImg from "@/assets/abhay_meganathan.webp";
 
 const FRANCHISE_OWNERS = [
   {
@@ -152,7 +153,16 @@ const FRANCHISE_OWNERS = [
     initial: "AJ",
     image: atulImg,
     team: "Rockfort Terminatrz",
-  }
+  },
+  {
+    name: "Abhay Meganathan",
+    type: "Franchise Owner",
+    category: "Vice Chairman, Rajalakshmi Institutions",
+    accent: "150 75% 52%", // Kanchi
+    initial: "AM",
+    image: abhayImg,
+    team: "Kanchi Blackbucks",
+  },
 ];
 
 export function Owners() {

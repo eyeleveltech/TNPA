@@ -15,7 +15,7 @@ const FOOTER_LINKS = {
   ],
   Partners: [
     { label: "Sponsorship Opportunities", href: "/sponsorship" },
-    { label: "Brand Collaboration", href: "/#contact-name" },
+    { label: "Brand Collaboration", href: "/#contact" },
     { label: "Franchise Enquiries", href: "/#contact" },
   ],
   Support: [
@@ -139,6 +139,19 @@ export function Footer() {
                     <li key={label}>
                       <Link
                         to={href}
+                        onClick={() => {
+                          if (
+                            label === "Brand Collaboration" ||
+                            label === "Franchise Enquiries"
+                          ) {
+                            sessionStorage.setItem("focusCollab", "true");
+                            const el = document.getElementById("contact-name");
+                            if (el) {
+                              setTimeout(() => el.focus({ preventScroll: true }), 100);
+                              setTimeout(() => el.focus({ preventScroll: true }), 500);
+                            }
+                          }
+                        }}
                         className="group flex items-center gap-2 text-[13px] font-medium text-foreground/70 transition-colors hover:text-gold"
                       >
                         <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition-all group-hover:opacity-100" />
