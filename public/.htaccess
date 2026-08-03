@@ -1,0 +1,120 @@
+# TNPPL Season 2 — Apache configuration
+# Lives in public/ so Vite copies it to dist/ on every build.
+# Upload alongside index.html at the web root.
+
+# ─────────────────────────────────────────────
+# SPA fallback — react-router BrowserRouter
+# Without this, a direct hit or refresh on /faq, /rules,
+# /media-kit, etc. returns 404 instead of the app.
+# ─────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Leave real files and directories alone (JS, CSS, images, video, fonts)
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Never fall back to index.html for missing build assets — a 404 is
+  # the honest answer, and it stops HTML being served as a script/style.
+  RewriteRule ^assets/ - [L]
+  RewriteRule \.(js|mjs|css|map|json|xml|txt|webp|png|jpe?g|gif|svg|ico|mp4|webm|woff2?|ttf|otf|eot)$ - [L]
+
+  # Everything else is a client-side route
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ─────────────────────────────────────────────
+# MIME types Apache may not know
+# ─────────────────────────────────────────────
+<IfModule mod_mime.c>
+  AddType image/webp                  .webp
+  AddType image/svg+xml               .svg
+  AddType video/mp4                   .mp4
+  AddType video/webm                  .webm
+  AddType font/woff                   .woff
+  AddType font/woff2                  .woff2
+  AddType font/ttf                    .ttf
+  AddType font/otf                    .otf
+  AddType application/manifest+json   .webmanifest
+  AddCharset UTF-8                    .html .css .js .mjs .json .svg .xml
+</IfModule>
+
+# ─────────────────────────────────────────────
+# Compression
+# ─────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/ttf font/otf
+  # Already-compressed formats: don't waste CPU
+  SetEnvIfNoCase Request_URI \.(?:webp|png|jpe?g|gif|ico|mp4|webm|woff2?|zip|gz|pdf)$ no-gzip dont-vary
+</IfModule>
+
+# ─────────────────────────────────────────────
+# Caching
+# Vite content-hashes everything in /assets/, so it is safe to pin
+# for a year. Files copied from public/ keep their names across
+# deploys, so they get a short TTL instead.
+# ─────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # Hashed build output — immutable
+  <FilesMatch "\.(js|mjs|css|woff2?|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Unhashed assets from public/ — a week, revalidated
+  <FilesMatch "\.(webp|png|jpe?g|gif|svg|ico|mp4|webm)$">
+    Header set Cache-Control "public, max-age=604800, must-revalidate"
+  </FilesMatch>
+
+  # The entry document must never be cached, or users get a stale
+  # index.html pointing at build assets that no longer exist.
+  <FilesMatch "\.(html|json|xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                        "access plus 1 week"
+  ExpiresByType text/html               "access plus 0 seconds"
+  ExpiresByType text/css                "access plus 1 year"
+  ExpiresByType application/javascript  "access plus 1 year"
+  ExpiresByType image/webp              "access plus 1 week"
+  ExpiresByType video/mp4               "access plus 1 week"
+</IfModule>
+
+# ─────────────────────────────────────────────
+# Security headers
+# ─────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header always unset X-Powered-By
+</IfModule>
+
+# Don't advertise directory contents
+Options -Indexes
+
+# ─────────────────────────────────────────────
+# Force HTTPS + strip www
+# Commented out: enable once the SSL certificate is live on the
+# production domain, otherwise the site becomes unreachable.
+# ─────────────────────────────────────────────
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#
+#   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# ErrorDocument intentionally omitted — the SPA fallback above already
+# serves index.html for unknown routes, and react-router handles them.

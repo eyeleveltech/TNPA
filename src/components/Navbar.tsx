@@ -11,13 +11,25 @@ const SOCIAL_LINKS = [
 
 import LOGO_SRC from "../assets/Tnppl.webp";
 
-const NAV_ITEMS = [
+interface NavItem {
+  name: string;
+  href: string;
+  /** Extra section ids that should also light this item. Defaults to its own hash. */
+  match?: string[];
+}
+
+/* "Teams & Owners" needs no `match`: Teams and Owners are now one section
+   (#teams), with each franchise card carrying its own owners. */
+
+/* Label is "Format", not "Tournament Format": the nav is whitespace-nowrap
+   inside overflow-hidden, so an over-wide row clips silently rather than
+   wrapping. "Tournament Format" overflows by ~25px at lg and ~70px at xl. */
+const NAV_ITEMS: NavItem[] = [
   { name: "Home", href: "/#home" },
   { name: "About", href: "/#about" },
-  { name: "Teams", href: "/#teams" },
-  { name: "Players", href: "/#players" },
+  { name: "Teams & Owners", href: "/#teams" },
+  { name: "Format", href: "/format" },
   { name: "Schedule", href: "/#schedule" },
-  { name: "Team Owners", href: "/#owners" },
   { name: "Sponsors", href: "/sponsorship" },
   { name: "Contact", href: "/#contact" },
 ];
@@ -51,7 +63,11 @@ export function Navbar() {
       }
     );
 
-    const sectionIds = NAV_ITEMS.filter((i) => i.href.startsWith("/#")).map((i) => i.href.substring(2));
+    // `match` lets one nav item stay lit across several section ids. Nothing
+    // uses it right now; it stays because merging sections is a recurring ask.
+    const sectionIds = NAV_ITEMS.flatMap((i) =>
+      i.match ?? (i.href.startsWith("/#") ? [i.href.substring(2)] : [])
+    );
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -60,21 +76,27 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [location.pathname]);
 
-  const isActive = (href: string) => {
-    if (href === "/#home") {
+  const isActive = (item: NavItem) => {
+    if (item.href === "/#home") {
       return location.pathname === "/" && (!activeSection || activeSection === "home");
     }
-    if (href.startsWith("/#")) {
-      return location.pathname === "/" && activeSection === href.replace("/#", "");
+    if (item.href.startsWith("/#")) {
+      const ids = item.match ?? [item.href.replace("/#", "")];
+      return location.pathname === "/" && ids.includes(activeSection);
     }
-    return location.pathname === href;
+    return location.pathname === item.href;
   };
 
   return (
     <header
       className="relative z-30 w-full transition-colors bg-linear-to-r from-[#011837] from-10% via-[#011837]/80 via-40% to-transparent to-90%"
     >
-      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2.5 sm:px-8 sm:py-3 md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-3 md:px-4 md:py-3 lg:gap-8 lg:px-10 lg:py-3.5 xl:px-14">
+      {/* The 3-column track must not start before lg: the <nav> that fills the
+          middle column is display:none until lg, and a hidden grid item is
+          removed from grid flow rather than reserving a cell — so at md the
+          right-hand cluster would land in the middle 1fr column and the menu
+          button would sit beside the logo instead of flush right. */}
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2.5 sm:px-8 sm:py-3 md:gap-3 md:px-4 md:py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-8 lg:px-10 lg:py-3.5 xl:px-14">
         <div className="flex min-w-0 items-center gap-4 lg:gap-6">
           <Link to="/" className="flex items-center" aria-label="TNPPL home">
             <img
@@ -98,14 +120,39 @@ export function Navbar() {
             <Link
               key={item.name}
               to={item.href}
-              className={`nav-link whitespace-nowrap text-[9px] lg:text-[12px] xl:text-[13px] ${isActive(item.href) ? "nav-link-active" : ""}`}
+              className={`nav-link whitespace-nowrap text-[9px] lg:text-[11px] xl:text-[12px] ${isActive(item) ? "nav-link-active" : ""}`}
             >
               {item.name}
             </Link>
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 lg:gap-3">
+        <div className="flex shrink-0 items-center justify-self-end gap-2 lg:gap-3">
+          {/* Social icons — xl and up only. Below 1280px the 8 nav items plus
+              the Brand Collaboration button already consume the row, and the
+              nav is whitespace-nowrap + overflow-hidden, so links would clip
+              rather than wrap. Mobile gets them inside the drawer instead. */}
+          <ul className="hidden items-center gap-1 xl:flex">
+            {SOCIAL_LINKS.map(({ label, Icon, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`TNPPL on ${label}`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-gold/10 hover:text-gold focus-visible:bg-gold/10 focus-visible:text-gold"
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <span
+            className="hidden h-5 w-px bg-foreground/15 xl:block"
+            aria-hidden="true"
+          />
+
           <div className="hidden items-center gap-2 lg:flex lg:gap-3">
             <a
               href="/#contact"
@@ -153,7 +200,7 @@ export function Navbar() {
                 key={item.name}
                 to={item.href}
                 onClick={() => setOpen(false)}
-                className={`nav-link text-sm ${isActive(item.href) ? "nav-link-active" : ""}`}
+                className={`nav-link text-sm ${isActive(item) ? "nav-link-active" : ""}`}
               >
                 {item.name}
               </Link>
@@ -176,6 +223,24 @@ export function Navbar() {
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
+
+          {/* Socials for every viewport below xl, where the header row hides them */}
+          <ul className="mt-5 flex items-center justify-center gap-2 border-t border-border pt-5">
+            {SOCIAL_LINKS.map(({ label, Icon, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`TNPPL on ${label}`}
+                  onClick={() => setOpen(false)}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-gold/10 hover:text-gold"
+                >
+                  <Icon className="h-4.5 w-4.5" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </header>

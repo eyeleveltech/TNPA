@@ -34,7 +34,7 @@ export function SponsorshipHero() {
           <Reveal delay={220}>
             <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]" style={{ fontFamily: "Arial, sans-serif" }}>
               TNPPL Season 2 is Tamil Nadu&rsquo;s biggest pickleball event. 12 franchises, 168
-              players, 4 days at Express Avenue Atrium. Align your brand with the fastest-growing
+              players, 4 days at the Central Atrium, Express Avenue Mall. Align your brand with the fastest-growing
               sport in India.
             </p>
           </Reveal>

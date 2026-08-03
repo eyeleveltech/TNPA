@@ -40,7 +40,7 @@ const STATS = [
     icon: MapPin,
     value: "TNPA + SDAT",
     label: "Official League",
-    copy: "The official state league nothing unofficial about it.",
+    copy: "The official state league. Nothing unofficial about it.",
     stacked: true,
   },
 ];
@@ -117,8 +117,10 @@ export function About() {
               className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
               style={{ fontFamily: "Arial, sans-serif" }}
             >
-              Twelve city franchises. Each district, a battle ground. Each team, a community.
-              Franchise identities to be unveiled at the Grand Player Auction.
+              Twelve districts, twelve franchises, twelve stories. Owners who believe in this
+              sport, sponsors who back it, and players who leave everything on the court for
+              their team&rsquo;s colors. TNPPL isn&rsquo;t just a tournament. It&rsquo;s where
+              community becomes competition, and competition becomes family.
             </p>
           </Reveal>
         </div>
@@ -225,7 +227,7 @@ export function About() {
           <div className="flex w-full justify-center">
             <div className="flex flex-col items-center gap-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Officially organized by
+                Organized by
               </p>
               <div className="flex items-center gap-4 text-left lg:gap-6">
                 <img
@@ -244,7 +246,7 @@ export function About() {
           <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
             <div className="flex flex-col items-center gap-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Affiliated by
+                Affiliated with
               </p>
               <div className="flex items-center gap-4 text-left lg:gap-6">
                 <img
@@ -263,7 +265,7 @@ export function About() {
           <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
             <div className="flex flex-col items-center gap-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Associate with
+                Co-sanctioned by
               </p>
               <div className="flex items-center gap-4 text-left lg:gap-6">
                 <img

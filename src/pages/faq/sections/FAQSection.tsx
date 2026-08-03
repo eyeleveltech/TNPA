@@ -7,7 +7,7 @@ export const FAQS = [
     items: [
       {
         q: "What is TNPPL Season 2?",
-        a: "The Tamil Nadu Pickleball Premier League (TNPPL) Season 2 is the state's flagship pickleball tournament, organized by the Tamil Nadu Pickleball Association (TNPA) and affiliated with SDAT. It features 12 district-based franchises, 168 players, and 30 league matches played across 4 days at the Central Atrium, Express Avenue Mall, Chennai.",
+        a: "The Tamil Nadu Pickleball Premier League (TNPPL) Season 2 is the state's flagship pickleball tournament, organized by the Tamil Nadu Pickleball Association (TNPA) and affiliated with SDAT. It features 12 district-based franchises, 168 players, and 30 league ties played across 4 days at the Central Atrium, Express Avenue Mall, Chennai.",
       },
       {
         q: "When and where is TNPPL Season 2?",
@@ -49,7 +49,7 @@ export const FAQS = [
     items: [
       {
         q: "What is the tournament format?",
-        a: "The tournament runs in three phases: League (30 team ties over Days 1–3), Playoffs (Quarter-Finals and Semi-Finals), and Finals (Day 4 at Express Avenue Atrium).",
+        a: "The tournament runs in three phases: League (30 ties over Days 1–3), Playoffs (Quarter-Final and Semi-Final ties), and the Final on Super Sunday (20 September, at the Central Atrium, Express Avenue Mall).",
       },
       {
         q: "What match categories are played per tie?",

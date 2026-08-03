@@ -9,7 +9,8 @@ import {
   MapPin,
   LayoutGrid,
   ChevronRight,
-  Tv2,
+  Youtube,
+  Ticket,
   Eye,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
@@ -33,7 +34,7 @@ const DAYS = [
     weekday: "FRI",
     title: "Group Stage",
     subtitle: "The Battle Begins",
-    copy: "Round robin matches as teams compete for crucial points to secure a spot in playoffs.",
+    copy: "Round-robin ties as teams compete for crucial points to secure a spot in playoffs.",
     time: "10:00 AM Onwards",
     icon: Users2,
     accent: "190 85% 58%",
@@ -53,7 +54,7 @@ const DAYS = [
     day: "04",
     date: "20 SEP",
     weekday: "SUN",
-    title: "The Finals",
+    title: "Super Sunday",
     subtitle: "One Game. One Champion.",
     copy: "The ultimate showdown. One champion will rise and take the glory home.",
     time: "4:00 PM Onwards",
@@ -66,7 +67,9 @@ const BOTTOM_STATS = [
   { value: "1,000+", label: "Spectators", sub: "Expected", icon: Eye },
   { value: "6", label: "Courts", sub: "Running Simultaneously", icon: LayoutGrid },
   { value: "Champions", label: "Title on the Line", sub: "TNPPL Season 2 Trophy", icon: Trophy },
-  { value: "Live", label: "Live Action", sub: <>Streaming <strong className="font-bold">&amp;</strong> Coverage</>, icon: Tv2 },
+  // Youtube icon, not Tv2, and "Streaming on YouTube", not "Coverage" — this is
+  // a livestream, and a TV glyph reads as a broadcast partner we do not have.
+  { value: "Live", label: "Live Action", sub: "Streaming on YouTube", icon: Youtube },
 ];
 
 export function Schedule() {
@@ -142,7 +145,7 @@ export function Schedule() {
                 </svg>
                 <img
                   src={EXPRESS_AVENUE_IMG}
-                  alt="Express Avenue Atrium — TNPPL Season 2 venue"
+                  alt="Central Atrium, Express Avenue Mall — TNPPL Season 2 venue"
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"
@@ -154,7 +157,7 @@ export function Schedule() {
               </div>
 
               <div className="p-6">
-                <h3 className="display-title-extended text-2xl text-foreground">Express Avenue Atrium</h3>
+                <h3 className="display-title-extended text-2xl text-foreground">Central Atrium, Express Avenue Mall</h3>
                 <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/60">
                   Royapettah, Chennai
                 </p>
@@ -181,7 +184,7 @@ export function Schedule() {
                     <div>
                       <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold">Venue</p>
                       <p className="mt-0.5 text-[13px] font-medium text-foreground/85">
-                        Express Avenue Atrium
+                        Central Atrium, Express Avenue Mall
                         <br />
                         Royapettah, Chennai
                       </p>
@@ -192,7 +195,7 @@ export function Schedule() {
                     <div>
                       <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold">Format</p>
                       <p className="mt-0.5 text-[13px] font-medium text-foreground/85">
-                        Team Ties · 30 League Matches
+                        30 League Ties
                       </p>
                     </div>
                   </div>
@@ -356,14 +359,31 @@ export function Schedule() {
           })}
         </div>
 
-        {/* CTA strip */}
+        {/* CTA strip. The free-entry line is a banner rather than fine print:
+            a ₹30L prize pool and spectator counts read as a ticketed, premium
+            event unless the opposite is stated loudly. Mirrors the hero badge. */}
         <div className="mt-10 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/55">
-            Entry is Free
-          </p>
-          <p className="mt-2 text-sm text-foreground/70">
-            Open to all. Come support your district franchise.
-          </p>
+          <div
+            className="mx-auto flex max-w-2xl flex-col items-center gap-3 rounded-2xl px-5 py-6 sm:flex-row sm:justify-center sm:gap-5 sm:px-8"
+            style={{
+              border: "1px solid color-mix(in oklab, var(--gold) 40%, transparent)",
+              background: "color-mix(in oklab, var(--gold) 8%, transparent)",
+            }}
+          >
+            <span
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gold"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              <Ticket className="h-4 w-4" aria-hidden="true" />
+              Free Entry
+            </span>
+            <p
+              className="text-[13px] font-semibold text-foreground/85 sm:text-sm sm:text-left"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Open to all. No ticket needed. Come support your district franchise.
+            </p>
+          </div>
           <a
             href="#contact"
             onClick={() => {

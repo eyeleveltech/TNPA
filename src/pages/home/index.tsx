@@ -5,7 +5,6 @@ import { About } from "./sections/About";
 import { Teams } from "./sections/Teams";
 import { Players } from "./sections/Players";
 import { Schedule } from "./sections/Schedule";
-import { Owners } from "./sections/Owners";
 import { Sponsors } from "./sections/Sponsors";
 // import { News } from "./sections/News";
 import { Contact } from "./sections/Contact";
@@ -20,10 +19,11 @@ export default function IndexPage() {
         <Hero />
       </div>
       <About />
+      {/* Teams and Owners are one section: each franchise card carries its
+          own owners, so there is a single source of truth for both. */}
       <Teams />
       <Players />
       <Schedule />
-      <Owners />
       {/* <Sponsors /> */}
       {/* <News /> */}
       <Contact />

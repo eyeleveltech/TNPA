@@ -280,6 +280,11 @@
 @utility nav-link {
   position: relative;
   display: inline-block;
+  /* padding-bottom clears the ::after underline; the matching padding-top
+     keeps the box symmetric so items-center lands the TEXT on centre rather
+     than the box — otherwise the labels sit ~3px above the icons and the
+     Brand Collaboration button. Keep these two values equal. */
+  padding-top: 6px;
   padding-bottom: 6px;
   font-family: Arial, sans-serif;
   font-size: 0.6875rem;

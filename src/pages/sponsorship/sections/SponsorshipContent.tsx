@@ -12,7 +12,7 @@ export const TIERS = [
       "Logo on all player jerseys",
       "Opening and closing ceremony naming rights",
       "30-second brand film played at every match",
-      "Dedicated booth at Express Avenue Atrium",
+      "Dedicated booth at the Central Atrium, Express Avenue Mall",
       "Social media co-branding across all channels",
       "Press conference visibility",
       "VIP access for 10 guests per day",

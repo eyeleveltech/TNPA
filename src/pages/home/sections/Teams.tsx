@@ -2,10 +2,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  MapPin,
-  Youtube,
+  Star,
+  Building2,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { AUCTION_STREAM_URL } from "@/lib/auction";
+
 
 import logoChennai from "@/assets/Team_Logos-01.webp";
 import logoCoimbatore from "@/assets/Team_Logos-02.webp";
@@ -20,113 +22,60 @@ import logoRamnad from "@/assets/Team_Logos-10.webp";
 import logoSalem from "@/assets/Team_Logos-11.webp";
 import logoKodai from "@/assets/Team_Logos-12.webp";
 
+/**
+ * Team + owner are ONE record on purpose.
+ *
+ * These used to be two arrays in two files (TEAMS here, FRANCHISE_OWNERS in
+ * Owners.tsx) with nothing keeping them in sync. They drifted: an orphaned
+ * "Sarvesh Shashi / District Franchise TBA" card belonged to no team, Ramnad
+ * Royals had no owner entry at all, and Rithika's surname was spelled two
+ * different ways. Keeping owners nested under their team makes that class of
+ * bug structurally impossible rather than something to re-audit each time.
+ */
+type Owner = {
+  name: string;
+  /** Company or role shown under the name. */
+  affiliation: string;
+  /** Drives the Star vs Building2 glyph. */
+  isCelebrity?: boolean;
+};
+
 type Team = {
   name: string;
   district: string;
   region: string;
   accent: string;
   logo: string | null;
-  owner: React.ReactNode;
-  about?: React.ReactNode;
+  owners: Owner[];
 };
 
+/** Order matches the confirmed Season 2 roster. */
 const TEAMS: Team[] = [
-  {
-    name: "Chennai Tamizh Titans",
-    district: "Chennai",
-    region: "North",
-    accent: "190 90% 62%",
-    logo: logoChennai,
-    owner: <>Varalaxmi Sarathkumar <strong className="font-bold">&amp;</strong> Nova Lifespaces (Co-owner)</>,
-    about: "Varalaxmi Sarathkumar is a renowned Tamil actress and entrepreneur.",
-  },
   {
     name: "Kanchi Blackbucks",
     district: "Kanchipuram",
     region: "North",
     accent: "150 75% 52%",
     logo: logoKanchi,
-    owner: "Mr. Abhay Meganathan",
-    about: "Vice Chairman, Rajalakshmi Institutions.",
-  },
-  {
-    name: "Cuddalore Kings",
-    district: "Cuddalore",
-    region: "East",
-    accent: "270 80% 65%",
-    logo: logoCuddalore,
-    owner: <>Chiyaan Vikram <strong className="font-bold">&amp;</strong> Manuranjith Ranganathan</>,
-    about: <>Chiyaan Vikram (Actor) <strong className="font-bold">&amp;</strong> Manuranjith Ranganathan (Director, CavinKare)</>,
+    owners: [
+      {
+        name: "Abhay Meganathan",
+        affiliation: "Vice Chairman, Rajalakshmi Institutions",
+      },
+    ],
   },
   {
     name: "Twin Eagles Hosur",
-    district: "Krishnagiri",
+    district: "Hosur",
     region: "North",
     accent: "205 85% 62%",
     logo: logoHosur,
-    owner: "Dr. Samarjit Baskaran",
-    about: "Owner, Gorilla Smash Club.",
-  },
-  {
-    name: "Coimbatore Smashers",
-    district: "Coimbatore",
-    region: "West",
-    accent: "15 90% 60%",
-    logo: logoCoimbatore,
-    owner: <>Arjun Narendran <strong className="font-bold">&amp;</strong> Rithika Ramakrishna</>,
-    about: <>Arjun Narendran (Arka Motorsport) <strong className="font-bold">&amp;</strong> Rithika Ramakrishna (Pickleball Champion)</>,
-  },
-  {
-    name: "Kodai Tigers",
-    district: "Kodaikanal",
-    region: "West",
-    accent: "32 95% 60%",
-    logo: logoKodai,
-    owner: "Mohamed Gani Faizal",
-    about: "Official Franchise Announcement Coming Soon",
-  },
-  {
-    name: "Ooty Bisons",
-    district: "Nilgiris",
-    region: "West",
-    accent: "128 70% 52%",
-    logo: logoOoty,
-    owner: "Abhishek Murali",
-    about: "Restaurateur, Geetham Veg Restaurant",
-  },
-  {
-    name: "Madurai All Stars",
-    district: "Madurai",
-    region: "South",
-    accent: "355 85% 58%",
-    logo: logoMadurai,
-    owner: <>Surya <strong className="font-bold">&amp;</strong> MV Manikandan</>,
-  },
-  {
-    name: "Nellai Superstars",
-    district: "Tirunelveli",
-    region: "South",
-    accent: "175 80% 55%",
-    logo: logoNellai,
-    owner: <>Uttam Kothari <strong className="font-bold">&amp;</strong> Keerthi Pandian</>,
-    about: "UTTAM KOTHARI - Entrepreneur. Keerthi Pandian - Tamil film actress.",
-  },
-  {
-    name: "Ramnad Royals",
-    district: "Ramanathapuram",
-    region: "South",
-    accent: "198 85% 58%",
-    logo: logoRamnad,
-    owner: <>Naagarjun Sethupathy <strong className="font-bold">&amp;</strong> Sneha Sethupathy</>,
-  },
-  {
-    name: "Rockfort Terminatrz",
-    district: "Tiruchirappalli",
-    region: "Central",
-    accent: "22 85% 58%",
-    logo: logoRockfort,
-    owner: "Atul Jain",
-    about: "Kiran Global Group",
+    owners: [
+      {
+        name: "Dr. Samarjit Baskaran",
+        affiliation: "Owner, Gorilla Smash Club",
+      },
+    ],
   },
   {
     name: "Salem Super Smashers",
@@ -134,8 +83,147 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "195 85% 55%",
     logo: logoSalem,
-    owner: "Dinesh Kumar Amudhan",
-    about: <>Entrepreneur; Chiseling Narratives <strong className="font-bold">&amp;</strong> Building Brands; associated with Mahendra Institutions and SKS Hospital.</>,
+    owners: [
+      {
+        name: "Dinesh Kumar Amudhan",
+        affiliation: "Entrepreneur, Mahendra Institutions and SKS Hospital",
+      },
+    ],
+  },
+  {
+    name: "Coimbatore Smashers",
+    district: "Coimbatore",
+    region: "West",
+    accent: "15 90% 60%",
+    logo: logoCoimbatore,
+    owners: [
+      {
+        name: "Arjun Narendran",
+        affiliation: "Arka Motorsport",
+      },
+      {
+        name: "Rithika Ramakrishna",
+        affiliation: "Pickleball Champion",
+      },
+    ],
+  },
+  {
+    name: "Chennai Tamizh Titans",
+    district: "Chennai",
+    region: "North",
+    accent: "190 90% 62%",
+    logo: logoChennai,
+    owners: [
+      {
+        name: "Varalaxmi Sarathkumar",
+        affiliation: "Actor",
+        isCelebrity: true,
+      },
+      {
+        name: "Nova Lifespaces",
+        affiliation: "Co-owner",
+      },
+    ],
+  },
+  {
+    name: "Cuddalore Kings",
+    district: "Cuddalore",
+    region: "East",
+    accent: "270 80% 65%",
+    logo: logoCuddalore,
+    owners: [
+      {
+        name: "Chiyaan Vikram",
+        affiliation: "Actor",
+        isCelebrity: true,
+      },
+      {
+        name: "Manuranjith Ranganathan",
+        affiliation: "Director, CavinKare",
+      },
+    ],
+  },
+  {
+    name: "Rockfort Terminatrz Trichy",
+    district: "Tiruchirappalli",
+    region: "Central",
+    accent: "22 85% 58%",
+    logo: logoRockfort,
+    owners: [
+      {
+        name: "Atul Jain",
+        affiliation: "Kiran Global Group",
+      },
+    ],
+  },
+  {
+    name: "Ooty Bisons",
+    district: "Nilgiris",
+    region: "West",
+    accent: "128 70% 52%",
+    logo: logoOoty,
+    owners: [
+      {
+        name: "Abhishek Murali",
+        affiliation: "Restaurateur, Geetham Veg Restaurant",
+      },
+    ],
+  },
+  {
+    name: "Ramnad Royals",
+    district: "Ramanathapuram",
+    region: "South",
+    accent: "198 85% 58%",
+    logo: logoRamnad,
+    owners: [
+      { name: "Naagarjun Sethupathy", affiliation: "Franchise Owner" },
+      { name: "Sneha Sethupathy", affiliation: "Franchise Owner" },
+    ],
+  },
+  {
+    name: "Nellai Superstars",
+    district: "Tirunelveli",
+    region: "South",
+    accent: "175 80% 55%",
+    logo: logoNellai,
+    owners: [
+      {
+        name: "Uttam Kothari",
+        affiliation: "Entrepreneur, Destiiny Inventure LLP",
+      },
+      {
+        name: "Keerthi Pandian",
+        affiliation: "Actor",
+        isCelebrity: true,
+      },
+    ],
+  },
+  {
+    name: "Madurai All-Stars",
+    district: "Madurai",
+    region: "South",
+    accent: "355 85% 58%",
+    logo: logoMadurai,
+    owners: [
+      { name: "Surya", affiliation: "Goplay" },
+      {
+        name: "MV Manikandan",
+        affiliation: "Adissia Developers",
+      },
+    ],
+  },
+  {
+    name: "Kodai Tigers",
+    district: "Kodaikanal",
+    region: "West",
+    accent: "32 95% 60%",
+    logo: logoKodai,
+    owners: [
+      {
+        name: "Mohamed Gani Faizal",
+        affiliation: "Millennials Movie Production LLP",
+      },
+    ],
   },
 ];
 
@@ -287,57 +375,19 @@ export function Teams() {
               className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
               style={{ fontFamily: "Arial, sans-serif" }}
             >
-              Twelve city franchises. Each district, a battle ground. Each team, a community. Franchise
-              identities unveiled at the Grand Player Auction.
+              Every franchise carries a district&rsquo;s name and an owner&rsquo;s belief.
+              Meet the twelve.
             </p>
           </Reveal>
         </div>
 
-        {/* mobile: logo grid */}
-        <div className="mt-10 grid grid-cols-2 gap-2.5 sm:hidden">
-          {TEAMS.map((t, i) => (
-            <div
-              key={t.name}
-              className="stat-card flex items-center gap-2 rounded-xl p-2.5 min-h-20 overflow-hidden"
-              style={{ borderColor: `color-mix(in oklab, hsl(${t.accent}) 35%, transparent)` }}
-            >
-              {t.logo ? (
-                <img
-                  src={t.logo}
-                  alt={`${t.name} logo`}
-                  loading="eager"
-                  fetchPriority="high"
-                  className="h-13 w-13 shrink-0 object-contain"
-                  style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.7))" }}
-                />
-              ) : (
-                <span
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-bold"
-                  style={{
-                    background: `radial-gradient(circle, color-mix(in oklab, hsl(${t.accent}) 30%, transparent), transparent)`,
-                    border: `1px solid color-mix(in oklab, hsl(${t.accent}) 50%, transparent)`,
-                    color: `hsl(${t.accent})`,
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              )}
-              <div className="min-w-0 flex-1 overflow-hidden">
-                <p className="font-display text-[9.5px] font-black uppercase leading-tight text-foreground wrap-break-word">
-                  {renderTeamName(t.name)}
-                </p>
-                <p className="mt-1 text-[8.5px] font-semibold text-foreground/80 line-clamp-2">
-                  Owner: <span className="text-gold">{t.owner}</span>
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* desktop: 3D carousel */}
-        <div className="relative mt-14 hidden sm:block">
+        {/* Carousel at every width. Below 640px the layout effect sets
+            {spread: 0, visible: 0}, which stacks the cards and shows only the
+            active one — a single-card swipe view driven by the same touch
+            handlers as desktop, with the dot indicators below. */}
+        <div className="relative mt-10 sm:mt-14">
           <div
-            className="relative h-137.5 lg:h-142.5 perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
+            className="relative h-131 sm:h-143.5 lg:h-148.5 perspective-[1400px] cursor-grab active:cursor-grabbing touch-pan-y select-none"
             onTouchStart={handlePointerDown}
             onTouchMove={handlePointerMove}
             onTouchEnd={handlePointerUp}
@@ -373,7 +423,7 @@ export function Teams() {
                   }}
                   aria-label={`${t.name} franchise`}
                   aria-hidden={abs > layout.visible}
-                  className="absolute left-1/2 top-1/2 w-68 lg:w-76 h-125 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
+                  className="absolute left-1/2 top-1/2 w-66 sm:w-68 lg:w-76 h-123 sm:h-131 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
                   style={{
                     transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${isActive ? 1 : 0.88
                       })`,
@@ -399,7 +449,7 @@ export function Teams() {
                     </div>
 
                     {/* logo / placeholder */}
-                    <div className="relative my-auto grid h-52 w-full place-items-center shrink-0">
+                    <div className="relative my-auto grid h-40 sm:h-48 w-full place-items-center shrink-0">
                       {/* glow behind logo */}
                       <span
                         className="absolute inset-0 rounded-2xl blur-3xl opacity-25"
@@ -412,7 +462,7 @@ export function Teams() {
                           alt={`${t.name} logo`}
                           loading="eager"
                           fetchPriority="high"
-                          className="relative h-52 w-full object-contain scale-125"
+                          className="relative h-40 sm:h-48 w-full object-contain scale-125"
                           style={{ filter: "drop-shadow(0 8px 22px rgba(0,0,0,0.75))" }}
                         />
                       ) : (
@@ -445,14 +495,36 @@ export function Teams() {
 
                     <span className="my-2.5 h-px w-full bg-foreground/10 shrink-0" />
 
-                    {/* Owner Block - Fixed Height Flex Slot */}
-                    <div className="h-16 w-full flex flex-col justify-center items-center shrink-0">
+                    {/* Owner block — team identity and owner identity travel
+                        together on the same card. Fixed height so cards align. */}
+                    <div className="h-18 w-full flex flex-col justify-start items-center shrink-0">
                       <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold/90">
-                        Franchise Owner
+                        {t.owners.length > 1 ? "Franchise Owners" : "Franchise Owner"}
                       </p>
-                      <p className="mt-1 text-center text-[12px] font-bold text-foreground leading-tight line-clamp-2">
-                        {t.owner}
-                      </p>
+                      <ul className="mt-2 flex w-full items-start justify-center gap-3">
+                        {t.owners.map((o) => (
+                          <li
+                            key={o.name}
+                            className="flex min-w-0 flex-1 flex-col items-center text-center"
+                            style={{ maxWidth: `${100 / t.owners.length}%` }}
+                          >
+                            <span className="w-full text-[11px] font-bold leading-tight text-foreground line-clamp-2">
+                              {o.name}
+                            </span>
+                            <span
+                              className="mt-0.5 flex w-full items-center justify-center gap-1 text-[9px] leading-tight text-foreground/65"
+                              style={{ fontFamily: "Arial, sans-serif" }}
+                            >
+                              {o.isCelebrity ? (
+                                <Star className="h-2.5 w-2.5 shrink-0 text-gold" strokeWidth={1.5} />
+                              ) : (
+                                <Building2 className="h-2.5 w-2.5 shrink-0 text-gold" strokeWidth={1.5} />
+                              )}
+                              <span className="line-clamp-2">{o.affiliation}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </button>
@@ -538,7 +610,7 @@ export function Teams() {
 
             <div className="mt-8 flex justify-center">
               <a
-                href="https://www.youtube.com/live/aSpkMbhuvU4"
+                href={AUCTION_STREAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gold inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full px-3.5 py-3 sm:px-7 sm:py-3.5 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.18em] leading-none whitespace-nowrap max-w-full"

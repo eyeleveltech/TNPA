@@ -27,8 +27,8 @@ export function FormatHero() {
           </Reveal>
           <Reveal delay={220}>
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-foreground/65">
-              TNPPL Season 2 — September 17&ndash;20, 2026 at Express Avenue, Central Atrium,
-              Chennai. 12 franchises, 168 players, 4 days of elite competition.
+              TNPPL Season 2 — September 17&ndash;20, 2026 at the Central Atrium, Express Avenue
+              Mall, Chennai. 12 franchises, 168 players, 4 days of elite competition.
             </p>
           </Reveal>
 

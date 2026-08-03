@@ -1,7 +1,12 @@
-import { ChevronRight, Medal, Users2, Star, Trophy, Instagram } from "lucide-react";
+import { ChevronRight, Users2, Star, Instagram, ClipboardList } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 import SEASON_1_WINNERS from "@/assets/season_1_winners.webp";
 
+/* Deliberately does NOT restate squad size or the prize pool. Squad size is
+   already carried by the composition breakdown and the paragraph above it;
+   the prize pool is stated in the hero and again in the format strip below.
+   Both were appearing three or four times on a single page. */
 const SQUAD_STATS = [
   {
     value: "168",
@@ -10,22 +15,10 @@ const SQUAD_STATS = [
     icon: Users2,
   },
   {
-    value: "14",
-    label: "Per Squad",
-    copy: "Each franchise builds a 14-player squad at the Grand Player Auction.",
-    icon: Medal,
-  },
-  {
     value: "30",
     label: "League Ties",
-    copy: "Round-robin league followed by Quarterfinals, Semifinals and the Final.",
+    copy: "Round-robin ties followed by Quarterfinals, Semifinals and the Final.",
     icon: Star,
-  },
-  {
-    value: "₹30L",
-    label: "Prize Pool",
-    copy: "Total prize money on the line across TNPPL Season 2.",
-    icon: Trophy,
   },
 ];
 
@@ -37,7 +30,7 @@ const COMPOSITION = [
 
 export function Players() {
   return (
-    <section id="players" className="relative overflow-hidden bg-background py-10 sm:py-12 lg:py-14">
+    <section id="players" className="relative overflow-hidden bg-background py-10 sm:py-12 lg:py-14 border-t border-white/5">
       {/* ambient */}
       <div
         aria-hidden
@@ -261,15 +254,24 @@ export function Players() {
             <p className="text-[12px] text-foreground/55">Quarterfinals and Semifinals on Day 3</p>
           </div>
           <div className="flex flex-col items-center gap-2 text-center">
-            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-foreground/50">Day 4</p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-foreground/50">Super Sunday</p>
             <p className="font-display text-4xl font-black text-gold">Final</p>
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/80">Championship</p>
             <p className="text-[12px] text-foreground/55">One champion. ₹30L prize pool on the line.</p>
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="mt-10 text-center">
+        {/* CTA — the full format page was previously reachable only from a
+            single footer link, despite being the deepest content on the site. */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <Link
+            to="/format"
+            className="btn-gold inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full px-3.5 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.16em] leading-none whitespace-nowrap max-w-full"
+          >
+            <ClipboardList className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span className="leading-none">View Full Tournament Format</span>
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" aria-hidden="true" />
+          </Link>
           <a
             href="https://www.instagram.com/tamilnadupickleball.assn"
             target="_blank"
