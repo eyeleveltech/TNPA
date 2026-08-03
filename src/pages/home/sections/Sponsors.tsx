@@ -57,7 +57,7 @@ export function Sponsors() {
         </div>
 
         {/* CTA strip */}
-        <div className="stat-card mt-14 grid items-center gap-6 rounded-2xl px-6 py-7 sm:px-10 lg:grid-cols-[auto_minmax(0,1fr)_auto]">
+        <div className="stat-card mt-14 grid items-center gap-6 rounded-2xl px-3.5 py-6 sm:px-10 lg:grid-cols-[auto_minmax(0,1fr)_auto]">
           <span className="relative hidden h-16 w-16 shrink-0 place-items-center lg:grid">
             <span className="absolute inset-0 rounded-2xl" style={{ border: "1px solid color-mix(in oklab, var(--gold) 22%, transparent)" }} />
             <span className="absolute inset-1.25 rounded-xl" style={{
@@ -85,10 +85,10 @@ export function Sponsors() {
                 setTimeout(() => el.focus({ preventScroll: true }), 50);
               }
             }}
-            className="btn-outline-light inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"
+            className="btn-outline-light inline-flex shrink-0 items-center justify-center gap-1.5 sm:gap-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.12em] whitespace-nowrap max-w-full"
           >
             Brand Collaboration
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
         </div>
       </div>

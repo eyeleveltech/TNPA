@@ -307,7 +307,7 @@ export function Teams() {
                   alt={`${t.name} logo`}
                   loading="eager"
                   fetchPriority="high"
-                  className="h-11 w-11 shrink-0 object-contain"
+                  className="h-13 w-13 shrink-0 object-contain"
                   style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.7))" }}
                 />
               ) : (
@@ -375,9 +375,8 @@ export function Teams() {
                   aria-hidden={abs > layout.visible}
                   className="absolute left-1/2 top-1/2 w-68 lg:w-76 h-125 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
                   style={{
-                    transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${
-                      isActive ? 1 : 0.88
-                    })`,
+                    transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${isActive ? 1 : 0.88
+                      })`,
                     zIndex: 20 - abs,
                     opacity: abs > layout.visible ? 0 : isActive ? 1 : Math.max(0.35, 0.85 - abs * 0.15),
                     pointerEvents: abs > layout.visible ? "none" : "auto",
@@ -400,7 +399,7 @@ export function Teams() {
                     </div>
 
                     {/* logo / placeholder */}
-                    <div className="relative my-auto grid h-40 w-full place-items-center shrink-0">
+                    <div className="relative my-auto grid h-52 w-full place-items-center shrink-0">
                       {/* glow behind logo */}
                       <span
                         className="absolute inset-0 rounded-2xl blur-3xl opacity-25"
@@ -413,7 +412,7 @@ export function Teams() {
                           alt={`${t.name} logo`}
                           loading="eager"
                           fetchPriority="high"
-                          className="relative h-40 w-full object-contain scale-105"
+                          className="relative h-52 w-full object-contain scale-125"
                           style={{ filter: "drop-shadow(0 8px 22px rgba(0,0,0,0.75))" }}
                         />
                       ) : (
@@ -501,7 +500,7 @@ export function Teams() {
 
         {/* bottom CTA — auction feature card */}
         <div className="stat-card relative mt-14 overflow-hidden rounded-3xl text-center sm:mt-16">
-          <div className="relative px-8 py-12 sm:px-14 sm:py-16">
+          <div className="relative px-2 py-12 sm:px-14 sm:py-16">
             {/* star eyebrow */}
             <div className="flex items-center justify-center gap-3">
               <span className="h-px w-12 bg-linear-to-r from-transparent to-gold/60" />
@@ -542,9 +541,9 @@ export function Teams() {
                 href="https://www.youtube.com/live/aSpkMbhuvU4"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold inline-flex items-center justify-center gap-3 rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.18em] leading-none"
+                className="btn-gold inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full px-3.5 py-3 sm:px-7 sm:py-3.5 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.18em] leading-none whitespace-nowrap max-w-full"
               >
-                <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
                     fill="currentColor"
@@ -552,7 +551,7 @@ export function Teams() {
                   <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="var(--gold)" />
                 </svg>
                 <span className="leading-none">Watch the Auction Live</span>
-                <ChevronRight className="h-4 w-4 shrink-0" />
+                <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
               </a>
             </div>
           </div>

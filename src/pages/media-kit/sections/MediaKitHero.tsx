@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/Reveal";
+
 export function MediaKitHero() {
   return (
     <div className="relative">
@@ -9,18 +11,24 @@ export function MediaKitHero() {
         }}
       >
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-10 bg-gold/50" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Press &amp; Brand
-            </span>
-          </div>
-          <h1 className="display-title mt-4 text-[clamp(2.6rem,7vw,4.8rem)] text-foreground">
-            Media <span className="text-gold-gradient">Kit</span>
-          </h1>
-          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-foreground/65">
-            Brand assets, logos, press releases, and official materials for TNPPL Season 2. For accredited media and official brand partners.
-          </p>
+          <Reveal delay={60}>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold/50" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                Press &amp; Brand
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={140}>
+            <h1 className="display-title mt-4 text-[clamp(2.6rem,7vw,4.8rem)] text-foreground">
+              Media <span className="text-gold-gradient">Kit</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={220}>
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-foreground/65">
+              Brand assets, logos, press releases, and official materials for TNPPL Season 2. For accredited media and official brand partners.
+            </p>
+          </Reveal>
         </div>
       </section>
     </div>

@@ -50,7 +50,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Surya",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Goplay",
     accent: "355 85% 58%", // Madurai
     initial: "S",
     image: suriyaImg,
@@ -59,7 +59,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Uttam Kothari",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Destiiny Inventure LLP",
     accent: "175 80% 55%", // Nellai
     initial: "UK",
     image: uttamImg,
@@ -68,16 +68,16 @@ const FRANCHISE_OWNERS = [
   {
     name: "MV Manikandan",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Adissia Developers",
     accent: "355 85% 58%", // Madurai
     initial: "MM",
     image: manikandanImg,
     team: "Madurai All Stars",
   },
   {
-    name: "Manuranjith\u00A0Ranganathan",
+    name: "Manuranjith Ranganathan",
     type: "Franchise Owner",
-    category: "Director, CavinKare",
+    category: "CavinKare",
     accent: "270 80% 65%", // Cuddalore
     initial: "MR",
     image: manuranjithImg,
@@ -86,7 +86,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Dr. Samarjit Baskaran",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Gorilla Smash Club",
     accent: "205 85% 62%", // Hosur
     initial: "SB",
     image: samarjitImg,
@@ -95,16 +95,16 @@ const FRANCHISE_OWNERS = [
   {
     name: "Arjun Narendran",
     type: "Franchise Owner",
-    category: "Arka Motorsport",
+    category: "Coimbatore Super Smashers",
     accent: "15 90% 60%", // Coimbatore
     initial: "AN",
     image: arjunImg,
     team: "Coimbatore Smashers",
   },
   {
-    name: "Rithika Ramakrishna",
+    name: "Rithika Ramakrishnan",
     type: "Franchise Owner",
-    category: "Pickleball Champion",
+    category: "Coimbatore Super Smashers",
     accent: "15 90% 60%", // Coimbatore
     initial: "RR",
     image: rithikaImg,
@@ -113,7 +113,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Mohamed Gani Faizal",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Millennials Movie Production LLP",
     accent: "32 95% 60%", // Kodai
     initial: "MF",
     image: mohamedImg,
@@ -122,7 +122,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Sarvesh Shashi",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "ABC Studios",
     accent: "210 50% 50%", // TBA
     initial: "SS",
     image: sarveshImg,
@@ -140,7 +140,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Abhishek Murali",
     type: "Franchise Owner",
-    category: "Restaurateur",
+    category: "Geetham Veg Restaurant",
     accent: "128 70% 52%", // Ooty
     initial: "AM",
     image: abishekImg,
@@ -149,7 +149,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Atul Jain",
     type: "Franchise Owner",
-    category: "Entrepreneur",
+    category: "Kiran Global Group",
     accent: "22 85% 58%", // Rockfort
     initial: "AJ",
     image: atulImg,
@@ -158,7 +158,7 @@ const FRANCHISE_OWNERS = [
   {
     name: "Abhay Meganathan",
     type: "Franchise Owner",
-    category: "Vice Chairman, Rajalakshmi Institutions",
+    category: "Rajalakshmi Institutions",
     accent: "150 75% 52%", // Kanchi
     initial: "AM",
     image: abhayImg,
@@ -223,18 +223,18 @@ export function Owners() {
         </div>
 
         {/* ── Franchise Owners Grid ── */}
-        <div className="mt-12 grid gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
           {FRANCHISE_OWNERS.map((owner, idx) => (
             <div
               key={idx}
-              className="stat-card group relative flex flex-col overflow-hidden rounded-2xl p-4 sm:p-5 transition-all duration-300 hover:border-gold/60 hover:shadow-[0_15px_35px_-10px_rgba(234,179,8,0.25)]"
+              className="stat-card group relative flex flex-col overflow-hidden rounded-2xl p-2.5 sm:p-5 transition-all duration-300 hover:border-gold/60 hover:shadow-[0_15px_35px_-10px_rgba(234,179,8,0.25)]"
               style={{
                 borderColor: "color-mix(in oklab, var(--gold) 30%, transparent)",
                 background: "linear-gradient(165deg, color-mix(in oklab, var(--gold) 8%, var(--ink)) 0%, var(--ink) 65%)",
               }}
             >
               {/* Image Frame with Full Cover Image */}
-              <div className="relative flex items-center justify-center aspect-[4/4.2] sm:aspect-auto sm:h-80 lg:h-84 w-full overflow-hidden rounded-xl bg-[#021026] border border-gold/30">
+              <div className="relative flex items-center justify-center aspect-square sm:aspect-auto sm:h-80 lg:h-84 w-full overflow-hidden rounded-xl bg-[#021026] border border-gold/30">
                 {owner.image ? (
                   <img
                     src={owner.image}
@@ -245,7 +245,7 @@ export function Owners() {
                   />
                 ) : (
                   <div className="grid h-full w-full place-items-center opacity-30">
-                    <span className="font-display text-4xl font-black text-white/50">
+                    <span className="font-display text-2xl sm:text-4xl font-black text-white/50">
                       TBA
                     </span>
                   </div>
@@ -253,25 +253,27 @@ export function Owners() {
               </div>
 
               {/* Details Centered Below Image */}
-              <div className="mt-4 flex flex-col items-center text-center p-2">
-                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">
-                  {owner.type}
-                </span>
-                <h3 className="mt-1.5 text-lg font-bold leading-snug text-foreground transition-colors group-hover:text-gold sm:text-xl">
-                  {owner.name}
-                </h3>
-                <p
-                  className="mt-1.5 flex items-center justify-center gap-1.5 text-xs text-foreground/80"
-                  style={{ fontFamily: "Arial, sans-serif" }}
-                >
-                  {owner.category === "Actor" ? (
-                    <Star className="h-3.5 w-3.5 text-gold" strokeWidth={1.5} />
-                  ) : (
-                    <Building2 className="h-3.5 w-3.5 text-gold" strokeWidth={1.5} />
-                  )}
-                  {owner.category}
-                </p>
-                <span className="mt-3.5 inline-block rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold">
+              <div className="mt-2.5 sm:mt-4 flex flex-1 flex-col justify-between items-center text-center p-1 sm:p-2">
+                <div className="flex flex-col items-center w-full">
+                  <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.16em] sm:tracking-[0.24em] text-gold">
+                    {owner.type}
+                  </span>
+                  <h3 className="mt-1 text-xs font-bold leading-tight text-foreground transition-colors group-hover:text-gold sm:text-xl min-h-[2.2rem] sm:min-h-11 flex items-center justify-center text-center">
+                    {owner.name}
+                  </h3>
+                  <p
+                    className="mt-1 flex items-center justify-center gap-1 text-[10px] sm:text-xs text-foreground/80 min-h-6 sm:min-h-7 text-center"
+                    style={{ fontFamily: "Arial, sans-serif" }}
+                  >
+                    {owner.category === "Actor" ? (
+                      <Star className="h-3 w-3 shrink-0 text-gold" strokeWidth={1.5} />
+                    ) : (
+                      <Building2 className="h-3 w-3 shrink-0 text-gold" strokeWidth={1.5} />
+                    )}
+                    <span className="line-clamp-2">{owner.category}</span>
+                  </p>
+                </div>
+                <span className="mt-2 sm:mt-3.5 inline-block rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider sm:tracking-[0.18em] text-gold whitespace-nowrap max-w-full overflow-hidden text-ellipsis">
                   {owner.team || "District Franchise TBA"}
                 </span>
               </div>

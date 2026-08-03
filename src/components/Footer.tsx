@@ -18,11 +18,6 @@ const FOOTER_LINKS = {
     { label: "Brand Collaboration", href: "/#contact" },
     { label: "Franchise Enquiries", href: "/#contact" },
   ],
-  Support: [
-    { label: "Help Center", href: "/#contact" },
-    { label: "Accreditation", href: "/#contact" },
-    { label: "Volunteer With Us", href: "/#contact" },
-  ],
 };
 
 const SOCIAL = [
@@ -122,7 +117,7 @@ export function Footer() {
           </div>
 
           {/* link columns */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-10 sm:gap-20 lg:gap-28 max-w-2xl">
             {Object.entries(FOOTER_LINKS).map(([col, links]) => (
               <div key={col}>
                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">{col}</p>

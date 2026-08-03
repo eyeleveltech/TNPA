@@ -93,7 +93,7 @@ export function Schedule() {
   }, []);
 
   return (
-    <section id="schedule" className="relative overflow-x-clip bg-ink py-10 sm:py-12 lg:py-14">
+    <section id="schedule" className="relative bg-ink py-10 sm:py-12 lg:py-14">
       {/* ambient */}
       <div
         aria-hidden
@@ -116,7 +116,7 @@ export function Schedule() {
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         <div className="grid gap-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[360px_minmax(0,1fr)]">
           {/* ── Venue sidebar ── */}
-          <div className="lg:sticky lg:top-28 lg:self-start z-10">
+          <div className="lg:sticky lg:top-28 lg:self-start h-fit z-10">
             <div className="stat-card overflow-hidden rounded-2xl">
               {/* venue photo */}
               <div

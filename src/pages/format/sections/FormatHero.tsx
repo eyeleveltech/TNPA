@@ -1,4 +1,5 @@
 import { Trophy, Users, Calendar, MapPin } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export function FormatHero() {
   return (
@@ -11,21 +12,28 @@ export function FormatHero() {
         }}
       >
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-10 bg-gold/50" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Official Format
-            </span>
-          </div>
-          <h1 className="display-title mt-4 text-[clamp(2.6rem,7vw,4.8rem)] text-foreground">
-            Tournament <span className="text-gold-gradient">Format</span>
-          </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-foreground/65">
-            TNPPL Season 2 — September 17&ndash;20, 2026 at Express Avenue, Central Atrium,
-            Chennai. 12 franchises, 168 players, 4 days of elite competition.
-          </p>
+          <Reveal delay={60}>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold/50" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                Official Format
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={140}>
+            <h1 className="display-title mt-4 text-[clamp(2.6rem,7vw,4.8rem)] text-foreground">
+              Tournament <span className="text-gold-gradient">Format</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={220}>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-foreground/65">
+              TNPPL Season 2 — September 17&ndash;20, 2026 at Express Avenue, Central Atrium,
+              Chennai. 12 franchises, 168 players, 4 days of elite competition.
+            </p>
+          </Reveal>
 
-          <div className="mt-10 flex flex-wrap gap-4">
+          <Reveal delay={300}>
+            <div className="mt-10 flex flex-wrap gap-4">
             {[
               { icon: Trophy, label: "Teams", value: "12" },
               { icon: Users, label: "Players", value: "168" },
@@ -46,6 +54,7 @@ export function FormatHero() {
               </div>
             ))}
           </div>
+          </Reveal>
         </div>
       </section>
     </div>

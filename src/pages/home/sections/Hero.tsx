@@ -1,11 +1,11 @@
 import { ChevronRight, Trophy, Users, Award, MapPin, Calendar } from "lucide-react";
 import { useParallax } from "@/hooks/useParallax";
 
-import SPONSOR_CAVINS from "@/assets/Cavins Logo_2-01.webp";
-import SPONSOR_GTB from "@/assets/GTB.webp";
-import SPONSOR_INDIANBANK from "@/assets/INDIANB.NS_BIG-f675f730.webp";
-import SPONSOR_PIXPE from "@/assets/PIX PE LOGO (BB).webp";
-import SPONSOR_RIZZFITT from "@/assets/rizzfitt_svg.webp";
+import SPONSOR_CAVINS from "@/assets/cavins logo 2.0.webp";
+import SPONSOR_GTB from "@/assets/gtb logo 2.0.webp";
+import SPONSOR_INDIANBANK from "@/assets/indian bank logo 2.0.webp";
+import SPONSOR_PIXPE from "@/assets/pixel logo 2.0.webp";
+import SPONSOR_RIZZFITT from "@/assets/rizz fit logo 2.0.webp";
 import LOGO_S2 from "@/assets/TNPPL_S2_logo.webp";
 
 const STRIP = [
@@ -16,11 +16,12 @@ const STRIP = [
   { eyebrow: "Dates", value: "17–20 Sep 2026", icon: Calendar },
 ];
 
-const SPONSOR_GROUPS = [
-  { label: "Title Sponsor", logos: [{ name: "CavinKare", src: SPONSOR_CAVINS }] },
-  { label: "Co Sponsors", logos: [{ name: "GTB", src: SPONSOR_GTB }, { name: "Indian Bank", src: SPONSOR_INDIANBANK }] },
-  { label: "Led Partner", logos: [{ name: "Pix Pe", src: SPONSOR_PIXPE }] },
-  { label: "Tech Partner", logos: [{ name: "Rizzfitt", src: SPONSOR_RIZZFITT }] },
+const SPONSOR_ITEMS = [
+  { label: "Title Sponsor", name: "CavinKare", src: SPONSOR_CAVINS },
+  { label: "Co Sponsor", name: "GTB", src: SPONSOR_GTB },
+  { label: "Co Sponsor", name: "Indian Bank", src: SPONSOR_INDIANBANK },
+  { label: "LED Partner", name: "Pix Pe", src: SPONSOR_PIXPE },
+  { label: "Tech Partner", name: "Rizzfitt", src: SPONSOR_RIZZFITT },
 ];
 
 
@@ -95,13 +96,13 @@ export function Hero() {
         <div className="flex flex-1 items-start sm:items-center pt-24 sm:pt-28 lg:pt-32">
           <div className="w-full max-w-full sm:max-w-160 lg:max-w-[50%] xl:max-w-[46%]">
             <div
-              className="animate-fade-up mb-2 flex items-start gap-2 sm:gap-4 lg:gap-5"
+              className="animate-fade-up mb-2 flex items-center gap-2 sm:gap-4 lg:gap-5"
               style={{ animationDelay: "20ms" }}
             >
               <img
                 src={SPONSOR_CAVINS}
                 alt="Cavins"
-                className="h-16 w-auto object-contain sm:h-24 lg:h-36 xl:h-44"
+                className="h-13 w-auto object-contain sm:h-20 lg:h-30 xl:h-36"
               />
               <img
                 src={LOGO_S2}
@@ -219,40 +220,37 @@ export function Hero() {
             WebkitMaskImage: "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           }}
         >
-          <div className="flex items-center pt-3 pb-1.5 sm:pt-4 sm:pb-2">
+          <div className="flex items-center pt-4 pb-3 sm:pt-5 sm:pb-4">
             <div
-              className="flex shrink-0 items-start"
+              className="flex shrink-0 items-center gap-10 sm:gap-14 lg:gap-18 px-5 sm:px-7 lg:px-9"
               style={{
-                animation: "sponsor-scroll 24s linear infinite",
+                animation: "sponsor-scroll 28s linear infinite",
               }}
             >
               {/* Repeat logos 4x for seamless infinite loop */}
               {Array.from({ length: 4 }).flatMap((_, setIdx) =>
-                SPONSOR_GROUPS.map((group, i) => (
+                SPONSOR_ITEMS.map((item, i) => (
                   <div
-                    key={`group-${setIdx}-${i}`}
-                    className="mx-6 flex shrink-0 flex-col items-center sm:mx-8 lg:mx-10"
+                    key={`item-${setIdx}-${i}`}
+                    className="flex shrink-0 flex-col items-center text-center"
                   >
                     <span
                       className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
                       style={{ fontFamily: "Arial, sans-serif" }}
                     >
-                      {group.label}
+                      {item.label}
                     </span>
-                    <div className="mt-0.5 flex h-12 w-full items-center justify-center gap-8 sm:mt-1 sm:h-14 sm:gap-10 lg:mt-1.5 lg:h-16 lg:gap-12">
-                      {group.logos.map(logo => (
-                        <img
-                          key={logo.name}
-                          src={logo.src}
-                          alt={logo.name}
-                          loading="eager"
-                          className={`w-auto object-contain ${
-                            logo.name === "CavinKare"
-                              ? "-my-2 h-16 max-w-56 sm:-my-3 sm:h-20 sm:max-w-68 lg:-my-4 lg:h-24 lg:max-w-80"
-                              : "h-8 max-w-27.5 sm:h-10 sm:max-w-32.5 lg:h-11 lg:max-w-37.5"
-                          }`}
-                        />
-                      ))}
+                    <div className="mt-2 sm:mt-3 flex h-16 items-center justify-center sm:h-20 lg:h-24">
+                      <img
+                        src={item.src}
+                        alt={item.name}
+                        loading="eager"
+                        className={`w-auto object-contain ${
+                          item.name === "CavinKare"
+                            ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-110"
+                            : "h-10 sm:h-12 lg:h-14 max-w-48 sm:max-w-64"
+                        }`}
+                      />
                     </div>
                   </div>
                 ))

@@ -1,5 +1,6 @@
 import { ChevronRight, Medal, Users2, Star, Trophy, Instagram } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import SEASON_1_WINNERS from "@/assets/season_1_winners.webp";
 
 const SQUAD_STATS = [
   {
@@ -29,9 +30,9 @@ const SQUAD_STATS = [
 ];
 
 const COMPOSITION = [
-  { role: "Men",       count: 8,  accent: "190 90% 60%" },
-  { role: "Women",     count: 3,  accent: "325 85% 62%" },
-  { role: "Masters",   count: 3,  accent: "45 90% 58%"  },
+  { role: "Men", count: 8, accent: "190 90% 60%" },
+  { role: "Women", count: 3, accent: "325 85% 62%" },
+  { role: "Masters", count: 3, accent: "45 90% 58%" },
 ];
 
 export function Players() {
@@ -86,8 +87,16 @@ export function Players() {
               }}
             />
 
-            <div className="relative z-10 flex h-full flex-col p-6 sm:p-8">
+            <div className="relative z-10 flex h-full flex-col p-2 sm:p-8">
               <div>
+                <div className="mb-2.5 sm:mb-5 overflow-hidden rounded-xl border border-gold/30 shadow-lg">
+                  <img
+                    src={SEASON_1_WINNERS}
+                    alt="TNPPL Season 1 Champions"
+                    className="h-48 sm:h-52 w-full object-cover object-center transition-transform duration-500 hover:scale-105"
+                    loading="eager"
+                  />
+                </div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-gold">
                   Season 2 Squad Format
                 </p>
@@ -265,11 +274,11 @@ export function Players() {
             href="https://www.instagram.com/tamilnadupickleball.assn"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline-light inline-flex items-center justify-center gap-3 rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.16em] leading-none"
+            className="btn-outline-light inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full px-3.5 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.16em] leading-none whitespace-nowrap max-w-full"
           >
             <Instagram className="h-4 w-4 text-white shrink-0" />
             <span className="leading-none">Follow for Player Updates</span>
-            <ChevronRight className="h-4 w-4 shrink-0" />
+            <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
           </a>
         </div>
       </div>
