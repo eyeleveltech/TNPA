@@ -107,7 +107,7 @@ export function Navbar() {
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-9 w-auto shrink-0 origin-left sm:h-11 md:h-12 lg:h-14 xl:h-16"
+              className="h-11 w-auto shrink-0 origin-left md:h-12 lg:h-14 xl:h-16"
             />
           </Link>
         </div>
@@ -177,12 +177,12 @@ export function Navbar() {
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="btn-outline-light inline-flex h-11 w-11 items-center justify-center rounded-md"
+              className="btn-outline-light inline-flex h-8 w-8 md:h-11 md:w-11 items-center justify-center rounded-md"
             >
               {open ? (
-                <X className="h-5 w-5" aria-hidden="true" />
+                <X className="h-4 w-4 md:h-5 md:w-5" aria-hidden="true" />
               ) : (
-                <Menu className="h-5 w-5" aria-hidden="true" />
+                <Menu className="h-4 w-4 md:h-5 md:w-5" aria-hidden="true" />
               )}
             </button>
           </div>
