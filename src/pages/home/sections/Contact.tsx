@@ -1,6 +1,15 @@
-import { ChevronRight, Instagram, Mail } from "lucide-react";
+import { ChevronDown, ChevronRight, Instagram, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Reveal } from "@/components/Reveal";
+
+/* Every CTA on the site routes to this one form, so the reader had no way to
+   tell a sponsorship approach from a general enquiry. Kept deliberately short:
+   a long list pushes people onto "General" rather than sorting them. */
+const ENQUIRY_TYPES = [
+  "Sponsorship",
+  "Collaboration / Partnership",
+  "General Enquiry",
+];
 
 export function Contact() {
   const [result, setResult] = useState("");
@@ -34,6 +43,15 @@ export function Contact() {
 
     const formData = new FormData(event.currentTarget);
     formData.append("access_key", "c7a4369a-4d6b-470c-aea4-fc31383c2643");
+
+    /* Web3Forms reads `subject` for the notification email's subject line.
+       Without it every enquiry arrived under the same default heading, so the
+       dropdown value is promoted into the subject to make the inbox sortable
+       without opening each message. */
+    const enquiryType = formData.get("enquiry_type");
+    if (enquiryType) {
+      formData.append("subject", `TNPPL Website: ${enquiryType}`);
+    }
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -78,7 +96,7 @@ export function Contact() {
             <div className="flex flex-col justify-top gap-8">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-gold mb-3">
-                  Let's Collaborate
+                  Get In Touch
                 </p>
                 <h2 className="display-title-extended text-[clamp(3rem,6vw,4.5rem)] leading-[0.95]">
                   <span className="block text-foreground">Connect</span>
@@ -138,7 +156,7 @@ export function Contact() {
             {/* Right: Contact Form UI */}
             <div className="stat-card rounded-2xl p-6 sm:p-8">
               <h3 className="mb-6 text-[13px] font-bold uppercase tracking-widest text-gold">
-                Collaboration Form
+                Enquiry Form
               </h3>
               <form className="space-y-4" onSubmit={onSubmit}>
                 <div className="space-y-1.5">
@@ -208,6 +226,54 @@ export function Contact() {
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[16px] sm:text-sm text-foreground outline-none transition-all placeholder:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50"
                     required
                   />
+                </div>
+
+                {/* Sits directly above the message so the "what" fields group
+                    together, leaving the identity fields uninterrupted. */}
+                <div className="space-y-1.5">
+                  <label
+                    htmlFor="contact-type"
+                    className="text-[11px] font-semibold uppercase tracking-wider text-foreground/70"
+                  >
+                    Enquiry Type
+                  </label>
+                  <div className="relative">
+                    {/* appearance-none because the native arrow renders dark on
+                        dark in most browsers; the chevron below replaces it.
+                        `invalid:` dims the unchosen state to match the
+                        placeholder styling on every other field. */}
+                    <select
+                      id="contact-type"
+                      name="enquiry_type"
+                      defaultValue=""
+                      required
+                      className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-11 text-[16px] sm:text-sm text-foreground outline-none transition-all invalid:text-foreground/30 focus:border-gold/50 focus:bg-white/10 focus:ring-1 focus:ring-gold/50"
+                    >
+                      {/* Options need an explicit solid background: they render
+                          in an OS-drawn popup that does not inherit the
+                          translucent bg-white/5 above it. */}
+                      <option
+                        value=""
+                        disabled
+                        style={{ backgroundColor: "var(--ink)", color: "var(--foreground)" }}
+                      >
+                        Select an enquiry type
+                      </option>
+                      {ENQUIRY_TYPES.map((type) => (
+                        <option
+                          key={type}
+                          value={type}
+                          style={{ backgroundColor: "var(--ink)", color: "var(--foreground)" }}
+                        >
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
