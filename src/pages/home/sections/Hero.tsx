@@ -25,12 +25,20 @@ const STRIP = [
   { eyebrow: "Prize", value: "₹30L Prize Pool", icon: Award },
 ];
 
-const SPONSOR_ITEMS = [
-  { label: "Title Sponsor", name: "CavinKare", src: SPONSOR_CAVINS },
-  { label: "Co Sponsor", name: "GTB", src: SPONSOR_GTB },
-  { label: "Co Sponsor", name: "Indian Bank", src: SPONSOR_INDIANBANK },
-  { label: "LED Partner", name: "Pix Pe", src: SPONSOR_PIXPE },
-  { label: "Tech Partner", name: "Rizzfitt", src: SPONSOR_RIZZFITT },
+/* Grouped by tier, not one entry per logo: GTB and Indian Bank hold the same
+   Co Sponsor rank, so they share a single centred label instead of repeating
+   "Co Sponsor" twice in a row. Any tier can hold one logo or several. */
+const SPONSOR_ITEMS: { label: string; logos: { name: string; src: string }[] }[] = [
+  { label: "Title Sponsor", logos: [{ name: "CavinKare", src: SPONSOR_CAVINS }] },
+  {
+    label: "Co Sponsors",
+    logos: [
+      { name: "GTB", src: SPONSOR_GTB },
+      { name: "Indian Bank", src: SPONSOR_INDIANBANK },
+    ],
+  },
+  { label: "LED Partner", logos: [{ name: "Pix Pe", src: SPONSOR_PIXPE }] },
+  { label: "Tech Partner", logos: [{ name: "Rizzfitt", src: SPONSOR_RIZZFITT }] },
 ];
 
 import HERO_VIDEO from "@/assets/hero.mp4";
@@ -353,10 +361,12 @@ export function Hero() {
           </dl>
         </div>
         {/* ── Sponsor Logo Marquee ──
-            Width is capped below one set period (≈1344px at lg: 984px of logos
-            + 5×72px spacing). If the window is wider than one set you see the
-            same logo twice at once — which is what happened at ≥1456px
-            viewport. Shrinking the logos would widen that gap, not close it. */}
+            Width is capped below one set period (≈1312px at lg: 984px of logos
+            + 4×72px tier spacing + one 40px gap inside the Co Sponsors pair).
+            If the window is wider than one set you see the same logo twice at
+            once — which is what happened at ≥1456px viewport. Shrinking the
+            logos would widen that gap, not close it. max-w-300 (1200px) keeps
+            the container under the period with ~110px to spare. */}
         <div
           className="animate-fade-up mx-auto mt-8 w-full max-w-300 overflow-hidden rounded-xl"
           style={{
@@ -397,17 +407,23 @@ export function Hero() {
                     >
                       {item.label}
                     </span>
-                    <div className="mt-2 sm:mt-3 flex h-16 items-center justify-center sm:h-20 lg:h-24">
-                      <img
-                        src={item.src}
-                        alt={item.name}
-                        loading="eager"
-                        className={`w-auto object-contain ${
-                          item.name === "CavinKare"
-                            ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-110"
-                            : "h-10 sm:h-12 lg:h-14 max-w-48 sm:max-w-64"
-                        }`}
-                      />
+                    {/* Inner gap only separates logos sharing a label. The
+                        outer mx-* still separates one tier from the next, so
+                        the grouping stays legible at a glance. */}
+                    <div className="mt-2 flex h-16 items-center justify-center gap-6 sm:mt-3 sm:h-20 sm:gap-8 lg:h-24 lg:gap-10">
+                      {item.logos.map((logo) => (
+                        <img
+                          key={logo.name}
+                          src={logo.src}
+                          alt={logo.name}
+                          loading="eager"
+                          className={`w-auto object-contain ${
+                            logo.name === "CavinKare"
+                              ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-110"
+                              : "h-10 sm:h-12 lg:h-14 max-w-48 sm:max-w-64"
+                          }`}
+                        />
+                      ))}
                     </div>
                   </div>
                 )),
