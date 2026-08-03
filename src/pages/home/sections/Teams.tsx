@@ -37,7 +37,7 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "190 90% 62%",
     logo: logoChennai,
-    owner: <>Varalaxmi Sarathkumar <strong className="font-bold">&amp;</strong> Nova Lifespaces (Co-owner)</>,
+    owner: "Varalaxmi Sarathkumar",
     about: "Varalaxmi Sarathkumar is a renowned Tamil actress and entrepreneur.",
   },
   {
@@ -117,7 +117,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "198 85% 58%",
     logo: logoRamnad,
-    owner: <>Naagarjun Sethupathy <strong className="font-bold">&amp;</strong> Sneha Sethupathy</>,
+    owner: <><span className="block">Naagarjun Sethupathy</span><span className="block">&amp; Sneha Sethupathy</span></>,
   },
   {
     name: "Rockfort Terminatrz",

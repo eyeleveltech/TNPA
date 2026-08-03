@@ -32,26 +32,7 @@
     />
   </head>
   <body>
-    <!-- Preloader -->
-    <div id="preloader">
-      <img src="/TNPPL_S2_Favicon-05.webp" alt="TNPPL Loading..." class="loader-logo" />
-    </div>
-    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      // Hide preloader when window is fully loaded
-      window.addEventListener('load', function() {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-          setTimeout(() => {
-            preloader.classList.add('hide');
-            setTimeout(() => {
-              preloader.style.display = 'none';
-            }, 500);
-          }, 300); // minimum 300ms delay for smooth effect
-        }
-      });
-    </script>
   </body>
 </html>
