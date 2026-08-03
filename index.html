@@ -8,6 +8,19 @@
       name="description"
       content="TNPPL Season 2: four days of elite pickleball, 12 celebrity-owned franchises and 168 players at Express Avenue Atrium, Chennai, 17-20 September 2026."
     />
+    
+    <!-- Open Graph / WhatsApp / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TNPPL Season 2 | Tamil Nadu's Premier Pickleball League" />
+    <meta property="og:description" content="TNPPL Season 2: four days of elite pickleball, 12 celebrity-owned franchises and 168 players at Express Avenue Atrium, Chennai, 17-20 September 2026." />
+    <meta property="og:image" content="https://tnppl.in/tnpa-logo.webp" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="TNPPL Season 2 | Tamil Nadu's Premier Pickleball League" />
+    <meta property="twitter:description" content="TNPPL Season 2: four days of elite pickleball, 12 celebrity-owned franchises and 168 players at Express Avenue Atrium, Chennai, 17-20 September 2026." />
+    <meta property="twitter:image" content="https://tnppl.in/tnpa-logo.webp" />
+
     <link rel="icon" type="image/webp" href="/TNPPL_S2_Favicon-03.webp" sizes="16x16" />
     <link rel="icon" type="image/webp" href="/TNPPL_S2_Favicon-04.webp" sizes="32x32" />
     <link rel="apple-touch-icon" href="/TNPPL_S2_Favicon-05.webp" />
@@ -19,7 +32,26 @@
     />
   </head>
   <body>
+    <!-- Preloader -->
+    <div id="preloader">
+      <img src="/TNPPL_S2_Favicon-05.webp" alt="TNPPL Loading..." class="loader-logo" />
+    </div>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Hide preloader when window is fully loaded
+      window.addEventListener('load', function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+          setTimeout(() => {
+            preloader.classList.add('hide');
+            setTimeout(() => {
+              preloader.style.display = 'none';
+            }, 500);
+          }, 300); // minimum 300ms delay for smooth effect
+        }
+      });
+    </script>
   </body>
 </html>

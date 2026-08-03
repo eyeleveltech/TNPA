@@ -101,6 +101,7 @@ export function Contact() {
         </div>
 
         {/* ── Contact Layout ── */}
+        <Reveal delay={300}>
         <div className="mx-auto mt-12 max-w-5xl grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
           
           {/* Left: Info Cards */}
@@ -223,6 +224,7 @@ export function Contact() {
             </form>
           </div>
         </div>
+        </Reveal>
 
       </div>
     </section>

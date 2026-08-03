@@ -52,11 +52,14 @@ export function Sponsors() {
         </div>
 
         {/* Sponsor logos will go here in the future */}
+        <Reveal delay={300}>
         <div className="grid place-items-center py-10 opacity-30">
           <p className="text-sm font-semibold tracking-widest text-white uppercase">Sponsors TBA</p>
         </div>
+        </Reveal>
 
         {/* CTA strip */}
+        <Reveal delay={400}>
         <div className="stat-card mt-14 grid items-center gap-6 rounded-2xl px-3.5 py-6 sm:px-10 lg:grid-cols-[auto_minmax(0,1fr)_auto]">
           <span className="relative hidden h-16 w-16 shrink-0 place-items-center lg:grid">
             <span className="absolute inset-0 rounded-2xl" style={{ border: "1px solid color-mix(in oklab, var(--gold) 22%, transparent)" }} />
@@ -91,6 +94,7 @@ export function Sponsors() {
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );

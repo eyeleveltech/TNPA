@@ -1,4 +1,5 @@
 import { CheckCircle2, AlertCircle, Info } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export const SECTIONS = [
   {
@@ -61,7 +62,8 @@ export function RulesContent() {
       <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         <div className="space-y-10">
           {SECTIONS.map(({ title, icon: Icon, color, rules }) => (
-            <div key={title} className="stat-card rounded-2xl p-6 sm:p-8">
+            <Reveal key={title} delay={100}>
+            <div className="stat-card rounded-2xl p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <div
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
@@ -101,7 +103,10 @@ export function RulesContent() {
                 ))}
               </ul>
             </div>
+            </Reveal>
           ))}
+
+          <Reveal delay={200}>
 
           <div className="rounded-2xl border border-gold/30 bg-gold/5 p-6 sm:p-8">
             <p className="text-[13px] leading-relaxed text-foreground/65">
@@ -111,6 +116,7 @@ export function RulesContent() {
               </a>.
             </p>
           </div>
+          </Reveal>
         </div>
       </div>
     </section>

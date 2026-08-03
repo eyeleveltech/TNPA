@@ -1,4 +1,5 @@
 import { Trophy, ShieldCheck, AlertTriangle, ArrowRight } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export const LEAGUE_MATCHES = [
   { num: 1, name: "Men's Singles", points: 2, menOpen: 1, women: null, men50: null },
@@ -115,9 +116,11 @@ export function FormatDetails() {
     <div className="mx-auto max-w-[1600px] space-y-14 px-5 pb-20 sm:px-8 lg:px-10 xl:px-14">
       {/* ── Section 1: Overview ── */}
       <section className="border-t border-border pt-14">
+        <Reveal delay={100}>
         <h2 className="display-title text-[clamp(1.8rem,4vw,2.8rem)] text-foreground">
           Tournament <span className="text-gold-gradient">Overview</span>
         </h2>
+        </Reveal>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {/* Pools */}

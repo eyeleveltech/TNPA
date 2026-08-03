@@ -499,6 +499,7 @@ export function Teams() {
 
 
         {/* bottom CTA — auction feature card */}
+        <Reveal delay={300}>
         <div className="stat-card relative mt-14 overflow-hidden rounded-3xl text-center sm:mt-16">
           <div className="relative px-2 py-12 sm:px-14 sm:py-16">
             {/* star eyebrow */}
@@ -556,6 +557,7 @@ export function Teams() {
             </div>
           </div>
         </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -6,10 +6,12 @@ import TNPA_LOGO from "../assets/TNPA LOGO (1).webp";
 import IPA_LOGO from "../assets/ipa.webp";
 
 const FOOTER_LINKS = {
-  Information: [
+  Tournament: [
     { label: "Tournament Format", href: "/format" },
     { label: "Rules & Regulations", href: "/rules" },
     { label: "FAQs", href: "/faq" },
+  ],
+  "Media & Legal": [
     { label: "Media Kit", href: "/media-kit" },
     { label: "Privacy Policy", href: "/privacy" },
   ],
@@ -117,7 +119,7 @@ export function Footer() {
           </div>
 
           {/* link columns */}
-          <div className="grid grid-cols-2 gap-10 sm:gap-20 lg:gap-28 max-w-2xl">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 w-full">
             {Object.entries(FOOTER_LINKS).map(([col, links]) => (
               <div key={col}>
                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold">{col}</p>

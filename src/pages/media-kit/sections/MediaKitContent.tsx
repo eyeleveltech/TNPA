@@ -1,7 +1,9 @@
 import { Download, Mail, ChevronRight, Image, FileText, Film } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 import ASSET_PRIMARY_LOGO from "@/assets/TNPPL_S2_logo_blue.webp";
 import ASSET_REVERSED_LOGO from "@/assets/TNPPL_S2_logo.webp";
 import ASSET_TNPA_LOGO from "@/assets/TNPA LOGO (1).webp";
+import ASSET_BRAND_MANUAL from "@/assets/TNPPL_BrandGuidelines.pdf";
 
 type AssetItem = {
   name: string;
@@ -26,19 +28,19 @@ export const ASSETS: {
         name: "TNPPL Primary Logo",
         size: "Transparent background, multiple sizes",
         downloadUrl: ASSET_PRIMARY_LOGO,
-        fileName: "TNPPL_Primary_Logo.webp",
+        fileName: "TNPPL_Primary_Logo.png",
       },
       {
         name: "TNPPL Logo Reversed (White on Dark)",
         size: "For dark backgrounds",
         downloadUrl: ASSET_REVERSED_LOGO,
-        fileName: "TNPPL_Logo_Reversed.webp",
+        fileName: "TNPPL_Logo_Reversed.png",
       },
       {
         name: "TNPA Official Logo",
         size: "Organizing body",
         downloadUrl: ASSET_TNPA_LOGO,
-        fileName: "TNPA_Official_Logo.webp",
+        fileName: "TNPA_Official_Logo.png",
       },
     ],
     note: "Available on request — email tnstatepa@gmail.com",
@@ -48,7 +50,12 @@ export const ASSETS: {
     icon: FileText,
     color: "190 85% 58%",
     items: [
-      { name: "TNPPL Brand Identity Manual", size: "Colors, typography, usage rules" },
+      {
+        name: "TNPPL Brand Identity Manual",
+        size: "Colors, typography, usage rules",
+        downloadUrl: ASSET_BRAND_MANUAL,
+        fileName: "TNPPL_BrandGuidelines.pdf",
+      },
       { name: "Official Color Palette", size: "Navy #011837 · Gold #FFD000 · Chalk #F6F6F6" },
       { name: "Typography Guide", size: "Fontspring Podium (display) · Inter (body)" },
     ],
@@ -85,10 +92,67 @@ export const PRESS_CONTACTS = [
 ];
 
 export function MediaKitContent() {
+  const handleDownloadAsset = async (e: React.MouseEvent, url: string, targetName: string) => {
+    e.preventDefault();
+    if (targetName.toLowerCase().endsWith(".pdf") || url.toLowerCase().includes(".pdf")) {
+      const pdfFileName = targetName.toLowerCase().endsWith(".pdf")
+        ? targetName
+        : `${targetName.replace(/\.[^/.]+$/, "")}.pdf`;
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = pdfFileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+
+    const finalFileName = targetName.endsWith(".png")
+      ? targetName
+      : `${targetName.replace(/\.[^/.]+$/, "")}.png`;
+
+    try {
+      const img = new window.Image();
+      img.crossOrigin = "anonymous";
+      img.src = url;
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        const pngUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = pngUrl;
+        a.download = finalFileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        return;
+      }
+    } catch (err) {
+      console.warn("Canvas PNG conversion fallback", err);
+    }
+
+    // Direct fallback
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = finalFileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <section className="py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
         {/* CTA banner */}
+        <Reveal delay={100}>
         <div
           className="stat-card mb-12 rounded-2xl p-6 sm:flex sm:items-center sm:justify-between sm:p-8"
           style={{
@@ -111,8 +175,10 @@ export function MediaKitContent() {
             Request Kit
           </a>
         </div>
+        </Reveal>
 
         {/* Asset categories */}
+        <Reveal delay={200}>
         <div className="grid gap-6 lg:grid-cols-2">
           {ASSETS.map(({ category, icon: Icon, color, items, note }) => (
             <div key={category} className="stat-card rounded-2xl p-6">
@@ -146,8 +212,7 @@ export function MediaKitContent() {
                         <a
                           href={item.downloadUrl}
                           download={item.fileName || item.name}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          onClick={(e) => handleDownloadAsset(e, item.downloadUrl!, item.fileName || item.name)}
                           className="group block"
                         >
                           <p className="text-[13px] font-semibold text-foreground group-hover:text-gold transition-colors">
@@ -166,8 +231,7 @@ export function MediaKitContent() {
                       <a
                         href={item.downloadUrl}
                         download={item.fileName || item.name}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        onClick={(e) => handleDownloadAsset(e, item.downloadUrl!, item.fileName || item.name)}
                         className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold hover:bg-gold hover:text-ink transition-all duration-200 cursor-pointer shadow-sm"
                         title={`Download ${item.name}`}
                       >
@@ -181,8 +245,10 @@ export function MediaKitContent() {
             </div>
           ))}
         </div>
+        </Reveal>
 
         {/* Media accreditation */}
+        <Reveal delay={300}>
         <div className="mt-12 stat-card rounded-2xl p-6 sm:p-8">
           <h2 className="display-title text-xl text-foreground sm:text-2xl">
             Media <span className="text-gold-gradient">Accreditation</span>
@@ -213,6 +279,7 @@ export function MediaKitContent() {
             <ChevronRight className="h-4 w-4" />
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );

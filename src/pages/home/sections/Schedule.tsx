@@ -322,6 +322,7 @@ export function Schedule() {
         </div>
 
         {/* ── Bottom stats strip ── */}
+        <Reveal delay={300}>
         <div ref={bottomStatsRef} className="stat-card mt-14 grid grid-cols-2 gap-6 rounded-2xl px-6 py-7 sm:px-10 lg:mt-16 lg:grid-cols-4">
           {BOTTOM_STATS.map((s, i) => {
             const Icon = s.icon;
@@ -355,8 +356,10 @@ export function Schedule() {
             );
           })}
         </div>
+        </Reveal>
 
         {/* CTA strip */}
+        <Reveal delay={400}>
         <div className="mt-10 text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/55">
             Entry is Free
@@ -380,6 +383,7 @@ export function Schedule() {
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );
