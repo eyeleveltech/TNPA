@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   CalendarDays,
   MapPin,
-  ShieldCheck,
-  Users,
 } from "lucide-react";
 
 import teamPhoto from "@/assets/TEAM-optimized.webp";
@@ -17,19 +15,11 @@ import { Reveal } from "@/components/Reveal";
 const SDAT_LOGO = sdatNewLogo;
 const IPA_LOGO = ipaLogoImg;
 
+/* Franchise and player counts live in the hero strip and, with context, in
+   the Teams and Players sections. Restating them here made the same four
+   numbers the fourth stat block on one page. What is left is what only this
+   section says: how long it runs and who sanctions it. */
 const STATS = [
-  {
-    icon: ShieldCheck,
-    value: "12",
-    label: "Franchises",
-    copy: "District-based teams competing for pride and glory.",
-  },
-  {
-    icon: Users,
-    value: "168",
-    label: "Players",
-    copy: "The best of Tamil Nadu, from age 18 to 50+.",
-  },
   {
     icon: CalendarDays,
     value: "4",
@@ -169,7 +159,7 @@ export function About() {
 
         {/* ---------- stats ---------- */}
         <Reveal delay={500}>
-          <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-0">
+          <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:gap-0">
             {STATS.map((s, i) => (
               <div
                 key={s.label}

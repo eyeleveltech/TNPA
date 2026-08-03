@@ -1,26 +1,12 @@
-import { ChevronRight, Users2, Star, Instagram, ClipboardList } from "lucide-react";
+import { ChevronRight, Instagram, ClipboardList } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 import SEASON_1_WINNERS from "@/assets/season_1_winners.webp";
 
-/* Deliberately does NOT restate squad size or the prize pool. Squad size is
-   already carried by the composition breakdown and the paragraph above it;
-   the prize pool is stated in the hero and again in the format strip below.
-   Both were appearing three or four times on a single page. */
-const SQUAD_STATS = [
-  {
-    value: "168",
-    label: "Players",
-    copy: "Elite athletes from across Tamil Nadu selected for Season 2.",
-    icon: Users2,
-  },
-  {
-    value: "30",
-    label: "League Ties",
-    copy: "Round-robin ties followed by Quarterfinals, Semifinals and the Final.",
-    icon: Star,
-  },
-];
+/* The stat grid that used to sit here restated this section's own content:
+   168 is already the h2 and the paragraph beside it, and 30 League Ties is
+   the first cell of the format strip below. Squad size and the prize pool
+   were removed earlier for the same reason. */
 
 const COMPOSITION = [
   { role: "Men", count: 8, accent: "190 90% 60%" },
@@ -51,11 +37,49 @@ export function Players() {
       />
 
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-        {/* ── Squad format + stats ── */}
-        <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+        {/* ── Squad format ──
+            Single column: heading on top, squad card beneath. The old
+            two-column split left the right side empty once its stat grid was
+            removed as duplicated content. */}
+        <div className="text-center">
+          <Reveal delay={60}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
+                The Players
+              </span>
+              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+            </div>
+          </Reveal>
 
-          {/* Left: squad format feature card */}
-          <Reveal delay={100}>
+          <Reveal delay={140}>
+            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
+              <span className="block text-foreground">The Heart of</span>
+              <span className="text-gold-gradient block">TNPPL</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <p
+              className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              From district champions to national-level talent, 168 pickleball players will
+              represent Tamil Nadu&rsquo;s finest. Different districts. One goal.
+            </p>
+          </Reveal>
+
+          <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
+            <span className="h-px w-20 bg-gold/40" />
+            <span className="text-gold text-xs animate-star-pickleball">★</span>
+            <span className="h-px w-20 bg-gold/40" />
+          </div>
+        </div>
+
+        {/* Wider than the stacked version was: the card now splits into
+            image-left / content-right internally and needs the room. */}
+        <div className="mx-auto mt-10 max-w-6xl lg:mt-12">
+          <Reveal delay={300}>
           <div
             className="stat-card relative min-h-120 overflow-hidden rounded-2xl"
             style={{
@@ -72,32 +96,38 @@ export function Players() {
               <path d="M150 0 L200 40 L120 210 L165 250 L90 400 L140 230 L100 195 Z" fill="var(--gold)" />
             </svg>
 
-            {/* left-side gradient for legibility */}
+            {/* Legibility gradient now runs to the LEFT: the copy moved to the
+                right column, so that is the side that needs the darker ground. */}
             <div
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to right, var(--ink) 40%, color-mix(in oklab, var(--ink) 60%, transparent) 65%, transparent 80%)",
+                  "linear-gradient(to left, var(--ink) 40%, color-mix(in oklab, var(--ink) 60%, transparent) 65%, transparent 80%)",
               }}
             />
 
-            <div className="relative z-10 flex h-full flex-col p-2 sm:p-8">
-              <div>
-                <div className="mb-2.5 sm:mb-5 overflow-hidden rounded-xl border border-gold/30 shadow-lg">
-                  <img
-                    src={SEASON_1_WINNERS}
-                    alt="TNPPL Season 1 Champions"
-                    className="h-48 sm:h-52 w-full object-cover object-center transition-transform duration-500 hover:scale-105"
-                    loading="eager"
-                  />
-                </div>
+            <div className="relative z-10 grid gap-6 p-4 sm:gap-8 sm:p-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-stretch">
+              {/* image — left */}
+              <div className="overflow-hidden rounded-xl border border-gold/30 shadow-lg lg:h-full">
+                <img
+                  src={SEASON_1_WINNERS}
+                  alt="TNPPL Season 1 Champions"
+                  className="h-52 w-full object-cover object-center transition-transform duration-500 hover:scale-105 sm:h-64 lg:h-full lg:min-h-115"
+                  loading="eager"
+                />
+              </div>
+
+              {/* content — right */}
+              <div className="flex flex-col">
                 <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-gold">
                   Season 2 Squad Format
                 </p>
-                <h2 className="display-title-extended mt-3 text-4xl leading-none sm:text-5xl">
+                {/* h3, not h2: this card now sits beneath the section's
+                    "The Heart of TNPPL" heading rather than beside it. */}
+                <h3 className="display-title-extended mt-3 text-3xl leading-none sm:text-4xl">
                   <span className="block font-black text-foreground" style={{ fontFamily: "Arial, sans-serif" }}>168</span>
                   <span className="text-gold-gradient block">Elite Athletes</span>
-                </h2>
+                </h3>
 
                 <p
                   className="mt-4 max-w-sm text-[13px] leading-relaxed text-foreground/70"
@@ -141,106 +171,42 @@ export function Players() {
                     <span className="font-display text-2xl font-black text-gold">14</span>
                   </div>
                 </div>
-              </div>
 
-              {/* equal space above */}
-              <div className="flex-1 min-h-6" />
+                {/* spacer pins the banner to the bottom of the column */}
+                <div className="flex-1 min-h-6" />
 
-              {/* announcement banner */}
-              <div
-                className="rounded-xl border px-5 py-4 shrink-0"
-                style={{
-                  borderColor: "color-mix(in oklab, var(--gold) 40%, transparent)",
-                  background: "color-mix(in oklab, var(--gold) 6%, transparent)",
-                }}
-              >
-                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-gold">
-                  Squad Announcement
-                </p>
-                <p
-                  className="mt-1.5 text-[13px] leading-relaxed text-foreground/80"
-                  style={{ fontFamily: "Arial, sans-serif" }}
+                {/* announcement banner */}
+                <div
+                  className="rounded-xl border px-5 py-4 shrink-0"
+                  style={{
+                    borderColor: "color-mix(in oklab, var(--gold) 40%, transparent)",
+                    background: "color-mix(in oklab, var(--gold) 6%, transparent)",
+                  }}
                 >
-                  Player squads will be revealed at the Grand Player Auction at ITC Grand Chola,
-                  Chennai. Follow{" "}
-                  <a
-                    href="https://www.instagram.com/tamilnadupickleball.assn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gold underline underline-offset-2"
+                  <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-gold">
+                    Squad Announcement
+                  </p>
+                  <p
+                    className="mt-1.5 text-[13px] leading-relaxed text-foreground/80"
+                    style={{ fontFamily: "Arial, sans-serif" }}
                   >
-                    @tamilnadupickleball.assn
-                  </a>{" "}
-                  for live updates.
-                </p>
+                    Player squads will be revealed at the Grand Player Auction at ITC Grand Chola,
+                    Chennai. Follow{" "}
+                    <a
+                      href="https://www.instagram.com/tamilnadupickleball.assn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold underline underline-offset-2"
+                    >
+                      @tamilnadupickleball.assn
+                    </a>{" "}
+                    for live updates.
+                  </p>
+                </div>
               </div>
-
-              {/* equal space below */}
-              <div className="flex-1 min-h-6" />
             </div>
           </div>
           </Reveal>
-
-          {/* Right: heading + stat grid */}
-          <div className="flex flex-col justify-center">
-            <Reveal delay={60}>
-              <div className="flex items-center gap-3">
-                <span className="h-px w-10 bg-gold/50 sm:w-16" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-                  The Players
-                </span>
-                <span className="h-px w-10 bg-gold/50 sm:w-16" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={140}>
-              <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-                <span className="block text-foreground">The Heart of</span>
-                <span className="text-gold-gradient block">TNPPL</span>
-              </h2>
-            </Reveal>
-
-            <Reveal delay={220}>
-              <p
-                className="mt-5 max-w-md text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-                style={{ fontFamily: "Arial, sans-serif" }}
-              >
-                From district champions to national-level talent, 168 pickleball players will
-                represent Tamil Nadu's finest. Different districts. One goal.
-              </p>
-            </Reveal>
-
-            <div className="mt-3 flex items-center gap-3" aria-hidden>
-              <span className="h-px w-20 bg-gold/40" />
-              <span className="text-gold text-xs animate-star-pickleball">★</span>
-            </div>
-
-            <Reveal delay={300}>
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              {SQUAD_STATS.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <div key={s.label} className="stat-card rounded-xl p-5">
-                    {/* luxury icon ring */}
-                    <span className="relative mb-4 grid h-14 w-14 place-items-center">
-                      <span className="absolute inset-0 rounded-full" style={{ border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)" }} />
-                      <span className="absolute inset-1.25 rounded-full" style={{
-                        background: "radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--gold) 22%, transparent), color-mix(in oklab, var(--gold) 5%, transparent))",
-                        border: "1px solid color-mix(in oklab, var(--gold) 45%, transparent)",
-                      }} />
-                      <Icon className="relative h-5 w-5 text-gold" strokeWidth={1.4} aria-hidden />
-                    </span>
-                    <p className="font-display text-3xl font-black leading-none text-gold">{s.value}</p>
-                    <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.2em] text-foreground/80">
-                      {s.label}
-                    </p>
-                    <p className="mt-2 text-[12px] leading-relaxed text-foreground/55">{s.copy}</p>
-                  </div>
-                );
-              })}
-            </div>
-            </Reveal>
-          </div>
         </div>
 
         {/* ── Format breakdown strip ── */}

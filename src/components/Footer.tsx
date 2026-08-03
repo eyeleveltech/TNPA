@@ -19,6 +19,9 @@ const FOOTER_LINKS = {
     { label: "Sponsorship Opportunities", href: "/sponsorship" },
     { label: "Brand Collaboration", href: "/#contact" },
     { label: "Franchise Enquiries", href: "/#contact" },
+    // General enquiry. Unlike the two above it does not set the focusCollab
+    // flag, so it scrolls to the section without hijacking the form field.
+    { label: "Contact", href: "/#contact" },
   ],
 };
 

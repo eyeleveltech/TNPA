@@ -26,7 +26,18 @@ export function SponsorshipHero() {
               className="display-title mx-auto mt-5"
               style={{ fontSize: "clamp(2.6rem, 7vw, 5rem)" }}
             >
-              <span className="block text-foreground">Sponsorship <span style={{ fontFamily: "Arial, sans-serif" }}>&amp;</span></span>
+              {/* Arial Black, not plain Arial: PODIUM Sharp's ampersand is
+                  escaped like other punctuation, but at display size a regular
+                  Arial "&" reads thin and curly beside the heavy condensed
+                  caps. Matches the treatment in FormatDetails. */}
+              <span className="block text-foreground">
+                Sponsorship{" "}
+                <span
+                  style={{ fontFamily: "'Arial Black', 'Arial', sans-serif", fontWeight: 900 }}
+                >
+                  &amp;
+                </span>
+              </span>
               <span className="text-gold-gradient block">Partnership</span>
               <span className="block text-foreground">Opportunities</span>
             </h1>

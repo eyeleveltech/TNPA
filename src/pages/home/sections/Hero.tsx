@@ -133,7 +133,13 @@ export function Hero() {
       </div>
 
       <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col px-5 pb-10 sm:px-8 sm:pb-12 lg:px-10 lg:pb-14 xl:px-14">
-        <div className="flex flex-1 items-start sm:items-center pt-24 sm:pt-28 lg:pt-32">
+        {/* flex-none on mobile is load-bearing. The section is min-h-svh and
+            this row used to be flex-1 at every width, so it absorbed all the
+            leftover height. Combined with items-start that space collected in
+            one lump *below* the CTAs and above the stat card, reading as a
+            ~250px hole. From sm up, items-center distributes it and the row
+            can grow as intended. */}
+        <div className="flex flex-none sm:flex-1 items-start sm:items-center pt-24 sm:pt-28 lg:pt-32">
           <div className="w-full max-w-full sm:max-w-160 lg:max-w-[54%] xl:max-w-[60%]">
             {/* Presented-by lockup. The TNPPL S2 logo used to sit here too, but
                 the <h1> below now spells out the same words — it survives in the

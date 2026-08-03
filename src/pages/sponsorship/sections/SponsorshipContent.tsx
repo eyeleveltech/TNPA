@@ -1,4 +1,5 @@
-import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe, Lock } from "lucide-react";
+import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe, Lock, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 
 export const TIERS = [
@@ -250,15 +251,20 @@ export function SponsorshipContent() {
                       Slot Reserved
                     </button>
                   ) : (
-                    <a
-                      href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
+                    <Link
+                      to="/#contact"
+                      onClick={() => {
+                        // Survives the navigation; Contact.tsx reads it and
+                        // focuses the name field on arrival.
+                        sessionStorage.setItem("focusCollab", "true");
+                      }}
                       className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-[12px] font-bold uppercase tracking-widest transition-colors ${
                         tier.highlight ? "btn-gold" : "btn-outline-light"
                       }`}
                     >
                       Enquire Now
                       <ChevronRight className="h-4 w-4" />
-                    </a>
+                    </Link>
                   )}
                 </div>
               );
@@ -271,35 +277,45 @@ export function SponsorshipContent() {
       {/* CTA */}
       <section className="border-t border-border py-16 sm:py-20">
         <div className="mx-auto max-w-[1600px] px-5 text-center sm:px-8 lg:px-10 xl:px-14">
-          <h2 className="display-title text-[clamp(1.9rem,4.5vw,3.2rem)] text-foreground">
+          {/* Constrained + balanced: this is the only heading on the page that
+              is one long run rather than explicit block spans, so without a
+              measure it can stretch the full 1488px container against a 576px
+              paragraph. text-balance evens the two lines. */}
+          <h2 className="display-title mx-auto max-w-4xl text-balance text-[clamp(1.9rem,4.5vw,3.2rem)] text-foreground">
             Ready to be part of <span className="text-gold-gradient">something bigger<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]" style={{ fontFamily: "Arial, sans-serif" }}>
             Reach out to explore the right partnership for your brand. We will share the full
             sponsorship deck, availability matrix, and custom options.
           </p>
-          <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
-            <a
-              href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry — TNPPL Season 2"
-              className="btn-gold inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
-            >
-              Email Us
-              <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </a>
-            <a
-              href="/#contact"
+          {/* One CTA. "Call Us Directly" never placed a call (it scrolled to
+              the form) and "Email Us" duplicated the address shown below, so
+              both became a single contact button with email as an icon link. */}
+          <div className="mt-8 flex justify-center">
+            <Link
+              to="/#contact"
               onClick={() => {
                 sessionStorage.setItem("focusCollab", "true");
               }}
-              className="btn-outline-light inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
+              className="btn-gold inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.08em] sm:px-8 sm:py-4 sm:text-sm"
             >
-              Call Us Directly
+              Contact Us
               <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            </Link>
+          </div>
+
+          <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-3">
+            <p className="text-xs text-foreground/40">
+              For detailed packages, pricing, and availability
+            </p>
+            <a
+              href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry"
+              className="inline-flex items-center gap-1.5 text-xs text-foreground/60 transition-colors hover:text-gold"
+            >
+              <Mail className="h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+              tnstatepa@gmail.com
             </a>
           </div>
-          <p className="mt-6 text-xs text-foreground/40">
-            For detailed packages, pricing, and availability — tnstatepa@gmail.com
-          </p>
         </div>
       </section>
     </>
