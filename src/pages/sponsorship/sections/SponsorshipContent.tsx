@@ -1,4 +1,5 @@
 import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe, Lock } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export const TIERS = [
   {
@@ -101,6 +102,7 @@ export function SponsorshipContent() {
       {/* Reach Numbers */}
       <section className="border-y border-border bg-card/30 py-10">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
+          <Reveal delay={100}>
           <ul className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {REACH.map((r) => (
               <li key={r.label} className="text-center">
@@ -114,6 +116,7 @@ export function SponsorshipContent() {
               </li>
             ))}
           </ul>
+          </Reveal>
         </div>
       </section>
 
@@ -125,6 +128,7 @@ export function SponsorshipContent() {
               Why Associate with <span className="text-gold-gradient">TNPPL<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
             </h2>
           </div>
+          <Reveal delay={100}>
           <div className="grid gap-6 sm:grid-cols-3">
             {ASSOCIATION.map((a) => {
               const Icon = a.icon;
@@ -139,6 +143,7 @@ export function SponsorshipContent() {
               );
             })}
           </div>
+          </Reveal>
         </div>
       </section>
 
@@ -162,6 +167,7 @@ export function SponsorshipContent() {
             </p>
           </div>
 
+          <Reveal delay={100}>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {TIERS.map((tier) => {
               const Icon = tier.icon;
@@ -258,6 +264,7 @@ export function SponsorshipContent() {
               );
             })}
           </div>
+          </Reveal>
         </div>
       </section>
 

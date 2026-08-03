@@ -168,119 +168,120 @@ export function About() {
         </div>
 
         {/* ---------- stats ---------- */}
-        <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-0">
-          {STATS.map((s, i) => (
-            <div
-              key={s.label}
-              className={`animate-fade-up flex min-w-0 items-start gap-3 lg:gap-2 xl:gap-5 lg:px-3 xl:px-7 ${i > 0 ? "lg:border-l lg:border-border" : ""
-                }`}
-              style={{ animationDelay: `${420 + i * 100}ms` }}
-            >
-              {/* luxury double-ring icon */}
-              <span
-                className={`relative grid h-12 w-12 sm:h-16 sm:w-16 lg:h-12 lg:w-12 xl:h-16 xl:w-16 shrink-0 place-items-center rounded-full ${
-                  inView ? "animate-icon-loop" : ""
-                }`}
-                style={{ animationDelay: inView ? `${80 + i * 110}ms` : "0ms" }}
+        <Reveal delay={500}>
+          <div ref={statsRef} className="mt-14 grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-0">
+            {STATS.map((s, i) => (
+              <div
+                key={s.label}
+                className={`flex min-w-0 items-start gap-3 lg:gap-2 xl:gap-5 lg:px-3 xl:px-7 ${i > 0 ? "lg:border-l lg:border-border" : ""}`}
               >
-                {/* outer ring */}
+                {/* luxury double-ring icon */}
                 <span
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)",
-                  }}
-                />
-                {/* tick marks — 4 corners */}
-                <span className="absolute -inset-1 rounded-full opacity-40"
-                  style={{
-                    background:
-                      "conic-gradient(from 0deg, transparent 0% 10%, color-mix(in oklab, var(--gold) 60%, transparent) 10% 12%, transparent 12% 35%, color-mix(in oklab, var(--gold) 60%, transparent) 35% 37%, transparent 37% 60%, color-mix(in oklab, var(--gold) 60%, transparent) 60% 62%, transparent 62% 85%, color-mix(in oklab, var(--gold) 60%, transparent) 85% 87%, transparent 87% 100%)",
-                  }}
-                />
-                {/* inner filled ring */}
-                <span
-                  className="absolute inset-1.5 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--gold) 22%, transparent), color-mix(in oklab, var(--gold) 5%, transparent))",
-                    border: "1px solid color-mix(in oklab, var(--gold) 50%, transparent)",
-                  }}
-                />
-                <s.icon className="relative h-6 w-6 text-gold" aria-hidden="true" />
-              </span>
-              <div className="min-w-0">
-                <div className="flex flex-col">
-                  <p className="text-xl sm:text-2xl lg:text-lg xl:text-2xl font-bold text-gold leading-tight" style={{ fontFamily: "Arial, sans-serif" }}>{s.value}</p>
-                  <p className="text-xs sm:text-sm lg:text-xs xl:text-sm font-semibold text-foreground mt-0.5 whitespace-nowrap" style={{ fontFamily: "Arial, sans-serif" }}>{s.label}</p>
+                  className={`relative grid h-12 w-12 sm:h-16 sm:w-16 lg:h-12 lg:w-12 xl:h-16 xl:w-16 shrink-0 place-items-center rounded-full ${
+                    inView ? "animate-icon-loop" : ""
+                  }`}
+                  style={{ animationDelay: inView ? `${80 + i * 110}ms` : "0ms" }}
+                >
+                  {/* outer ring */}
+                  <span
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      border: "1px solid color-mix(in oklab, var(--gold) 20%, transparent)",
+                    }}
+                  />
+                  {/* tick marks — 4 corners */}
+                  <span className="absolute -inset-1 rounded-full opacity-40"
+                    style={{
+                      background:
+                        "conic-gradient(from 0deg, transparent 0% 10%, color-mix(in oklab, var(--gold) 60%, transparent) 10% 12%, transparent 12% 35%, color-mix(in oklab, var(--gold) 60%, transparent) 35% 37%, transparent 37% 60%, color-mix(in oklab, var(--gold) 60%, transparent) 60% 62%, transparent 62% 85%, color-mix(in oklab, var(--gold) 60%, transparent) 85% 87%, transparent 87% 100%)",
+                    }}
+                  />
+                  {/* inner filled ring */}
+                  <span
+                    className="absolute inset-1.5 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--gold) 22%, transparent), color-mix(in oklab, var(--gold) 5%, transparent))",
+                      border: "1px solid color-mix(in oklab, var(--gold) 50%, transparent)",
+                    }}
+                  />
+                  <s.icon className="relative h-6 w-6 text-gold" aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <div className="flex flex-col">
+                    <p className="text-xl sm:text-2xl lg:text-lg xl:text-2xl font-bold text-gold leading-tight" style={{ fontFamily: "Arial, sans-serif" }}>{s.value}</p>
+                    <p className="text-xs sm:text-sm lg:text-xs xl:text-sm font-semibold text-foreground mt-0.5 whitespace-nowrap" style={{ fontFamily: "Arial, sans-serif" }}>{s.label}</p>
+                  </div>
+                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>{s.copy}</p>
                 </div>
-                <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>{s.copy}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
 
         {/* ---------- partners ---------- */}
-        <div
-          className="animate-fade-up stat-card mt-14 grid gap-8 rounded-2xl px-6 py-8 sm:px-10 xl:px-4 2xl:px-10 lg:grid-cols-3 lg:gap-0"
-          style={{ animationDelay: "840ms" }}
-        >
-          <div className="flex w-full justify-center">
-            <div className="flex flex-col items-center gap-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Organized by
-              </p>
-              <div className="flex items-center gap-4 text-left lg:gap-6">
-                <img
-                  src={TNPA_LOGO}
-                  alt="Tamil Nadu Pickleball Association logo"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="h-16 w-auto shrink-0"
-                />
+        <Reveal delay={600}>
+          <div
+            className="stat-card mt-14 grid gap-8 rounded-2xl px-6 py-8 sm:px-10 xl:px-4 2xl:px-10 lg:grid-cols-3 lg:gap-0"
+          >
+            <div className="flex w-full justify-center">
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
+                  Organized by
+                </p>
+                <div className="flex items-center gap-4 text-left lg:gap-6">
+                  <img
+                    src={TNPA_LOGO}
+                    alt="Tamil Nadu Pickleball Association logo"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    className="h-16 w-auto shrink-0"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
-            <div className="flex flex-col items-center gap-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Affiliated with
-              </p>
-              <div className="flex items-center gap-4 text-left lg:gap-6">
-                <img
-                  src={IPA_LOGO}
-                  alt="Indian Pickleball Association logo"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="h-16 w-auto shrink-0"
-                />
+            <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
+                  Affiliated with
+                </p>
+                <div className="flex items-center gap-4 text-left lg:gap-6">
+                  <img
+                    src={IPA_LOGO}
+                    alt="Indian Pickleball Association logo"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    className="h-16 w-auto shrink-0"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
-            <div className="flex flex-col items-center gap-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
-                Co-sanctioned by
-              </p>
-              <div className="flex items-center gap-4 text-left lg:gap-6">
-                <img
-                  src={SDAT_LOGO}
-                  alt="Sports Development Authority of Tamil Nadu logo"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="h-16 w-auto shrink-0"
-                />
+            <div className="flex w-full justify-center border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pt-0">
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold text-center w-full">
+                  Co-sanctioned by
+                </p>
+                <div className="flex items-center gap-4 text-left lg:gap-6">
+                  <img
+                    src={SDAT_LOGO}
+                    alt="Sports Development Authority of Tamil Nadu logo"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    className="h-16 w-auto shrink-0"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

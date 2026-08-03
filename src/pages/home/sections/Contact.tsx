@@ -68,43 +68,29 @@ export function Contact() {
       />
 
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-        {/* heading */}
-        <div className="text-center">
-          <Reveal delay={60}>
-            <div className="flex items-center justify-center gap-3">
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-                Get in Touch
-              </span>
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
-            </div>
-          </Reveal>
-          <Reveal delay={140}>
-            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-              <span className="text-foreground">Connect with </span>
-              <span className="text-gold-gradient">TNPPL</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={220}>
-            <p
-              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              For partnership enquiries, media requests, or general information — reach us directly.
-            </p>
-          </Reveal>
-          <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
-            <span className="h-px w-20 bg-gold/40" />
-            <span className="text-xs text-gold animate-star-pickleball">★</span>
-            <span className="h-px w-20 bg-gold/40" />
-          </div>
-        </div>
 
         {/* ── Contact Layout ── */}
-        <div className="mx-auto mt-12 max-w-5xl grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+        <Reveal delay={300}>
+        <div className="mx-auto mt-6 max-w-5xl grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
           
           {/* Left: Info Cards */}
-          <div className="space-y-4">
+          <div className="flex flex-col justify-between gap-8">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-gold mb-3">Let's Collaborate</p>
+              <h2 className="display-title-extended text-[clamp(3rem,6vw,4.5rem)] leading-[0.95]">
+                <span className="block text-foreground">Connect</span>
+                <span className="block text-foreground">With</span>
+                <span className="block text-gold-gradient">TNPPL</span>
+              </h2>
+              <p
+                className="mt-5 max-w-sm text-[14px] leading-relaxed text-foreground/80"
+                style={{ fontFamily: "Arial, sans-serif" }}
+              >
+                For partnership enquiries, media requests, or general information.
+              </p>
+            </div>
+
+            <div className="space-y-4">
             {/* Email */}
             <div className="stat-card flex flex-col justify-center rounded-2xl px-6 py-6">
               <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-gold/80 mb-3">Direct Email</p>
@@ -133,6 +119,7 @@ export function Contact() {
                 </div>
                 @tamilnadupickleball.assn
               </a>
+            </div>
             </div>
           </div>
 
@@ -223,6 +210,7 @@ export function Contact() {
             </form>
           </div>
         </div>
+        </Reveal>
 
       </div>
     </section>

@@ -55,6 +55,7 @@ export function Players() {
         <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
 
           {/* Left: squad format feature card */}
+          <Reveal delay={100}>
           <div
             className="stat-card relative min-h-120 overflow-hidden rounded-2xl"
             style={{
@@ -178,6 +179,7 @@ export function Players() {
               <div className="flex-1 min-h-6" />
             </div>
           </div>
+          </Reveal>
 
           {/* Right: heading + stat grid */}
           <div className="flex flex-col justify-center">
@@ -213,6 +215,7 @@ export function Players() {
               <span className="text-gold text-xs animate-star-pickleball">★</span>
             </div>
 
+            <Reveal delay={300}>
             <div className="mt-8 grid grid-cols-2 gap-4">
               {SQUAD_STATS.map((s) => {
                 const Icon = s.icon;
@@ -236,10 +239,12 @@ export function Players() {
                 );
               })}
             </div>
+            </Reveal>
           </div>
         </div>
 
         {/* ── Format breakdown strip ── */}
+        <Reveal delay={400}>
         <div className="stat-card mt-12 grid gap-6 rounded-2xl px-6 py-7 sm:px-10 lg:mt-16 lg:grid-cols-3">
           <div className="flex flex-col items-center gap-2 text-center lg:border-r lg:border-border">
             <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-foreground/50">League Stage</p>
@@ -260,9 +265,11 @@ export function Players() {
             <p className="text-[12px] text-foreground/55">One champion. ₹30L prize pool on the line.</p>
           </div>
         </div>
+        </Reveal>
 
         {/* CTA — the full format page was previously reachable only from a
             single footer link, despite being the deepest content on the site. */}
+        <Reveal delay={500}>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <Link
             to="/format"
@@ -283,6 +290,7 @@ export function Players() {
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );

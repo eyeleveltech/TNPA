@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/Reveal";
+
 export const SECTIONS = [
   {
     title: "Information We Collect",
@@ -100,6 +102,7 @@ export function PrivacyContent() {
           {/* Content */}
           <div className="space-y-8">
             {SECTIONS.map(({ title, body }) => (
+              <Reveal delay={100}>
               <div
                 key={title}
                 id={title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}
@@ -114,6 +117,7 @@ export function PrivacyContent() {
                   ))}
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         </div>

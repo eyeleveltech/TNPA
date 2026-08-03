@@ -325,6 +325,7 @@ export function Schedule() {
         </div>
 
         {/* ── Bottom stats strip ── */}
+        <Reveal delay={300}>
         <div ref={bottomStatsRef} className="stat-card mt-14 grid grid-cols-2 gap-6 rounded-2xl px-6 py-7 sm:px-10 lg:mt-16 lg:grid-cols-4">
           {BOTTOM_STATS.map((s, i) => {
             const Icon = s.icon;
@@ -358,10 +359,12 @@ export function Schedule() {
             );
           })}
         </div>
+        </Reveal>
 
         {/* CTA strip. The free-entry line is a banner rather than fine print:
             a ₹30L prize pool and spectator counts read as a ticketed, premium
             event unless the opposite is stated loudly. Mirrors the hero badge. */}
+        <Reveal delay={400}>
         <div className="mt-10 text-center">
           <div
             className="mx-auto flex max-w-2xl flex-col items-center gap-3 rounded-2xl px-5 py-6 sm:flex-row sm:justify-center sm:gap-5 sm:px-8"
@@ -400,6 +403,7 @@ export function Schedule() {
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );

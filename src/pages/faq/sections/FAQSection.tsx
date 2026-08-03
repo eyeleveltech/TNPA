@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export const FAQS = [
   {
@@ -137,6 +138,7 @@ export function FAQSection() {
           {/* questions */}
           <div className="space-y-12">
             {FAQS.map(({ category, items }) => (
+              <Reveal delay={100}>
               <div
                 key={category}
                 id={category.toLowerCase().replace(/\s+/g, "-")}
@@ -158,9 +160,11 @@ export function FAQSection() {
                   ))}
                 </div>
               </div>
+              </Reveal>
             ))}
 
             {/* Still have questions */}
+            <Reveal delay={100}>
             <div
               className="stat-card rounded-2xl px-6 py-8 text-center sm:px-10"
               style={{
@@ -181,6 +185,7 @@ export function FAQSection() {
                 Email Us
               </a>
             </div>
+            </Reveal>
           </div>
         </div>
       </div>
