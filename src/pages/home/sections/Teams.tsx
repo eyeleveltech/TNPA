@@ -176,8 +176,8 @@ const TEAMS: Team[] = [
     accent: "198 85% 58%",
     logo: logoRamnad,
     owners: [
-      { name: "Naagarjun Sethupathy", affiliation: "Franchise Owner" },
-      { name: "Sneha Sethupathy", affiliation: "Franchise Owner" },
+      { name: "Naagarjun Sethuppathy", affiliation: "Franchise Owner" },
+      { name: "Sneha Sethuppathy", affiliation: "Franchise Owner" },
     ],
   },
   {
@@ -199,7 +199,7 @@ const TEAMS: Team[] = [
     ],
   },
   {
-    name: "Madurai All-Stars",
+    name: "Madurai All Stars",
     district: "Madurai",
     region: "South",
     accent: "355 85% 58%",
