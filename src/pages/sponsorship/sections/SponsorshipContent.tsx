@@ -1,4 +1,14 @@
-import { ChevronRight, Star, Handshake, Megaphone, Trophy, Users2, Globe, Lock, Mail } from "lucide-react";
+import {
+  ChevronRight,
+  Star,
+  Handshake,
+  Megaphone,
+  Trophy,
+  Users2,
+  Globe,
+  Lock,
+  Mail,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 
@@ -80,20 +90,17 @@ export const ASSOCIATION = [
   {
     icon: Megaphone,
     title: "Live Audience",
-    copy:
-      "Central Atrium, Express Avenue Mall — one of Chennai's highest-footfall premium venues. Free entry means maximum crowd.",
+    copy: "Central Atrium, Express Avenue Mall — one of Chennai's highest-footfall premium venues. Free entry means maximum crowd.",
   },
   {
     icon: Users2,
     title: "Digital Reach",
-    copy:
-      "Official social channels with an engaged Tamil Nadu pickleball community. Pre-event, match-day, and post-event content cycles.",
+    copy: "Official social channels with an engaged Tamil Nadu pickleball community. Pre-event, match-day, and post-event content cycles.",
   },
   {
     icon: Globe,
     title: "Media Coverage",
-    copy:
-      "Regional press coverage and digital video content reaching players, fans, and sports enthusiasts across the state.",
+    copy: "Regional press coverage and digital video content reaching players, fans, and sports enthusiasts across the state.",
   },
 ];
 
@@ -104,19 +111,21 @@ export function SponsorshipContent() {
       <section className="border-y border-border bg-card/30 py-10">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
           <Reveal delay={100}>
-          <ul className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-            {REACH.map((r) => (
-              <li key={r.label} className="text-center">
-                <p className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-none text-gold">
-                  {r.value}
-                </p>
-                <p className="mt-1 text-sm font-bold uppercase tracking-[0.12em] text-foreground">
-                  {r.label}
-                </p>
-                <p className="mt-0.5 text-[11px] text-foreground/50">{r.sub}</p>
-              </li>
-            ))}
-          </ul>
+            <ul className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+              {REACH.map((r) => (
+                <li key={r.label} className="text-center">
+                  <h2 className="font-bold text-[clamp(2rem,5vw,3.5rem)] leading-none text-gold">
+                    {r.value}
+                  </h2>
+                  <p className="mt-1 text-sm font-bold uppercase tracking-[0.12em] text-foreground">
+                    {r.label}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-foreground/50">
+                    {r.sub}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>
@@ -126,24 +135,37 @@ export function SponsorshipContent() {
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
           <div className="mb-12 text-center">
             <h2 className="display-title text-[clamp(1.8rem,4.5vw,3rem)] text-foreground">
-              Why Associate with <span className="text-gold-gradient">TNPPL<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
+              Why Associate with{" "}
+              <span className="text-gold-gradient">
+                TNPPL<span style={{ fontFamily: "Arial, sans-serif" }}>?</span>
+              </span>
             </h2>
           </div>
           <Reveal delay={100}>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {ASSOCIATION.map((a) => {
-              const Icon = a.icon;
-              return (
-                <div key={a.title} className="stat-card rounded-2xl p-6 sm:p-8">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/40 text-gold">
-                    <Icon className="h-6 w-6" strokeWidth={1.5} />
+            <div className="grid gap-6 sm:grid-cols-3">
+              {ASSOCIATION.map((a) => {
+                const Icon = a.icon;
+                return (
+                  <div
+                    key={a.title}
+                    className="stat-card rounded-2xl p-6 sm:p-8"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-gold/40 text-gold">
+                      <Icon className="h-6 w-6" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="display-title mt-5 text-xl text-foreground">
+                      {a.title}
+                    </h3>
+                    <p
+                      className="mt-3 text-[13px] leading-relaxed text-foreground/80"
+                      style={{ fontFamily: "Arial, sans-serif" }}
+                    >
+                      {a.copy}
+                    </p>
                   </div>
-                  <h3 className="display-title mt-5 text-xl text-foreground">{a.title}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>{a.copy}</p>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           </Reveal>
         </div>
       </section>
@@ -160,116 +182,126 @@ export function SponsorshipContent() {
               <span className="h-px w-10 bg-gold/50 sm:w-16" />
             </div>
             <h2 className="display-title mt-4 text-[clamp(1.8rem,4.5vw,3rem)] text-foreground">
-              Find the Right <span className="text-gold-gradient">Partnership Level</span>
+              Find the Right{" "}
+              <span className="text-gold-gradient">Partnership Level</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>
-              Each tier is customized to match your brand objectives. Contact us for detailed
-              packages, availability, and pricing.
+            <p
+              className="mx-auto mt-4 max-w-xl text-sm text-foreground/80"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Each tier is customized to match your brand objectives. Contact us
+              for detailed packages, availability, and pricing.
             </p>
           </div>
 
           <Reveal delay={100}>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {TIERS.map((tier) => {
-              const Icon = tier.icon;
-              return (
-                <div
-                  key={tier.name}
-                  className={`stat-card relative flex flex-col rounded-2xl p-6 ${
-                    tier.highlight
-                      ? "ring-1 ring-gold/60"
-                      : ""
-                  }`}
-                  style={
-                    tier.highlight
-                      ? {
-                          background:
-                            "linear-gradient(160deg, color-mix(in oklab, var(--gold) 10%, var(--card)), var(--card))",
-                        }
-                      : undefined
-                  }
-                >
-                  {tier.soldOut ? (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground shadow-lg">
-                        Slot Reserved
-                      </span>
-                    </div>
-                  ) : tier.highlight ? (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground">
-                        Premium Slot
-                      </span>
-                    </div>
-                  ) : null}
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {TIERS.map((tier) => {
+                const Icon = tier.icon;
+                return (
+                  <div
+                    key={tier.name}
+                    className={`stat-card relative flex flex-col rounded-2xl p-6 ${
+                      tier.highlight ? "ring-1 ring-gold/60" : ""
+                    }`}
+                    style={
+                      tier.highlight
+                        ? {
+                            background:
+                              "linear-gradient(160deg, color-mix(in oklab, var(--gold) 10%, var(--card)), var(--card))",
+                          }
+                        : undefined
+                    }
+                  >
+                    {tier.soldOut ? (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground shadow-lg">
+                          Slot Reserved
+                        </span>
+                      </div>
+                    ) : tier.highlight ? (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span className="rounded-full bg-gold px-4 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-primary-foreground">
+                          Premium Slot
+                        </span>
+                      </div>
+                    ) : null}
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold">
-                      <Icon className="h-6 w-6" strokeWidth={1.5} />
+                    <div className="flex items-center justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/40 text-gold">
+                        <Icon className="h-6 w-6" strokeWidth={1.5} />
+                      </div>
+                      {tier.soldOut && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gold">
+                          <Lock className="h-3 w-3" /> Reserved
+                        </span>
+                      )}
                     </div>
-                    {tier.soldOut && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-gold">
-                        <Lock className="h-3 w-3" /> Reserved
-                      </span>
+
+                    <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.28em] text-gold">
+                      {tier.tag}
+                    </p>
+                    <h3 className="display-title mt-1 text-xl text-foreground">
+                      {tier.name.includes("-") ? (
+                        <>
+                          {tier.name.split("-")[0]}
+                          <span style={{ fontFamily: "Arial, sans-serif" }}>
+                            -
+                          </span>
+                          {tier.name.split("-")[1]}
+                        </>
+                      ) : (
+                        tier.name
+                      )}
+                    </h3>
+                    <p
+                      className="mt-3 text-[13px] leading-relaxed text-foreground/80"
+                      style={{ fontFamily: "Arial, sans-serif" }}
+                    >
+                      {tier.description}
+                    </p>
+
+                    <ul className="mt-5 flex-1 space-y-2">
+                      {tier.features.map((f) => (
+                        <li
+                          key={f}
+                          className="flex items-start gap-2 text-[12px] text-foreground/75"
+                        >
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {tier.soldOut ? (
+                      <button
+                        disabled
+                        aria-disabled="true"
+                        className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-gold/30 bg-gold/10 px-5 py-3 text-[12px] font-bold uppercase tracking-widest text-gold/75"
+                      >
+                        <Lock className="h-3.5 w-3.5" />
+                        Slot Reserved
+                      </button>
+                    ) : (
+                      <Link
+                        to="/#contact"
+                        onClick={() => {
+                          // Survives the navigation; Contact.tsx reads it and
+                          // focuses the name field on arrival.
+                          sessionStorage.setItem("focusCollab", "true");
+                        }}
+                        className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-[12px] font-bold uppercase tracking-widest transition-colors ${
+                          tier.highlight ? "btn-gold" : "btn-outline-light"
+                        }`}
+                      >
+                        Enquire Now
+                        <ChevronRight className="h-4 w-4" />
+                      </Link>
                     )}
                   </div>
-
-                  <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.28em] text-gold">
-                    {tier.tag}
-                  </p>
-                  <h3 className="display-title mt-1 text-xl text-foreground">
-                    {tier.name.includes("-") ? (
-                      <>
-                        {tier.name.split("-")[0]}
-                        <span style={{ fontFamily: "Arial, sans-serif" }}>-</span>
-                        {tier.name.split("-")[1]}
-                      </>
-                    ) : (
-                      tier.name
-                    )}
-                  </h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-foreground/80" style={{ fontFamily: "Arial, sans-serif" }}>
-                    {tier.description}
-                  </p>
-
-                  <ul className="mt-5 flex-1 space-y-2">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-[12px] text-foreground/75">
-                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {tier.soldOut ? (
-                    <button
-                      disabled
-                      aria-disabled="true"
-                      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-gold/30 bg-gold/10 px-5 py-3 text-[12px] font-bold uppercase tracking-widest text-gold/75"
-                    >
-                      <Lock className="h-3.5 w-3.5" />
-                      Slot Reserved
-                    </button>
-                  ) : (
-                    <Link
-                      to="/#contact"
-                      onClick={() => {
-                        // Survives the navigation; Contact.tsx reads it and
-                        // focuses the name field on arrival.
-                        sessionStorage.setItem("focusCollab", "true");
-                      }}
-                      className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-[12px] font-bold uppercase tracking-widest transition-colors ${
-                        tier.highlight ? "btn-gold" : "btn-outline-light"
-                      }`}
-                    >
-                      Enquire Now
-                      <ChevronRight className="h-4 w-4" />
-                    </Link>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
           </Reveal>
         </div>
       </section>
@@ -282,11 +314,19 @@ export function SponsorshipContent() {
               measure it can stretch the full 1488px container against a 576px
               paragraph. text-balance evens the two lines. */}
           <h2 className="display-title mx-auto max-w-4xl text-balance text-[clamp(1.9rem,4.5vw,3.2rem)] text-foreground">
-            Ready to be part of <span className="text-gold-gradient">something bigger<span style={{ fontFamily: "Arial, sans-serif" }}>?</span></span>
+            Ready to be part of{" "}
+            <span className="text-gold-gradient">
+              something bigger
+              <span style={{ fontFamily: "Arial, sans-serif" }}>?</span>
+            </span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]" style={{ fontFamily: "Arial, sans-serif" }}>
-            Reach out to explore the right partnership for your brand. We will share the full
-            sponsorship deck, availability matrix, and custom options.
+          <p
+            className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+            style={{ fontFamily: "Arial, sans-serif" }}
+          >
+            Reach out to explore the right partnership for your brand. We will
+            share the full sponsorship deck, availability matrix, and custom
+            options.
           </p>
           {/* One CTA. "Call Us Directly" never placed a call (it scrolled to
               the form) and "Email Us" duplicated the address shown below, so
@@ -312,7 +352,11 @@ export function SponsorshipContent() {
               href="mailto:tnstatepa@gmail.com?subject=Sponsorship Enquiry"
               className="inline-flex items-center gap-1.5 text-xs text-foreground/60 transition-colors hover:text-gold"
             >
-              <Mail className="h-3.5 w-3.5 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+              <Mail
+                className="h-3.5 w-3.5 shrink-0 text-gold"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
               tnstatepa@gmail.com
             </a>
           </div>
