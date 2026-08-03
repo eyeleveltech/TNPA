@@ -3,9 +3,23 @@
 
 /* ─────────────────────────────────────────────
    PODIUM SHARP — brand display face
-   Demo license: for development preview only.
-   Purchase web license at fontspring.com before
-   deploying the site publicly.
+
+   ⚠ DEMO LICENCE. Development preview only. A web licence must be
+   purchased from fontspring.com before this site is deployed publicly.
+
+   Only ONE face is declared, and only one is needed: `display-title`
+   requests weight 500, and with nothing available between 500 and 700
+   CSS resolves that down to this 400 face. Nothing on the site pairs
+   `display-title` with italic or a bold class — and it could not, since
+   the fallback below sets font-weight: 500 !important. The italic, 700
+   and 800 demo files were therefore never selected and have been
+   removed: ~87KB off the build and licensing scope narrowed to a single
+   style (PODIUM Sharp 4.11, Regular / Extended).
+
+   Note the demo file is ~19KB, i.e. a character-limited subset. That is
+   why punctuation (. ' ? &) is escaped to Arial throughout the site. A
+   licensed copy with a full character set should let most of those
+   escape spans be removed.
 ───────────────────────────────────────────── */
 
 /* Regular / Extended (width 11) — TTF for maximum browser compat */
@@ -14,42 +28,6 @@
   src: local("FSP DEMO - PODIUM Sharp"),
     url('/fonts/FSP-DEMO-podiumsharp-4.11.ttf') format('truetype');
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PODIUM Sharp";
-  src: url('/fonts/Fontspring-DEMO-podiumsharp-4.11italic.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* Bold / Normal-width — OTF */
-@font-face {
-  font-family: "PODIUM Sharp";
-  src: local("PODIUM Sharp Bold"),
-    url('/fonts/Fontspring-DEMO-podiumsharp-7.7.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "PODIUM Sharp";
-  src: local("PODIUM Sharp Bold Italic"),
-    url('/fonts/Fontspring-DEMO-podiumsharp-7.7italic.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* ExtraBold / Normal-width — OTF */
-@font-face {
-  font-family: "PODIUM Sharp";
-  src: url('/fonts/Fontspring-DEMO-podiumsharp-8.7.otf') format('opentype');
-  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
