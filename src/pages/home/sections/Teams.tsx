@@ -249,7 +249,7 @@ function renderTeamName(name: string) {
 }
 
 export function Teams() {
-  const [active, setActive] = useState(5);
+  const [active, setActive] = useState(0);
   const [layout, setLayout] = useState({ spread: 132, visible: 4 });
 
   useEffect(() => {

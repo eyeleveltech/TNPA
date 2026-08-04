@@ -251,7 +251,7 @@ export function Players() {
             rel="noopener noreferrer"
             className="btn-outline-light inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full px-3.5 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.16em] leading-none whitespace-nowrap max-w-full"
           >
-            <Instagram className="h-4 w-4 text-white shrink-0" />
+            <Instagram className="h-4 w-4 shrink-0" />
             <span className="leading-none">Follow for Player Updates</span>
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
           </a>
