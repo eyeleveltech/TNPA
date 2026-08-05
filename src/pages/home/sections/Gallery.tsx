@@ -1,238 +1,235 @@
-import { useState } from "react";
-import { Camera, ChevronRight } from "lucide-react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const CATEGORIES = [
-  "All Moments",
-  "Match Action",
-  "Behind The Scenes",
-  "Opening Ceremony",
-  "Fan Zone",
-  "Award Ceremony",
-];
-
-const IMAGES = [
-  {
-    label: "Champion in Action",
-    accent: "45 90% 58%",
-    span: "col-span-1 row-span-2",
-    caption: "Match Action",
-    img: "/images/gallery-01.jpg",
-  },
-  {
-    label: "High Five Moment",
-    accent: "120 70% 55%",
-    span: "col-span-1 row-span-1",
-    caption: "Behind The Scenes",
-    img: "/images/gallery-02.jpg",
-  },
-  {
-    label: "Fan Zone Energy",
-    accent: "190 85% 58%",
-    span: "col-span-1 row-span-1",
-    caption: "Fan Zone",
-    img: "/images/gallery-03.jpg",
-  },
-  {
-    label: "Serve & Smash",
-    accent: "300 80% 62%",
-    span: "col-span-1 md:col-span-1 md:row-span-1",
-    caption: "Match Action",
-    img: "/images/gallery-04.jpg",
-  },
-  {
-    label: "Opening Ceremony",
-    accent: "45 90% 58%",
-    span: "col-span-1 row-span-1",
-    caption: "Opening Ceremony",
-    img: "/images/gallery-05.jpg",
-  },
-  {
-    label: "Champions Trophy",
-    accent: "45 95% 55%",
-    span: "col-span-1 row-span-1",
-    caption: "Award Ceremony",
-    img: "/images/gallery-06.jpg",
-  },
-  {
-    label: "Champions Celebration",
-    accent: "45 90% 58%",
-    span: "col-span-1 row-span-1",
-    caption: "Award Ceremony",
-    prize: "₹8,50,000",
-    img: "/images/gallery-07.jpg",
-  },
-];
+import img1 from "../../../assets/AUCTION GALLERY/E1.webp";
+import img2 from "../../../assets/AUCTION GALLERY/E2.webp";
+import img3 from "../../../assets/AUCTION GALLERY/E3.webp";
+import img4 from "../../../assets/AUCTION GALLERY/E4.webp";
+import img5 from "../../../assets/AUCTION GALLERY/E5.webp";
+import img6 from "../../../assets/AUCTION GALLERY/E6.webp";
+import img7 from "../../../assets/AUCTION GALLERY/A7.webp";
+import img8 from "../../../assets/AUCTION GALLERY/A8.webp";
+import img9 from "../../../assets/AUCTION GALLERY/A9.webp";
+import img10 from "../../../assets/AUCTION GALLERY/A10.webp";
+import img11 from "../../../assets/AUCTION GALLERY/A11.webp";
+import img12 from "../../../assets/AUCTION GALLERY/A12.webp";
+import img13 from "../../../assets/AUCTION GALLERY/A13.webp";
+import img14 from "../../../assets/AUCTION GALLERY/T14.webp";
+import img15 from "../../../assets/AUCTION GALLERY/T15.webp";
+import img16 from "../../../assets/AUCTION GALLERY/T16.webp";
+import img17 from "../../../assets/AUCTION GALLERY/T17.webp";
+import img18 from "../../../assets/AUCTION GALLERY/T18.webp";
+import img19 from "../../../assets/AUCTION GALLERY/T19.webp";
+import img20 from "../../../assets/AUCTION GALLERY/T20.webp";
+import img21 from "../../../assets/AUCTION GALLERY/T21.webp";
+import img22 from "../../../assets/AUCTION GALLERY/T22.webp";
+import img23 from "../../../assets/AUCTION GALLERY/T23.webp";
+import img24 from "../../../assets/AUCTION GALLERY/T24.webp";
+import img25 from "../../../assets/AUCTION GALLERY/T25.webp";
 
 export function Gallery() {
-  const [active, setActive] = useState("All Moments");
+  const [active, setActive] = useState(0);
+
+  // Array of actual auction photos
+  const auctionPhotos = [
+    { id: 1, src: img1, alt: "Auction Moment 1" },
+    { id: 2, src: img2, alt: "Auction Moment 2" },
+    { id: 3, src: img3, alt: "Auction Moment 3" },
+    { id: 4, src: img4, alt: "Auction Moment 4" },
+    { id: 5, src: img5, alt: "Auction Moment 5" },
+    { id: 6, src: img6, alt: "Auction Moment 6" },
+    { id: 7, src: img7, alt: "Auction Moment 7" },
+    { id: 8, src: img8, alt: "Auction Moment 8" },
+    { id: 9, src: img9, alt: "Auction Moment 9" },
+    { id: 10, src: img10, alt: "Auction Moment 10" },
+    { id: 11, src: img11, alt: "Auction Moment 11" },
+    { id: 12, src: img12, alt: "Auction Moment 12" },
+    { id: 13, src: img13, alt: "Auction Moment 13" },
+    { id: 14, src: img14, alt: "Auction Moment 14" },
+    { id: 15, src: img15, alt: "Auction Moment 15" },
+    { id: 16, src: img16, alt: "Auction Moment 16" },
+    { id: 17, src: img17, alt: "Auction Moment 17" },
+    { id: 18, src: img18, alt: "Auction Moment 18" },
+    { id: 19, src: img19, alt: "Auction Moment 19" },
+    { id: 20, src: img20, alt: "Auction Moment 20" },
+    { id: 21, src: img21, alt: "Auction Moment 21" },
+    { id: 22, src: img22, alt: "Auction Moment 22" },
+    { id: 23, src: img23, alt: "Auction Moment 23" },
+    { id: 24, src: img24, alt: "Auction Moment 24" },
+    { id: 25, src: img25, alt: "Auction Moment 25" },
+  ];
+
+  const go = useCallback((dir: number) => {
+    setActive((i) => (i + dir + auctionPhotos.length) % auctionPhotos.length);
+  }, [auctionPhotos.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") go(-1);
+      if (e.key === "ArrowRight") go(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go]);
+
+  // Drag/Swipe Handlers (Touch & Mouse)
+  // Drag/Swipe Handlers (Touch & Mouse) - using Refs to avoid re-renders
+  const dragStart = React.useRef<number | null>(null);
+  const dragEnd = React.useRef<number | null>(null);
+  const isDragging = React.useRef(false);
+  const minSwipeDistance = 30;
+
+  const onDragStart = (clientX: number) => {
+    isDragging.current = true;
+    dragStart.current = clientX;
+    dragEnd.current = null;
+  };
+
+  const onDragMove = (clientX: number) => {
+    if (!isDragging.current) return;
+    dragEnd.current = clientX;
+  };
+
+  const onDragEnd = () => {
+    isDragging.current = false;
+    if (dragStart.current === null || dragEnd.current === null) return;
+    
+    const distance = dragStart.current - dragEnd.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) go(1);
+    if (isRightSwipe) go(-1);
+    
+    dragStart.current = null;
+    dragEnd.current = null;
+  };
 
   return (
-    <section id="gallery" className="relative overflow-hidden bg-ink py-10 sm:py-12 lg:py-14">
-      {/* ambient */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-50"
-        style={{
-          background:
-            "radial-gradient(70% 50% at 50% 0%, color-mix(in oklab, var(--gold) 8%, transparent), transparent 65%)",
-        }}
-      />
-
+    <section id="gallery" className="relative bg-ink py-20 sm:py-32 overflow-hidden">
       <div className="relative mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-        {/* heading */}
-        <div className="text-center">
-          <Reveal delay={60}>
+        
+        {/* Section Header */}
+        <Reveal delay={100}>
+          <div className="mb-12 text-center md:mb-16">
             <div className="flex items-center justify-center gap-3">
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="h-px w-8 bg-gold/50 sm:w-16" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold">
-                Gallery
+                Event Gallery
               </span>
-              <span className="h-px w-10 bg-gold/50 sm:w-16" />
+              <span className="h-px w-8 bg-gold/50 sm:w-16" />
             </div>
-          </Reveal>
-          <Reveal delay={140}>
-            <h2 className="display-title-extended mt-4 text-[clamp(2.4rem,6.5vw,4.2rem)]">
-              <span className="block text-foreground">Relive</span>
-              <span className="text-gold-gradient block">The Action</span>
+            <h2 className="display-title-extended mt-6 text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]">
+              <span className="block text-foreground">Auction</span>
+              <span className="block text-gold-gradient">Highlights</span>
             </h2>
-          </Reveal>
-          <Reveal delay={220}>
-            <p
-              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              Unforgettable moments, fierce rivalries, and non-stop energy. A glimpse of TNPPL Season 2.
+            <p className="mx-auto mt-4 max-w-2xl text-[14px] leading-relaxed text-foreground/80 font-sans">
+              Exclusive moments from the Grand Player Auction.
             </p>
-          </Reveal>
-          <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
-            <span className="h-px w-20 bg-gold/40" />
-            <span className="text-xs text-gold animate-star-pickleball">★</span>
-            <span className="h-px w-20 bg-gold/40" />
           </div>
-        </div>
+        </Reveal>
 
-        {/* category tabs */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActive(cat)}
-              className={`rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-all ${
-                active === cat
-                  ? "bg-gold text-primary-foreground shadow-(--shadow-gold)"
-                  : "border border-border text-foreground/70 hover:border-gold/50 hover:text-gold"
-              }`}
+        {/* Interactive 3D Manual Carousel */}
+        <Reveal delay={200}>
+          <div className="relative mt-12 flex flex-col items-center justify-center">
+            
+            <div 
+              className="relative h-100 w-full max-w-200 sm:h-140 lg:h-160 flex items-center justify-center touch-pan-y select-none"
+              onTouchStart={(e) => onDragStart(e.targetTouches[0].clientX)}
+              onTouchMove={(e) => onDragMove(e.targetTouches[0].clientX)}
+              onTouchEnd={onDragEnd}
+              onMouseDown={(e) => onDragStart(e.clientX)}
+              onMouseMove={(e) => onDragMove(e.clientX)}
+              onMouseUp={onDragEnd}
+              onMouseLeave={onDragEnd}
             >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* photo grid */}
-        <div className="mt-10 grid auto-rows-50 grid-cols-2 gap-3 sm:auto-rows-55 sm:gap-4 lg:grid-cols-4 lg:auto-rows-60">
-          {IMAGES.map((img, i) => (
-            <div
-              key={img.label}
-              className={`group relative overflow-hidden rounded-xl cursor-pointer ${i === 0 ? "row-span-2" : ""}`}
-              style={{
-                background: `linear-gradient(165deg, color-mix(in oklab, hsl(${img.accent}) 28%, var(--ink)), var(--ink))`,
-              }}
-            >
-              {/* grid pattern (fallback, hidden once image loads) */}
-              <svg
-                aria-hidden
-                className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.08]"
-                viewBox="0 0 200 200"
-                fill="none"
+              {/* Left Arrow (Absolute positioning on the side) */}
+              <button 
+                onClick={() => go(-1)}
+                className="absolute left-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 -translate-x-6 sm:-translate-x-20 md:-translate-x-28 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
+                aria-label="Previous image"
               >
-                <line x1="100" y1="0" x2="100" y2="200" stroke="white" />
-                <line x1="0" y1="100" x2="200" y2="100" stroke="white" />
-                <rect x="60" y="60" width="80" height="80" stroke="white" strokeWidth="0.5" />
-              </svg>
+                <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
+              </button>
 
-              {/* paint accent */}
-              <div
-                className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full opacity-20 blur-2xl"
-                style={{ background: `hsl(${img.accent})` }}
-              />
+              {/* Photos */}
+              {auctionPhotos.map((photo, i) => {
+                const isActive = i === active;
+                // Calculate position relative to active index
+                const diff = (i - active + auctionPhotos.length) % auctionPhotos.length;
+                const isNext = diff === 1;
+                const isPrev = diff === auctionPhotos.length - 1;
+                
+                let transform = "translateX(0) scale(0.6)";
+                let zIndex = 0;
+                let opacity = 0;
+                let pointerEvents: "auto" | "none" = "none";
+                
+                if (isActive) {
+                  transform = "translateX(0) scale(1)";
+                  zIndex = 30;
+                  opacity = 1;
+                  pointerEvents = "auto";
+                } else if (isNext) {
+                  transform = "translateX(40%) scale(0.85)";
+                  zIndex = 20;
+                  opacity = 0.5;
+                  pointerEvents = "auto";
+                } else if (isPrev) {
+                  transform = "translateX(-40%) scale(0.85)";
+                  zIndex = 20;
+                  opacity = 0.5;
+                  pointerEvents = "auto";
+                }
 
-              {/* real photo */}
-              <img
-                src={img.img}
-                alt={img.label}
-                loading="eager"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover object-center"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
-              />
-
-              {/* centre label (fallback only — hidden when image shows) */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <span
-                    className="font-display text-2xl font-black uppercase opacity-25 select-none sm:text-3xl"
-                    style={{ color: `hsl(${img.accent})` }}
+                return (
+                  <div 
+                    key={photo.id}
+                    className="absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                    style={{
+                      transform,
+                      zIndex,
+                      opacity,
+                      filter: isActive ? "none" : "blur(4px) brightness(0.6)",
+                      pointerEvents
+                    }}
+                    onClick={() => {
+                      if (isNext) go(1);
+                      if (isPrev) go(-1);
+                    }}
                   >
-                    TNPPL
-                  </span>
-                </div>
-              </div>
+                    <div className="h-full w-full overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group cursor-pointer relative">
+                      <img 
+                        src={photo.src} 
+                        alt={photo.alt} 
+                        className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105 select-none pointer-events-none" 
+                        loading="lazy"
+                        draggable={false}
+                      />
+                      
+                      {/* No text overlay */}
+                    </div>
+                  </div>
+                );
+              })}
 
-              {/* prize overlay (award card) */}
-              {img.prize && (
-                <div className="absolute right-3 bottom-14 rounded-lg bg-ink/90 px-3 py-2 text-right">
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-gold">
-                    Champions
-                  </p>
-                  <p className="font-display text-xl text-foreground">{img.prize}</p>
-                  <p className="text-[8px] text-foreground/50">TNPPL Season 2</p>
-                </div>
-              )}
-
-              {/* hover overlay */}
-              <div className="absolute inset-0 flex items-end bg-linear-to-t from-ink/90 via-transparent to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
-                <div>
-                  <p
-                    className="text-[9px] font-bold uppercase tracking-[0.22em]"
-                    style={{ color: `hsl(${img.accent})` }}
-                  >
-                    {img.caption}
-                  </p>
-                  <p className="mt-0.5 text-[13px] font-semibold text-foreground">
-                    {img.label.includes("&") ? <>{img.label.split("&")[0]}<strong className="font-bold">&amp;</strong>{img.label.split("&")[1]}</> : img.label}
-                  </p>
-                </div>
-              </div>
+              {/* Right Arrow (Absolute positioning on the side) */}
+              <button 
+                onClick={() => go(1)}
+                className="absolute right-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 translate-x-6 sm:translate-x-20 md:translate-x-28 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
+              </button>
             </div>
-          ))}
-        </div>
 
-        {/* bottom banner */}
-        <div className="stat-card mt-10 flex flex-col items-center justify-between gap-5 rounded-2xl px-6 py-7 sm:flex-row sm:px-10">
-          <div className="flex items-center gap-4">
-            <Camera className="h-10 w-10 shrink-0 text-gold" strokeWidth={1.3} aria-hidden />
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.08em] text-foreground/80">
-                Witness the excitement.
-              </p>
-              <h3 className="display-title-extended text-2xl">
-                <span className="text-foreground">More Moments, </span>
-                <span className="text-gold-gradient">Coming Soon!</span>
-              </h3>
-            </div>
+            {/* Pagination Dots Removed */}
+
           </div>
-          <a
-            href="#gallery"
-            className="btn-outline-light inline-flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"
-          >
-            View Full Gallery
-            <ChevronRight className="h-4 w-4" />
-          </a>
-        </div>
+        </Reveal>
+
       </div>
     </section>
   );

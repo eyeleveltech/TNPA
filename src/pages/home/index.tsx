@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "./sections/Hero";
 import { About } from "./sections/About";
 import { Teams } from "./sections/Teams";
+import { Gallery } from "./sections/Gallery";
 import { Players } from "./sections/Players";
 import { Schedule } from "./sections/Schedule";
 import { Sponsors } from "./sections/Sponsors";
@@ -22,6 +23,7 @@ export default function IndexPage() {
       {/* Teams and Owners are one section: each franchise card carries its
           own owners, so there is a single source of truth for both. */}
       <Teams />
+      <Gallery />
       <Players />
       <Schedule />
       {/* <Sponsors /> */}
