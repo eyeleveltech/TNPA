@@ -148,7 +148,7 @@ export function Gallery() {
               {/* Left Arrow (Absolute positioning on the side) */}
               <button 
                 onClick={() => go(-1)}
-                className="absolute left-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 -translate-x-6 sm:-translate-x-20 md:-translate-x-28 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
+                className="absolute left-2 sm:left-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 sm:-translate-x-16 md:-translate-x-24 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
@@ -218,7 +218,7 @@ export function Gallery() {
               {/* Right Arrow (Absolute positioning on the side) */}
               <button 
                 onClick={() => go(1)}
-                className="absolute right-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 translate-x-6 sm:translate-x-20 md:translate-x-28 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
+                className="absolute right-2 sm:right-0 z-50 flex h-10 w-10 sm:h-14 sm:w-14 sm:translate-x-16 md:translate-x-24 items-center justify-center rounded-full border border-white/20 bg-ink/80 backdrop-blur-md text-white/80 shadow-xl transition-all hover:bg-gold hover:text-ink hover:border-gold hover:scale-110 active:scale-95"
                 aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
