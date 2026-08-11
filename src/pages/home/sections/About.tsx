@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   CalendarDays,
   MapPin,
+  Star,
 } from "lucide-react";
 
 import teamPhoto from "@/assets/TEAM-optimized.webp";
@@ -14,6 +15,76 @@ import { Reveal } from "@/components/Reveal";
 
 const SDAT_LOGO = sdatNewLogo;
 const IPA_LOGO = ipaLogoImg;
+
+import mohitPhoto from "@/assets/worked/Mr._Mohit_Kumar.webp";
+import kavyaPhoto from "@/assets/worked/Dr._Kavya_Somesh.webp";
+import ganeshPhoto from "@/assets/worked/Mr._Ganesh.webp";
+import petuliaPhoto from "@/assets/worked/Ms._Petulia_Balaji.webp";
+import muraliPhoto from "@/assets/worked/Mr._Murali.webp";
+import yogeshPhoto from "@/assets/worked/Mr._Yogesh_Ramchandhani.webp";
+
+export const BOARD_MEMBERS = [
+  {
+    id: 1,
+    name: "Mr. Mohit Kumar",
+    role: "President",
+    badge: "President",
+    initials: "MK",
+    photo: mohitPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+  {
+    id: 2,
+    name: "Dr. Kavya Somesh",
+    role: "Secretary",
+    badge: "Secretary",
+    initials: "KS",
+    photo: kavyaPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+  {
+    id: 3,
+    name: "Mr. Ganesh",
+    role: "Treasurer",
+    badge: "Treasurer",
+    initials: "G",
+    photo: ganeshPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+  {
+    id: 4,
+    name: "Ms. Petulia Balaji",
+    role: "Founding Member",
+    badge: "Founding Member",
+    initials: "PB",
+    photo: petuliaPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+  {
+    id: 5,
+    name: "Mr. Murali",
+    role: "Founding Member",
+    badge: "Founding Member",
+    initials: "M",
+    photo: muraliPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+  {
+    id: 6,
+    name: "Mr. Yogesh Ramchandhani",
+    role: "Founding Member",
+    badge: "Founding Member",
+    initials: "YR",
+    photo: yogeshPhoto,
+    objectPosition: "center 15%",
+    scale: 1,
+  },
+];
 
 /* Franchise and player counts live in the hero strip and, with context, in
    the Teams and Players sections. Restating them here made the same four
@@ -73,7 +144,7 @@ export function About() {
 
       <div className="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
 
-        {/* ---------- centered intro ---------- */}
+        {/* ---------- Eyebrow ---------- */}
         <div className="text-center">
           <Reveal delay={60}>
             <div className="flex items-center justify-center gap-3">
@@ -84,7 +155,11 @@ export function About() {
               <span className="h-px w-10 bg-gold/50 sm:w-16" />
             </div>
           </Reveal>
+        </div>
 
+
+        {/* ---------- More than a league heading & content ---------- */}
+        <div className="text-center">
           <Reveal delay={140}>
             <h2 className="display-title-extended mt-4 text-[clamp(2.1rem,6.2vw,4.1rem)]">
               <span className="block text-foreground">More than a league<span style={{ fontFamily: "Arial, sans-serif" }}>.</span></span>
@@ -272,6 +347,105 @@ export function About() {
             </div>
           </div>
         </Reveal>
+
+        {/* ========================================================= */}
+        {/* ---------- THE TNPA BOARD (Between About TNPPL & More Than A League) ---------- */}
+        {/* ========================================================= */}
+        <div className="mt-8 sm:mt-10 mb-16 sm:mb-20 text-center">
+          <Reveal delay={100}>
+            <h2 className="display-title-extended text-[clamp(2.4rem,6.5vw,4.2rem)] flex flex-wrap justify-center items-center gap-x-2 sm:gap-x-3">
+              <span className="text-foreground">THE</span>
+              <span className="text-gold-gradient">TNPA</span>
+              <span className="text-foreground">BOARD</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={160}>
+            <p
+              className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Visionaries committed to building a stronger Pickleball community
+            </p>
+          </Reveal>
+
+          <div className="mt-4 flex items-center justify-center gap-3" aria-hidden>
+            <span className="h-px w-20 bg-gold/40" />
+            <span className="text-xs text-gold animate-star-pickleball">★</span>
+            <span className="h-px w-20 bg-gold/40" />
+          </div>
+
+          {/* ── Franchise Owners Style Grid (3 Cards Per Row) ── */}
+          <div className="mt-10 sm:mt-12 grid grid-cols-2 gap-3.5 sm:gap-8 lg:gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+            {BOARD_MEMBERS.map((member, idx) => (
+              <Reveal key={member.id} delay={idx * 60}>
+                <div
+                  className="stat-card group relative flex flex-col overflow-hidden rounded-2xl p-2.5 sm:p-5 transition-all duration-300 hover:border-gold/60 hover:shadow-[0_15px_35px_-10px_rgba(234,179,8,0.25)] h-full text-left"
+                  style={{
+                    borderColor: "color-mix(in oklab, var(--gold) 30%, transparent)",
+                    background: "linear-gradient(165deg, color-mix(in oklab, var(--gold) 8%, var(--ink)) 0%, var(--ink) 65%)",
+                  }}
+                >
+                  {/* Image Frame with Full Cover Image / Monogram Placeholder */}
+                  <div className="relative flex items-center justify-center aspect-square sm:aspect-auto sm:h-72 lg:h-80 w-full overflow-hidden rounded-xl bg-[#021026] border border-gold/30">
+                    {member.photo ? (
+                      <img
+                        src={member.photo}
+                        alt={member.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{
+                          objectPosition: member.objectPosition || "center",
+                          transform: member.scale && member.scale !== 1 ? `scale(${member.scale})` : undefined
+                        }}
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full w-full bg-linear-to-br from-white/5 via-ink to-ink p-4">
+                        {/* Glow behind monogram */}
+                        <span className="absolute inset-0 rounded-full blur-3xl opacity-20 bg-gold" aria-hidden />
+                        <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full border-2 border-gold/40 bg-gold/10 shadow-[0_0_25px_rgba(212,175,55,0.2)]">
+                          <span className="text-3xl sm:text-4xl font-extrabold tracking-wider text-gold-gradient">
+                            {member.initials}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Details Centered Below Image */}
+                  <div className="mt-2.5 sm:mt-4 flex flex-1 flex-col justify-between items-center text-center p-1 sm:p-2">
+                    <div className="flex flex-col items-center w-full">
+                      <h3 className="text-xs font-bold leading-tight text-foreground transition-colors group-hover:text-gold sm:text-xl min-h-[2.2rem] sm:min-h-11 flex items-center justify-center text-center">
+                        {member.name}
+                      </h3>
+                      <span className="mt-1 text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.24em] text-gold">
+                        {member.role}
+                      </span>
+                      <p
+                        className="mt-1 flex items-center justify-center gap-1 text-[10px] sm:text-xs text-foreground/80 min-h-6 sm:min-h-7 text-center"
+                        style={{ fontFamily: "Arial, sans-serif" }}
+                      >
+                        <Star className="h-3 w-3 shrink-0 text-gold" strokeWidth={1.5} />
+                        <span className="line-clamp-2">Tamil Nadu Pickleball Association</span>
+                      </p>
+                    </div>
+                    <span className="mt-2 sm:mt-3.5 inline-block rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider sm:tracking-[0.18em] text-gold whitespace-nowrap max-w-full overflow-hidden text-ellipsis">
+                      TNPA Board
+                    </span>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Divider leading into More than a league */}
+          <div className="mx-auto mt-14 sm:mt-16 flex items-center justify-center gap-4 max-w-2xl opacity-60">
+            <span className="h-px flex-1 bg-linear-to-r from-transparent to-gold/50" />
+            <span className="text-xs text-gold animate-star-pickleball">&#9733;</span>
+            <span className="h-px flex-1 bg-linear-to-l from-transparent to-gold/50" />
+          </div>
+        </div>
       </div>
     </section>
   );
