@@ -4,6 +4,7 @@ import {
   ChevronRight,
   Star,
   Building2,
+  X,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { AUCTION_STREAM_URL } from "@/lib/auction";
@@ -21,6 +22,19 @@ import logoRockfort from "@/assets/Team_Logos-09.webp";
 import logoRamnad from "@/assets/Team_Logos-10.webp";
 import logoSalem from "@/assets/Team_Logos-11.webp";
 import logoKodai from "@/assets/Team_Logos-12.webp";
+
+import CK_Team from "@/assets/TEAM PLAYERS/CK_Team.webp";
+import CS_Team from "@/assets/TEAM PLAYERS/CS_Team.webp";
+import CTT_Team from "@/assets/TEAM PLAYERS/CTT_Team.webp";
+import KB_Team from "@/assets/TEAM PLAYERS/KB_Team.webp";
+import KT_Team from "@/assets/TEAM PLAYERS/KT_Team.webp";
+import MAS_Team from "@/assets/TEAM PLAYERS/MAS_Team.webp";
+import NS_Team from "@/assets/TEAM PLAYERS/NS_Team.webp";
+import OB_Team from "@/assets/TEAM PLAYERS/OB_Team.webp";
+import RR_Team from "@/assets/TEAM PLAYERS/RR_Team.webp";
+import RTT_Team from "@/assets/TEAM PLAYERS/RTT_Team.webp";
+import SSS_Team from "@/assets/TEAM PLAYERS/SSS_Team.webp";
+import TEH_Team from "@/assets/TEAM PLAYERS/TEH_Team.webp";
 
 /**
  * Team + owner are ONE record on purpose.
@@ -46,6 +60,7 @@ type Team = {
   region: string;
   accent: string;
   logo: string | null;
+  teamPhoto?: string;
   owners: Owner[];
 };
 
@@ -57,6 +72,7 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "150 75% 52%",
     logo: logoKanchi,
+    teamPhoto: KB_Team,
     owners: [
       {
         name: "Abhay Meganathan",
@@ -70,6 +86,7 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "205 85% 62%",
     logo: logoHosur,
+    teamPhoto: TEH_Team,
     owners: [
       {
         name: "Dr. Samarjit Baskaran",
@@ -83,6 +100,7 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "195 85% 55%",
     logo: logoSalem,
+    teamPhoto: SSS_Team,
     owners: [
       {
         name: "Dinesh Kumar Amudhan",
@@ -96,6 +114,7 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "15 90% 60%",
     logo: logoCoimbatore,
+    teamPhoto: CS_Team,
     owners: [
       {
         name: "Arjun Narendran",
@@ -113,6 +132,7 @@ const TEAMS: Team[] = [
     region: "North",
     accent: "190 90% 62%",
     logo: logoChennai,
+    teamPhoto: CTT_Team,
     owners: [
       {
         name: "Varalaxmi Sarathkumar",
@@ -131,6 +151,7 @@ const TEAMS: Team[] = [
     region: "East",
     accent: "270 80% 65%",
     logo: logoCuddalore,
+    teamPhoto: CK_Team,
     owners: [
       {
         name: "Chiyaan Vikram",
@@ -149,6 +170,7 @@ const TEAMS: Team[] = [
     region: "Central",
     accent: "22 85% 58%",
     logo: logoRockfort,
+    teamPhoto: RTT_Team,
     owners: [
       {
         name: "Atul Jain",
@@ -162,6 +184,7 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "128 70% 52%",
     logo: logoOoty,
+    teamPhoto: OB_Team,
     owners: [
       {
         name: "Abhishek Murali",
@@ -175,6 +198,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "198 85% 58%",
     logo: logoRamnad,
+    teamPhoto: RR_Team,
     owners: [
       { name: "Naagarjun Sethuppathy", affiliation: "Franchise Owner" },
       { name: "Sneha Sethuppathy", affiliation: "Franchise Owner" },
@@ -186,6 +210,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "175 80% 55%",
     logo: logoNellai,
+    teamPhoto: NS_Team,
     owners: [
       {
         name: "Uttam Kothari",
@@ -204,6 +229,7 @@ const TEAMS: Team[] = [
     region: "South",
     accent: "355 85% 58%",
     logo: logoMadurai,
+    teamPhoto: MAS_Team,
     owners: [
       { name: "Surya", affiliation: "Goplay" },
       {
@@ -218,6 +244,7 @@ const TEAMS: Team[] = [
     region: "West",
     accent: "32 95% 60%",
     logo: logoKodai,
+    teamPhoto: KT_Team,
     owners: [
       {
         name: "Mohamed Gani Faizal",
@@ -251,6 +278,7 @@ function renderTeamName(name: string) {
 export function Teams() {
   const [active, setActive] = useState(0);
   const [layout, setLayout] = useState({ spread: 132, visible: 4 });
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   useEffect(() => {
     const update = () => {
@@ -415,15 +443,21 @@ export function Teams() {
               const isActive = offset === 0;
 
               return (
-                <button
+                <div
                   key={t.name}
-                  type="button"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      if (!dragMoved) setActive(i);
+                    }
+                  }}
                   onClick={() => {
                     if (!dragMoved) setActive(i);
                   }}
                   aria-label={`${t.name} franchise`}
                   aria-hidden={abs > layout.visible}
-                  className="absolute left-1/2 top-1/2 w-66 sm:w-68 lg:w-76 h-123 sm:h-131 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
+                  className="absolute left-1/2 top-1/2 w-66 sm:w-68 lg:w-76 h-132.5 sm:h-140 rounded-2xl border text-left transition-all duration-500 ease-out overflow-hidden"
                   style={{
                     transform: `translate(-50%, -50%) translateX(${offset * (layout.spread + 10)}px) scale(${isActive ? 1 : 0.88
                       })`,
@@ -512,22 +546,39 @@ export function Teams() {
                               {o.name}
                             </span>
                             <span
-                              className="mt-0.5 flex w-full items-center justify-center gap-1 text-[9px] leading-tight text-foreground/65"
+                              className="mt-0.5 text-[9px] leading-tight text-foreground/65 line-clamp-2"
                               style={{ fontFamily: "Arial, sans-serif" }}
                             >
                               {o.isCelebrity ? (
-                                <Star className="h-2.5 w-2.5 shrink-0 text-gold" strokeWidth={1.5} />
+                                <Star className="inline-block h-2.5 w-2.5 text-gold mr-1 -mt-0.5" strokeWidth={1.5} />
                               ) : (
-                                <Building2 className="h-2.5 w-2.5 shrink-0 text-gold" strokeWidth={1.5} />
+                                <Building2 className="inline-block h-2.5 w-2.5 text-gold mr-1 -mt-0.5" strokeWidth={1.5} />
                               )}
-                              <span className="line-clamp-2">{o.affiliation}</span>
+                              {o.affiliation}
                             </span>
                           </li>
                         ))}
                       </ul>
                     </div>
+
+                    {/* View Team Button */}
+                    <div className="mt-4 shrink-0 w-full flex justify-center">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (t.teamPhoto) {
+                            setSelectedTeam(t);
+                          }
+                        }}
+                        disabled={!t.teamPhoto}
+                        className="rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-[10px] font-bold uppercase tracking-widest text-gold transition-colors hover:bg-gold hover:text-ink disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        View Team
+                      </button>
+                    </div>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
@@ -612,6 +663,30 @@ export function Teams() {
         </div>
         </Reveal>
       </div>
+      {/* Modal for Team Photo */}
+      {selectedTeam && (
+        <div
+          className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
+          onClick={() => setSelectedTeam(null)}
+        >
+          <div
+            className="relative max-h-[90vh] max-w-5xl w-full flex flex-col items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedTeam(null)}
+              className="absolute -top-10 right-0 rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition-colors"
+            >
+              <X className="h-4 w-4 sm:h-6 sm:w-6" />
+            </button>
+            <img
+              src={selectedTeam.teamPhoto!}
+              alt={`${selectedTeam.name} Players`}
+              className="w-full h-auto max-h-[85vh] object-contain rounded-xl shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
