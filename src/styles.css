@@ -222,7 +222,6 @@
   line-height: 1.0;
   text-transform: uppercase;
   -webkit-text-stroke: 0.5px #011837;
-  text-stroke: 0.5px #011837;
 }
 
 /* Fallback layer — ensures all properties are applied even if @utility misses */
@@ -243,7 +242,6 @@
     line-height: 1.0;
     text-transform: uppercase;
     -webkit-text-stroke: 0.5px #011837 !important;
-    text-stroke: 0.5px #011837 !important;
   }
 }
 
