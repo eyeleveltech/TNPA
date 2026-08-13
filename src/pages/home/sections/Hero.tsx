@@ -15,6 +15,7 @@ import SPONSOR_CAVINS from "@/assets/cavins logo 2.0.webp";
 import SPONSOR_GTB from "@/assets/gtb logo 2.0.webp";
 import SPONSOR_INDIANBANK from "@/assets/indian bank logo 2.0.webp";
 import SPONSOR_PIXPE from "@/assets/pixel logo 2.0.webp";
+import SPONSOR_SPECTON from "@/assets/specton.webp";
 import SPONSOR_RIZZFITT from "@/assets/rizz fit logo 2.0.webp";
 
 /* Dates and venue now live in the free-entry badge row above the strip —
@@ -38,6 +39,7 @@ const SPONSOR_ITEMS: { label: string; logos: { name: string; src: string }[] }[]
     ],
   },
   { label: "LED Partner", logos: [{ name: "Pix Pe", src: SPONSOR_PIXPE }] },
+  { label: "Official Ball Partner", logos: [{ name: "Specton", src: SPONSOR_SPECTON }] },
   { label: "Tech Partner", logos: [{ name: "Rizzfitt", src: SPONSOR_RIZZFITT }] },
 ];
 
@@ -167,15 +169,11 @@ export function Hero() {
             </div>
 
             <div
-              className="animate-fade-up mt-5 flex items-center gap-3"
+              className="animate-fade-up mt-5"
               style={{ animationDelay: "140ms" }}
             >
               <span
-                className="h-px w-8 bg-gold/60 sm:w-12"
-                aria-hidden="true"
-              />
-              <span
-                className="text-[10px] font-bold uppercase tracking-[0.32em] text-gold sm:text-[11px]"
+                className="text-[12px] font-bold uppercase tracking-[0.32em] text-gold sm:text-[14px]"
                 style={{ fontFamily: "Arial, sans-serif" }}
               >
                 TNPPL &middot; Season 2
@@ -225,11 +223,12 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Punctuation escapes back to Arial — PODIUM Sharp's period and
-                apostrophe glyphs are wrong. Same pattern as About.tsx. */}
             <p
-              className="animate-fade-up display-title mt-4 max-w-[26ch] text-[clamp(0.95rem,3.4vw,1.25rem)] text-foreground/90 sm:mt-5 sm:max-w-[34ch] sm:text-[clamp(1.05rem,2.2vw,1.6rem)]"
-              style={{ animationDelay: "900ms", lineHeight: 1.15 }}
+              className="animate-fade-up display-title-light mt-4 max-w-[26ch] text-[clamp(0.85rem,2.2vw,0.95rem)] text-foreground/90 sm:mt-5 sm:max-w-[34ch] sm:text-[clamp(0.9rem,1.6vw,1.1rem)]"
+              style={{
+                animationDelay: "900ms",
+                lineHeight: 1.15,
+              }}
             >
               Tamil Nadu
               <span style={{ fontFamily: "Arial, sans-serif" }}>&rsquo;</span>s
@@ -420,6 +419,8 @@ export function Hero() {
                           className={`w-auto object-contain ${
                             logo.name === "CavinKare"
                               ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-110"
+                              : logo.name === "Specton"
+                              ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-[1.45]"
                               : "h-10 sm:h-12 lg:h-14 max-w-48 sm:max-w-64"
                           }`}
                         />

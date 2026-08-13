@@ -215,6 +215,16 @@
   text-transform: uppercase;
 }
 
+@utility display-title-light {
+  font-family: "PODIUM Sharp", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.0;
+  text-transform: uppercase;
+  -webkit-text-stroke: 0.5px #011837;
+  text-stroke: 0.5px #011837;
+}
+
 /* Fallback layer — ensures all properties are applied even if @utility misses */
 @layer components {
   .display-title,
@@ -224,6 +234,16 @@
     letter-spacing: 0.05em !important;
     line-height: 1.0;
     text-transform: uppercase;
+  }
+
+  .display-title-light {
+    font-family: "PODIUM Sharp", sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.0;
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.5px #011837 !important;
+    text-stroke: 0.5px #011837 !important;
   }
 }
 
