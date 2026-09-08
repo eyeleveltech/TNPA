@@ -114,14 +114,20 @@ export function Navbar() {
 
         <nav
           aria-label="Primary"
-          className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden lg:flex lg:gap-x-5 xl:gap-x-7 2xl:gap-x-9"
+          className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden lg:flex lg:gap-x-3.5 xl:gap-x-5 2xl:gap-x-7"
         >
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className={`nav-link whitespace-nowrap text-[9px] lg:text-[11px] xl:text-[12px] ${isActive(item) ? "nav-link-active" : ""}`}
+              className={`nav-link whitespace-nowrap text-[9px] lg:text-[11px] xl:text-[12px] flex items-center gap-1.5 ${isActive(item) ? "nav-link-active" : ""}`}
             >
+              {item.name === "Live" && (
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                </span>
+              )}
               {item.name}
             </Link>
           ))}
@@ -140,7 +146,7 @@ export function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`TNPPL on ${label}`}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-gold/10 hover:text-gold focus-visible:bg-gold/10 focus-visible:text-gold"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-gold/10 hover:text-gold focus-visible:bg-gold/10"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -154,6 +160,16 @@ export function Navbar() {
           />
 
           <div className="hidden items-center gap-2 lg:flex lg:gap-3">
+            <Link
+              to="/live"
+              className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 hover:text-white transition-all shadow-[0_0_10px_rgba(239,68,68,0.2)] xl:px-3.5"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              Live
+            </Link>
             <a
               href="/#contact"
               onClick={(e) => {
@@ -170,7 +186,17 @@ export function Navbar() {
             </a>
           </div>
 
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-2">
+            <Link
+              to="/live"
+              className="inline-flex items-center gap-1 rounded-full border border-red-500/40 bg-red-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 hover:text-white transition-all shadow-[0_0_8px_rgba(239,68,68,0.25)]"
+            >
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
+              </span>
+              Live
+            </Link>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -200,8 +226,14 @@ export function Navbar() {
                 key={item.name}
                 to={item.href}
                 onClick={() => setOpen(false)}
-                className={`nav-link text-sm ${isActive(item) ? "nav-link-active" : ""}`}
+                className={`nav-link text-sm flex items-center gap-2 ${isActive(item) ? "nav-link-active" : ""}`}
               >
+                {item.name === "Live" && (
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                  </span>
+                )}
                 {item.name}
               </Link>
             ))}

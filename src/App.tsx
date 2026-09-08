@@ -7,6 +7,7 @@ import MediaKitPage from "./pages/media-kit";
 import PrivacyPage from "./pages/privacy";
 import RulesPage from "./pages/rules";
 import SponsorshipPage from "./pages/sponsorship";
+import LivePage from "./pages/live";
 import { NotFound } from "./pages/NotFound";
 import { BackToTop } from "./components/BackToTop";
 
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/rules" element={<RulesPage />} />
         <Route path="/sponsorship" element={<SponsorshipPage />} />
+        <Route path="/live" element={<LivePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
