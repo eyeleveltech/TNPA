@@ -42,27 +42,23 @@ export default function LivePage() {
   return (
     <div className="min-h-screen bg-ink text-foreground flex flex-col justify-between selection:bg-gold/30 selection:text-gold">
       {/* Top Navigation */}
-      <div className="relative z-30">
+      <div className="absolute inset-x-0 top-0 z-30">
         <Navbar />
       </div>
 
       {/* Main Content Area */}
-      <main className="relative isolate flex-1 flex flex-col justify-center overflow-hidden">
-        {/* Ambient Stadium Lighting Glows */}
+      <main className="relative isolate flex-1 flex flex-col justify-center items-center overflow-hidden w-full">
+        {/* Ambient Stadium Lighting Glows - Subtle and balanced */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-125 w-200 -translate-x-1/2 rounded-full bg-linear-to-b from-red-600/20 via-navy/40 to-transparent blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-1/2 -z-10 h-100 w-150 -translate-x-1/2 rounded-full bg-gold/15 blur-[140px]"
+          className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-96 w-140 -translate-x-1/2 rounded-full bg-red-600/10 blur-3xl"
         />
 
         {isLiveActive ? (
           /* ========================================================================= */
           /* 2-VIDEO LIVE BROADCAST VIEW (Active when developer adds YouTube IDs)       */
           /* ========================================================================= */
-          <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl px-4 pt-24 pb-8 sm:px-6 sm:pt-28 sm:pb-10 lg:px-8 lg:pt-32">
             {/* Live Header Strip */}
             <div className="stat-card mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl p-4 sm:p-5">
               <div className="flex items-center gap-3">
@@ -167,105 +163,104 @@ export default function LivePage() {
           </div>
         ) : (
           /* ========================================================================= */
-          /* BANNER HERO SECTION: 2K ULTRA-WIDE COMING SOON BANNER WITH LIVE COUNTDOWN */
+          /* BANNER HERO SECTION: FULL-BLEED LIVE COUNTDOWN ARENA                      */
           /* ========================================================================= */
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center justify-center px-3 py-3 sm:px-6 sm:py-6 lg:px-8 lg:py-8 text-center">
-            {/* Live Coming Soon Banner with Dynamic Elements */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-red-500/40 ring-1 ring-gold/25 shadow-[0_0_80px_rgba(239,68,68,0.35),0_0_30px_rgba(255,208,0,0.15)] flex flex-col items-center justify-center p-4 sm:p-8 md:p-12 select-none">
-              {/* Ultra HD Studio Background */}
-              <img
-                src={LIVE_STUDIO_BG}
-                alt="TNPPL Live Broadcast Arena"
-                width={2048}
-                height={1152}
-                loading="eager"
-                fetchPriority="high"
-                className="absolute inset-0 w-full h-full object-cover -z-10"
-              />
+          <div className="relative flex w-full min-h-screen flex-col items-center justify-center px-4 pt-24 pb-12 sm:pt-28 sm:pb-16 text-center select-none overflow-hidden">
+            {/* Ultra HD Studio Background - Edge to Edge */}
+            <img
+              src={LIVE_STUDIO_BG}
+              alt="TNPPL Live Broadcast Arena"
+              width={1920}
+              height={1080}
+              loading="eager"
+              fetchPriority="high"
+              className="absolute inset-0 w-full h-full object-cover object-center -z-10"
+            />
+            {/* Subtle contrast overlay to keep glow balanced and elegant */}
+            <div className="absolute inset-0 bg-ink/30 pointer-events-none -z-10" />
 
-              {/* 1. Ultra Vibrant YouTube 3D Vector Icon */}
-              <div className="relative mb-2 sm:mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
-                <div className="absolute h-14 w-20 sm:h-20 sm:w-28 md:h-28 md:w-36 lg:h-32 lg:w-44 rounded-full bg-red-600/45 blur-2xl animate-pulse" />
-                <svg
-                  className="relative h-10 w-auto sm:h-14 md:h-18 lg:h-22 drop-shadow-[0_0_30px_rgba(255,0,30,0.9)]"
-                  viewBox="0 0 120 84"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="120" height="84" rx="24" fill="url(#ytRedGrad)" />
-                  <path d="M48 24L82 42L48 60V24Z" fill="white" />
-                  <defs>
-                    <linearGradient id="ytRedGrad" x1="0" y1="0" x2="120" y2="84" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#FF1E27" />
-                      <stop offset="1" stopColor="#B80008" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+            {/* 1. YouTube 3D Vector Icon (Compact & elegant) */}
+            <div className="relative mb-2 sm:mb-3 md:mb-4 flex items-center justify-center">
+              <div className="absolute h-9 w-12 sm:h-12 sm:w-16 md:h-14 md:w-20 rounded-full bg-red-600/20 blur-lg" />
+              <svg
+                className="relative h-8 w-auto sm:h-11 md:h-13 lg:h-14 drop-shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
+                viewBox="0 0 120 84"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="120" height="84" rx="24" fill="url(#ytRedGrad)" />
+                <path d="M48 24L82 42L48 60V24Z" fill="white" />
+                <defs>
+                  <linearGradient id="ytRedGrad" x1="0" y1="0" x2="120" y2="84" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FF1E27" />
+                    <stop offset="1" stopColor="#B80008" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
 
-              {/* 2. Razor-Sharp "Coming up soon" Title */}
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white tracking-tight drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] mb-3 sm:mb-6 md:mb-8 font-sans">
-                Coming up soon
-              </h1>
+            {/* 2. Razor-Sharp "Coming up soon" Title (Refined, proportional scale) */}
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] mb-3 sm:mb-5 md:mb-6 font-sans">
+              Coming up soon
+            </h1>
 
-              {/* 3. Dynamic Glowing Live Countdown Box */}
-              <div className="w-[90%] sm:w-[76%] md:w-[62%] lg:w-[50%] xl:w-[46%] bg-black/92 border border-red-500/80 ring-1 ring-gold/30 rounded-xl sm:rounded-2xl md:rounded-3xl px-3 py-2 sm:px-6 sm:py-4 md:px-8 md:py-5 shadow-[0_0_40px_rgba(239,68,68,0.65),inset_0_0_25px_rgba(239,68,68,0.3)] flex flex-col items-center justify-center backdrop-blur-2xl">
-                <span className="text-[8px] sm:text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.22em] text-white uppercase mb-1 sm:mb-1.5 md:mb-2 drop-shadow-[0_0_10px_rgba(239,68,68,0.9)]">
-                  {timeLeft.isLive ? "EVENT IS NOW LIVE" : "GOING LIVE IN"}
+            {/* 3. Sleek Luxury Glassmorphic Countdown Box (Toned-down glow) */}
+            <div className="w-[92%] sm:w-[80%] md:w-[65%] lg:w-[50%] xl:w-[44%] max-w-2xl bg-black/85 border border-red-500/35 ring-1 ring-white/10 rounded-2xl sm:rounded-3xl px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_16px_rgba(239,68,68,0.2)] flex flex-col items-center justify-center backdrop-blur-xl">
+              <span className="text-[9px] sm:text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.22em] text-white/90 uppercase mb-1.5 sm:mb-2">
+                {timeLeft.isLive ? "EVENT IS NOW LIVE" : "GOING LIVE IN"}
+              </span>
+
+              <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-5 lg:gap-6 text-white">
+                {/* Days */}
+                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
+                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                    {String(timeLeft.days).padStart(2, "0")}
+                  </span>
+                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
+                    DAYS
+                  </span>
+                </div>
+
+                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
+                  :
                 </span>
 
-                <div className="flex items-center justify-center gap-1.5 sm:gap-3 md:gap-5 lg:gap-6 text-white">
-                  {/* Days */}
-                  <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                    <span className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.95)]">
-                      {String(timeLeft.days).padStart(2, "0")}
-                    </span>
-                    <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                      DAYS
-                    </span>
-                  </div>
-
-                  <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500 animate-pulse -translate-y-2 sm:-translate-y-3">
-                    :
+                {/* Hours */}
+                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
+                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                    {String(timeLeft.hours).padStart(2, "0")}
                   </span>
-
-                  {/* Hours */}
-                  <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                    <span className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.95)]">
-                      {String(timeLeft.hours).padStart(2, "0")}
-                    </span>
-                    <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                      HRS
-                    </span>
-                  </div>
-
-                  <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500 animate-pulse -translate-y-2 sm:-translate-y-3">
-                    :
+                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
+                    HRS
                   </span>
+                </div>
 
-                  {/* Minutes */}
-                  <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                    <span className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.95)]">
-                      {String(timeLeft.minutes).padStart(2, "0")}
-                    </span>
-                    <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                      MIN
-                    </span>
-                  </div>
+                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
+                  :
+                </span>
 
-                  <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500 animate-pulse -translate-y-2 sm:-translate-y-3">
-                    :
+                {/* Minutes */}
+                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
+                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                    {String(timeLeft.minutes).padStart(2, "0")}
                   </span>
+                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
+                    MIN
+                  </span>
+                </div>
 
-                  {/* Seconds */}
-                  <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                    <span className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-[#ff3355] drop-shadow-[0_0_20px_rgba(255,51,85,1)]">
-                      {String(timeLeft.seconds).padStart(2, "0")}
-                    </span>
-                    <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                      SEC
-                    </span>
-                  </div>
+                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
+                  :
+                </span>
+
+                {/* Seconds */}
+                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
+                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-[#ff4466] drop-shadow-[0_2px_8px_rgba(255,68,102,0.3)]">
+                    {String(timeLeft.seconds).padStart(2, "0")}
+                  </span>
+                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
+                    SEC
+                  </span>
                 </div>
               </div>
             </div>
