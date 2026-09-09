@@ -11,12 +11,19 @@ import {
 import { useParallax } from "@/hooks/useParallax";
 import { getHeroTertiaryCta } from "@/lib/auction";
 
-import SPONSOR_CAVINS from "@/assets/cavins logo 2.0.webp";
-import SPONSOR_GTB from "@/assets/gtb logo 2.0.webp";
-import SPONSOR_INDIANBANK from "@/assets/indian bank logo 2.0.webp";
-import SPONSOR_PIXPE from "@/assets/pixel logo 2.0.webp";
-import SPONSOR_SPECTON from "@/assets/specton.webp";
-import SPONSOR_RIZZFITT from "@/assets/rizz fit logo 2.0.webp";
+import SPONSOR_CAVINS from "@/assets/sponsors/cavin.webp";
+import SPONSOR_BOOM from "@/assets/sponsors/boom.webp";
+import SPONSOR_GTB from "@/assets/sponsors/gtb.webp";
+import SPONSOR_INDIANBANK from "@/assets/sponsors/indian_bank.webp";
+import SPONSOR_NOVA from "@/assets/sponsors/nova.webp";
+import SPONSOR_TURFTOWN from "@/assets/sponsors/turf_town.webp";
+import SPONSOR_RAUNAQ from "@/assets/sponsors/raunaq.webp";
+import SPONSOR_PIXEL from "@/assets/sponsors/pixel_edge.webp";
+import SPONSOR_SPECTON from "@/assets/sponsors/specton.webp";
+import SPONSOR_MIRCHI from "@/assets/sponsors/mirchi.webp";
+import SPONSOR_GEETHAM from "@/assets/sponsors/geetham.webp";
+import SPONSOR_RIGHTS from "@/assets/sponsors/right_hospitals.webp";
+import SPONSOR_REFORGE from "@/assets/sponsors/reforge.webp";
 
 /* Dates and venue now live in the free-entry badge row above the strip —
    keeping them here too would state them twice. */
@@ -26,21 +33,105 @@ const STRIP = [
   { eyebrow: "Prize", value: "₹30L Prize Pool", icon: Award },
 ];
 
-/* Grouped by tier, not one entry per logo: GTB and Indian Bank hold the same
-   Co Sponsor rank, so they share a single centred label instead of repeating
-   "Co Sponsor" twice in a row. Any tier can hold one logo or several. */
-const SPONSOR_ITEMS: { label: string; logos: { name: string; src: string }[] }[] = [
-  { label: "Title Sponsor", logos: [{ name: "CavinKare", src: SPONSOR_CAVINS }] },
+/* Grouped by tier per official league hierarchy.
+   Any unmentioned logos have been removed.
+   Tier 5 (Mirchi, Geetham, Right Hospitals, Reforge) has no category title.
+   Sizing boosted for prominent, bold visibility across all tiers. */
+const SPONSOR_ITEMS: {
+  label: string;
+  logos: { name: string; src: string; className?: string }[];
+}[] = [
+  {
+    label: "Title Sponsor",
+    logos: [
+      {
+        name: "CavinKare",
+        src: SPONSOR_CAVINS,
+        className:
+          "h-13 max-w-40 sm:h-15 sm:max-w-48 lg:h-17 lg:max-w-56",
+      },
+    ],
+  },
+  {
+    label: "Powered By",
+    logos: [
+      {
+        name: "Boom Cars",
+        src: SPONSOR_BOOM,
+        className: "h-9 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+      },
+      {
+        name: "GTB",
+        src: SPONSOR_GTB,
+        className: "h-9 max-w-32 sm:h-10 sm:max-w-38 lg:h-12 lg:max-w-44",
+      },
+    ],
+  },
   {
     label: "Co Sponsors",
     logos: [
-      { name: "GTB", src: SPONSOR_GTB },
-      { name: "Indian Bank", src: SPONSOR_INDIANBANK },
+      {
+        name: "Indian Bank",
+        src: SPONSOR_INDIANBANK,
+        className: "h-8 max-w-36 sm:h-10 sm:max-w-42 lg:h-11 lg:max-w-48",
+      },
+      {
+        name: "NOVA",
+        src: SPONSOR_NOVA,
+        className: "h-9 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+      },
     ],
   },
-  { label: "LED Partner", logos: [{ name: "Pix Pe", src: SPONSOR_PIXPE }] },
-  { label: "Official Ball Partner", logos: [{ name: "Specton", src: SPONSOR_SPECTON }] },
-  { label: "Tech Partner", logos: [{ name: "Rizzfitt", src: SPONSOR_RIZZFITT }] },
+  {
+    label: "Associate Partners",
+    logos: [
+      {
+        name: "Turf Town",
+        src: SPONSOR_TURFTOWN,
+        className: "h-10 max-w-28 sm:h-11 sm:max-w-32 lg:h-13 lg:max-w-38",
+      },
+      {
+        name: "Raunaq",
+        src: SPONSOR_RAUNAQ,
+        className: "h-10 max-w-24 sm:h-11 sm:max-w-28 lg:h-13 lg:max-w-36",
+      },
+      {
+        name: "Pixel Edge",
+        src: SPONSOR_PIXEL,
+        className: "h-7 max-w-36 sm:h-8 sm:max-w-42 lg:h-10 lg:max-w-48",
+      },
+      {
+        name: "Specton",
+        src: SPONSOR_SPECTON,
+        className: "h-6 max-w-36 sm:h-7 sm:max-w-44 lg:h-8 lg:max-w-52",
+      },
+    ],
+  },
+  {
+    label: "",
+    logos: [
+      {
+        name: "Radio Mirchi",
+        src: SPONSOR_MIRCHI,
+        className: "h-10 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+      },
+      {
+        name: "Geetham",
+        src: SPONSOR_GEETHAM,
+        className: "h-10 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+      },
+      {
+        name: "Right Hospitals",
+        src: SPONSOR_RIGHTS,
+        className: "h-9 max-w-34 sm:h-10 sm:max-w-40 lg:h-12 lg:max-w-48",
+      },
+      {
+        name: "Reforge",
+        src: SPONSOR_REFORGE,
+        className: "h-9 max-w-32 sm:h-10 sm:max-w-38 lg:h-12 lg:max-w-44",
+      },
+    ],
+  },
 ];
 
 import HERO_VIDEO from "@/assets/hero.mp4";
@@ -380,16 +471,16 @@ export function Hero() {
               "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
           }}
         >
-          <div className="flex items-center pt-4 pb-3 sm:pt-5 sm:pb-4">
-            {/* Spacing is per-item margin, NOT container `gap` + `px`.
+          <div className="flex items-center pt-3 pb-2.5 sm:pt-4 sm:pb-3">
+            {/* Spacing is per-item margin and divider, NOT container `gap` + `px`.
                 `gap` puts no space after the last child, so half the track's
                 width is never exactly one set — the -50% keyframe lands half a
-                gap off and the loop visibly jumps. Symmetric margins make every
-                item cost (width + 2m), so half the track is exactly one set. */}
+                gap off and the loop visibly jumps. Symmetric margins and dividers
+                make every item cost (width + divider), so half the track is exactly one set. */}
             <div
               className="flex shrink-0 items-center"
               style={{
-                animation: "sponsor-scroll 28s linear infinite",
+                animation: "sponsor-scroll 48s linear infinite",
               }}
             >
               {/* 2 sets is the minimum for a -50% loop; 4 was double the DOM
@@ -398,34 +489,37 @@ export function Hero() {
                 SPONSOR_ITEMS.map((item, i) => (
                   <div
                     key={`item-${setIdx}-${i}`}
-                    className="mx-5 flex shrink-0 flex-col items-center text-center sm:mx-7 lg:mx-9"
+                    className="flex shrink-0 items-center"
                   >
-                    <span
-                      className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
-                      style={{ fontFamily: "Arial, sans-serif" }}
-                    >
-                      {item.label}
-                    </span>
-                    {/* Inner gap only separates logos sharing a label. The
-                        outer mx-* still separates one tier from the next, so
-                        the grouping stays legible at a glance. */}
-                    <div className="mt-2 flex h-16 items-center justify-center gap-6 sm:mt-3 sm:h-20 sm:gap-8 lg:h-24 lg:gap-10">
-                      {item.logos.map((logo) => (
-                        <img
-                          key={logo.name}
-                          src={logo.src}
-                          alt={logo.name}
-                          loading="eager"
-                          className={`w-auto object-contain ${
-                            logo.name === "CavinKare"
-                              ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-110"
-                              : logo.name === "Specton"
-                              ? "h-14 max-w-56 sm:h-17 sm:max-w-68 lg:h-20 lg:max-w-80 scale-[1.45]"
-                              : "h-10 sm:h-12 lg:h-14 max-w-48 sm:max-w-64"
-                          }`}
-                        />
-                      ))}
+                    <div className="flex shrink-0 flex-col items-center text-center px-6 sm:px-8 lg:px-10">
+                      <span
+                        className="min-h-[14px] text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
+                        style={{ fontFamily: "Arial, sans-serif" }}
+                      >
+                        {item.label || "\u00A0"}
+                      </span>
+                      {/* Uniform gap between logos in the same batch */}
+                      <div className="mt-2 flex h-16 items-center justify-center gap-7 sm:mt-2.5 sm:h-18 sm:gap-9 lg:h-22 lg:gap-11">
+                        {item.logos.map((logo) => (
+                          <div
+                            key={logo.name}
+                            className="flex shrink-0 items-center justify-center"
+                          >
+                            <img
+                              src={logo.src}
+                              alt={logo.name}
+                              loading="eager"
+                              className={`w-auto object-contain transition-opacity duration-300 ${logo.className}`}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                    {/* Subtle divider separating batches with perfect symmetry */}
+                    <div
+                      className="mt-3.5 h-8 w-px shrink-0 self-center bg-white/10"
+                      aria-hidden="true"
+                    />
                   </div>
                 )),
               )}

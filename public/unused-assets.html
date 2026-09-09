@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TNPA - Unused Assets Visual Gallery</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #011837; color: #f6f6f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 2rem; min-height: 100vh; }
+    header { max-width: 1300px; margin: 0 auto 2rem; border-bottom: 1px solid rgba(255,208,0,0.2); padding-bottom: 1.5rem; }
+    h1 { font-size: 2rem; color: #ffd000; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    p.desc { color: rgba(246,246,246,0.75); margin-top: 0.5rem; font-size: 1rem; line-height: 1.5; }
+    .summary-bar { display: flex; gap: 1.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.75rem 1.25rem; }
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; color: rgba(246,246,246,0.5); letter-spacing: 0.1em; }
+    .stat-val { font-size: 1.5rem; font-weight: bold; color: #ffd000; margin-top: 0.25rem; }
+    .filters { display: flex; gap: 0.5rem; margin: 1.75rem 0 1rem; flex-wrap: wrap; }
+    .filter-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #f6f6f6; padding: 0.5rem 1.1rem; border-radius: 9999px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+    .filter-btn.active, .filter-btn:hover { background: #ffd000; color: #011837; border-color: #ffd000; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; max-width: 1300px; margin: 0 auto; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,208,0,0.4); }
+    .img-box { width: 100%; height: 200px; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; padding: 1rem; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .info { padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .filename { font-size: 0.9rem; font-weight: 600; color: #fff; word-break: break-all; margin-bottom: 0.5rem; }
+    .meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(246,246,246,0.6); }
+    .size-badge { background: rgba(255,208,0,0.15); color: #ffd000; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight: bold; }
+    .tag-badge { margin-top: 0.75rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.3rem 0.7rem; border-radius: 6px; display: inline-block; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unused Images Visual Gallery</h1>
+    <p class="desc">Indha page-la project-la irukura thevailladha / unused images ellathaiyum neenga direct-ah visual-ah paathukalam. <strong>Edhume innum delete aagala.</strong></p>
+    <div class="summary-bar">
+      <div class="stat"><div class="stat-label">Total Unused Images</div><div class="stat-val">63 files</div></div>
+      <div class="stat"><div class="stat-label">Potential Space Saved</div><div class="stat-val">19.20 MB</div></div>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterCat('all', this)">All (63)</button>
+      <button class="filter-btn" onclick="filterCat('huge', this)">Huge Raw Duplicates (1)</button>
+      <button class="filter-btn" onclick="filterCat('drive', this)">Drive Raw PNGs (27)</button>
+      <button class="filter-btn" onclick="filterCat('sponsors', this)">Old Replaced Sponsors (11)</button>
+      <button class="filter-btn" onclick="filterCat('live', this)">Old Live Banners (3)</button>
+      <button class="filter-btn" onclick="filterCat('owners', this)">Franchise Owners (15)</button>
+    </div>
+  </header>
+  <div class="grid">
+    <div class="card" data-cat="huge">
+      <div class="img-box">
+        <img src="/src/assets/season 1 winners.jpeg" alt="season 1 winners.jpeg" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">season 1 winners.jpeg</div>
+          <div class="meta">
+            <span>assets/season 1 winners.jpeg</span>
+            <span class="size-badge">11.07 MB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Safe to Delete (Duplicate 11.3 MB)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="live">
+      <div class="img-box">
+        <img src="/src/assets/live_studio_bg.webp" alt="live_studio_bg.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">live_studio_bg.webp</div>
+          <div class="meta">
+            <span>assets/live_studio_bg.webp</span>
+            <span class="size-badge">961.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b44;">Old Live Banner</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="live">
+      <div class="img-box">
+        <img src="/src/assets/live_coming_soon.png" alt="live_coming_soon.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">live_coming_soon.png</div>
+          <div class="meta">
+            <span>assets/live_coming_soon.png</span>
+            <span class="size-badge">631.5 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b44;">Old Live Banner</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/TNPPL Season 2 Logo.png" alt="TNPPL Season 2 Logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPPL Season 2 Logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/TNPPL Season 2 Logo.png</span>
+            <span class="size-badge">471.4 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/TNPPL Season 2 White Logo.png" alt="TNPPL Season 2 White Logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPPL Season 2 White Logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/TNPPL Season 2 White Logo.png</span>
+            <span class="size-badge">468.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Raunaq_png.png" alt="Raunaq_png.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Raunaq_png.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Raunaq_png.png</span>
+            <span class="size-badge">416.4 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Geetham logo.png" alt="Geetham logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Geetham logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Geetham logo.png</span>
+            <span class="size-badge">364.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Boom Cars - Power Sponsor 1.png" alt="Boom Cars - Power Sponsor 1.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Boom Cars - Power Sponsor 1.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Boom Cars - Power Sponsor 1.png</span>
+            <span class="size-badge">340.4 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Cavins Title Sponsor.png" alt="Cavins Title Sponsor.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Cavins Title Sponsor.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Cavins Title Sponsor.png</span>
+            <span class="size-badge">307.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Specton_Logo.png" alt="Specton_Logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Specton_Logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Specton_Logo.png</span>
+            <span class="size-badge">273.9 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Specton_Logo_White.png" alt="Specton_Logo_White.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Specton_Logo_White.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Specton_Logo_White.png</span>
+            <span class="size-badge">254.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Radio Mirchi - Ratio Partner.png" alt="Radio Mirchi - Ratio Partner.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Radio Mirchi - Ratio Partner.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Radio Mirchi - Ratio Partner.png</span>
+            <span class="size-badge">249.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Rights_Logo.png" alt="Rights_Logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Rights_Logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Rights_Logo.png</span>
+            <span class="size-badge">234.5 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="backup">
+      <div class="img-box">
+        <img src="/src/assets/worked/Mr._Ganesh_raw_backup.webp" alt="Mr._Ganesh_raw_backup.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Mr._Ganesh_raw_backup.webp</div>
+          <div class="meta">
+            <span>assets/worked/Mr._Ganesh_raw_backup.webp</span>
+            <span class="size-badge">227.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #6b728022; color: #6b7280; border: 1px solid #6b728044;">Original Raw Backup</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Pixel_Edge.png" alt="Pixel_Edge.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Pixel_Edge.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Pixel_Edge.png</span>
+            <span class="size-badge">226.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/GTB white - Power Sponsor 2.png" alt="GTB white - Power Sponsor 2.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">GTB white - Power Sponsor 2.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/GTB white - Power Sponsor 2.png</span>
+            <span class="size-badge">218.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="live">
+      <div class="img-box">
+        <img src="/src/assets/live_coming_soon.webp" alt="live_coming_soon.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">live_coming_soon.webp</div>
+          <div class="meta">
+            <span>assets/live_coming_soon.webp</span>
+            <span class="size-badge">190.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b44;">Old Live Banner</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/GTB - Power Sponsor 2.png" alt="GTB - Power Sponsor 2.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">GTB - Power Sponsor 2.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/GTB - Power Sponsor 2.png</span>
+            <span class="size-badge">183.2 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/RAUNAQ - corporate-03.png" alt="RAUNAQ - corporate-03.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">RAUNAQ - corporate-03.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/RAUNAQ - corporate-03.png</span>
+            <span class="size-badge">176.0 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/NOVA CoSponsor 1.png" alt="NOVA CoSponsor 1.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">NOVA CoSponsor 1.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/NOVA CoSponsor 1.png</span>
+            <span class="size-badge">144.9 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Reforge.png" alt="Reforge.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Reforge.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Reforge.png</span>
+            <span class="size-badge">143.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Reforge_Logo-02.png" alt="Reforge_Logo-02.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Reforge_Logo-02.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Reforge_Logo-02.png</span>
+            <span class="size-badge">138.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Reforge_Logo-03.png" alt="Reforge_Logo-03.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Reforge_Logo-03.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Reforge_Logo-03.png</span>
+            <span class="size-badge">133.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="other">
+      <div class="img-box">
+        <img src="/src/assets/Cavins Logo_2-01.webp" alt="Cavins Logo_2-01.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Cavins Logo_2-01.webp</div>
+          <div class="meta">
+            <span>assets/Cavins Logo_2-01.webp</span>
+            <span class="size-badge">132.9 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ffd00022; color: #ffd000; border: 1px solid #ffd00044;">Review</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/abhay_meganathan.webp" alt="abhay_meganathan.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">abhay_meganathan.webp</div>
+          <div class="meta">
+            <span>assets/abhay_meganathan.webp</span>
+            <span class="size-badge">122.5 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Pixel-pix.png" alt="Pixel-pix.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Pixel-pix.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Pixel-pix.png</span>
+            <span class="size-badge">99.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/GTB.webp" alt="GTB.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">GTB.webp</div>
+          <div class="meta">
+            <span>assets/GTB.webp</span>
+            <span class="size-badge">87.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/varalaxmi_final.webp" alt="varalaxmi_final.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">varalaxmi_final.webp</div>
+          <div class="meta">
+            <span>assets/varalaxmi_final.webp</span>
+            <span class="size-badge">82.0 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Indian bank - CoSponsor 2.png" alt="Indian bank - CoSponsor 2.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Indian bank - CoSponsor 2.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Indian bank - CoSponsor 2.png</span>
+            <span class="size-badge">79.5 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/mohamed_gani_faizal.webp" alt="mohamed_gani_faizal.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">mohamed_gani_faizal.webp</div>
+          <div class="meta">
+            <span>assets/mohamed_gani_faizal.webp</span>
+            <span class="size-badge">78.5 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/TNPA LOGO_BLACK.png" alt="TNPA LOGO_BLACK.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPA LOGO_BLACK.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/TNPA LOGO_BLACK.png</span>
+            <span class="size-badge">62.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/keerthi_final.webp" alt="keerthi_final.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">keerthi_final.webp</div>
+          <div class="meta">
+            <span>assets/keerthi_final.webp</span>
+            <span class="size-badge">49.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="favicon">
+      <div class="img-box">
+        <img src="/src/assets/TNPPL_S2_Favicon-03.webp" alt="TNPPL_S2_Favicon-03.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPPL_S2_Favicon-03.webp</div>
+          <div class="meta">
+            <span>assets/TNPPL_S2_Favicon-03.webp</span>
+            <span class="size-badge">49.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #8b5cf622; color: #8b5cf6; border: 1px solid #8b5cf644;">Unused Favicon</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/samarjit_baskaran.webp" alt="samarjit_baskaran.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">samarjit_baskaran.webp</div>
+          <div class="meta">
+            <span>assets/samarjit_baskaran.webp</span>
+            <span class="size-badge">48.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/vikram_final.webp" alt="vikram_final.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">vikram_final.webp</div>
+          <div class="meta">
+            <span>assets/vikram_final.webp</span>
+            <span class="size-badge">43.2 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/manuranjith.webp" alt="manuranjith.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">manuranjith.webp</div>
+          <div class="meta">
+            <span>assets/manuranjith.webp</span>
+            <span class="size-badge">42.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/atul_jain.webp" alt="atul_jain.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">atul_jain.webp</div>
+          <div class="meta">
+            <span>assets/atul_jain.webp</span>
+            <span class="size-badge">42.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/SDAT Logo.png" alt="SDAT Logo.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">SDAT Logo.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/SDAT Logo.png</span>
+            <span class="size-badge">40.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Pixel Edge.png" alt="Pixel Edge.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Pixel Edge.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Pixel Edge.png</span>
+            <span class="size-badge">38.2 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/RH_Reversed.png" alt="RH_Reversed.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">RH_Reversed.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/RH_Reversed.png</span>
+            <span class="size-badge">37.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/mv_manikandan.webp" alt="mv_manikandan.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">mv_manikandan.webp</div>
+          <div class="meta">
+            <span>assets/mv_manikandan.webp</span>
+            <span class="size-badge">33.4 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/sponsors/right_hospitals_color.webp" alt="right_hospitals_color.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">right_hospitals_color.webp</div>
+          <div class="meta">
+            <span>assets/sponsors/right_hospitals_color.webp</span>
+            <span class="size-badge">30.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/suriya.webp" alt="suriya.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">suriya.webp</div>
+          <div class="meta">
+            <span>assets/suriya.webp</span>
+            <span class="size-badge">29.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/pixel logo 2.0.webp" alt="pixel logo 2.0.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">pixel logo 2.0.webp</div>
+          <div class="meta">
+            <span>assets/pixel logo 2.0.webp</span>
+            <span class="size-badge">26.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/arjun.webp" alt="arjun.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">arjun.webp</div>
+          <div class="meta">
+            <span>assets/arjun.webp</span>
+            <span class="size-badge">26.0 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/rithika.webp" alt="rithika.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">rithika.webp</div>
+          <div class="meta">
+            <span>assets/rithika.webp</span>
+            <span class="size-badge">24.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/dinesh_kumar_amudhan.webp" alt="dinesh_kumar_amudhan.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">dinesh_kumar_amudhan.webp</div>
+          <div class="meta">
+            <span>assets/dinesh_kumar_amudhan.webp</span>
+            <span class="size-badge">24.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/INDIANB.NS_BIG-f675f730.webp" alt="INDIANB.NS_BIG-f675f730.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">INDIANB.NS_BIG-f675f730.webp</div>
+          <div class="meta">
+            <span>assets/INDIANB.NS_BIG-f675f730.webp</span>
+            <span class="size-badge">23.9 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/indian bank logo 2.0.webp" alt="indian bank logo 2.0.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">indian bank logo 2.0.webp</div>
+          <div class="meta">
+            <span>assets/indian bank logo 2.0.webp</span>
+            <span class="size-badge">23.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/uttam_kothari.webp" alt="uttam_kothari.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">uttam_kothari.webp</div>
+          <div class="meta">
+            <span>assets/uttam_kothari.webp</span>
+            <span class="size-badge">21.9 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/sponsors/right_hospitals_horizontal.webp" alt="right_hospitals_horizontal.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">right_hospitals_horizontal.webp</div>
+          <div class="meta">
+            <span>assets/sponsors/right_hospitals_horizontal.webp</span>
+            <span class="size-badge">18.2 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="other">
+      <div class="img-box">
+        <img src="/src/assets/PIX PE LOGO (BB).webp" alt="PIX PE LOGO (BB).webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">PIX PE LOGO (BB).webp</div>
+          <div class="meta">
+            <span>assets/PIX PE LOGO (BB).webp</span>
+            <span class="size-badge">17.8 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ffd00022; color: #ffd000; border: 1px solid #ffd00044;">Review</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="favicon">
+      <div class="img-box">
+        <img src="/src/assets/TNPPL_S2_Favicon-04.webp" alt="TNPPL_S2_Favicon-04.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPPL_S2_Favicon-04.webp</div>
+          <div class="meta">
+            <span>assets/TNPPL_S2_Favicon-04.webp</span>
+            <span class="size-badge">17.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #8b5cf622; color: #8b5cf6; border: 1px solid #8b5cf644;">Unused Favicon</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/cavins logo 2.0.webp" alt="cavins logo 2.0.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">cavins logo 2.0.webp</div>
+          <div class="meta">
+            <span>assets/cavins logo 2.0.webp</span>
+            <span class="size-badge">15.4 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/sponsors/right_hospitals_white_horiz.webp" alt="right_hospitals_white_horiz.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">right_hospitals_white_horiz.webp</div>
+          <div class="meta">
+            <span>assets/sponsors/right_hospitals_white_horiz.webp</span>
+            <span class="size-badge">15.3 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="owners">
+      <div class="img-box">
+        <img src="/src/assets/abishek_murali.webp" alt="abishek_murali.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">abishek_murali.webp</div>
+          <div class="meta">
+            <span>assets/abishek_murali.webp</span>
+            <span class="size-badge">14.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">Franchise Owner Photo</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/rizz fit logo 2.0.webp" alt="rizz fit logo 2.0.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">rizz fit logo 2.0.webp</div>
+          <div class="meta">
+            <span>assets/rizz fit logo 2.0.webp</span>
+            <span class="size-badge">13.0 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/TNPA LOGO.png" alt="TNPA LOGO.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPA LOGO.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/TNPA LOGO.png</span>
+            <span class="size-badge">12.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/rizzfitt_svg.webp" alt="rizzfitt_svg.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">rizzfitt_svg.webp</div>
+          <div class="meta">
+            <span>assets/rizzfitt_svg.webp</span>
+            <span class="size-badge">11.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="favicon">
+      <div class="img-box">
+        <img src="/src/assets/TNPPL_S2_Favicon-05.webp" alt="TNPPL_S2_Favicon-05.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">TNPPL_S2_Favicon-05.webp</div>
+          <div class="meta">
+            <span>assets/TNPPL_S2_Favicon-05.webp</span>
+            <span class="size-badge">8.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #8b5cf622; color: #8b5cf6; border: 1px solid #8b5cf644;">Unused Favicon</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="sponsors">
+      <div class="img-box">
+        <img src="/src/assets/gtb logo 2.0.webp" alt="gtb logo 2.0.webp" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">gtb logo 2.0.webp</div>
+          <div class="meta">
+            <span>assets/gtb logo 2.0.webp</span>
+            <span class="size-badge">7.7 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #ef444422; color: #ef4444; border: 1px solid #ef444444;">Old / Replaced Sponsor</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Turf town_White.png" alt="Turf town_White.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Turf town_White.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Turf town_White.png</span>
+            <span class="size-badge">5.6 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" data-cat="drive">
+      <div class="img-box">
+        <img src="/src/assets/sponsors_new/Turf town.png" alt="Turf town.png" loading="lazy">
+      </div>
+      <div class="info">
+        <div>
+          <div class="filename">Turf town.png</div>
+          <div class="meta">
+            <span>assets/sponsors_new/Turf town.png</span>
+            <span class="size-badge">4.1 KB</span>
+          </div>
+        </div>
+        <div>
+          <span class="tag-badge" style="background: #3b82f622; color: #3b82f6; border: 1px solid #3b82f644;">Drive Source PNG (WebP ready)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card').forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>

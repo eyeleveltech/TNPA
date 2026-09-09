@@ -307,15 +307,19 @@ export function Schedule() {
                         <p className="mt-2 text-[12px] leading-relaxed text-foreground/80 sm:text-[13px]" style={{ fontFamily: "Arial, sans-serif" }}>
                           {d.copy}
                         </p>
+                        <p className="mt-2.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold sm:hidden">
+                          <Clock className="h-3.5 w-3.5 shrink-0 text-gold" />
+                          <span>{d.time}</span>
+                        </p>
                       </div>
                     </div>
 
-                    {/* time */}
-                    <div className="hidden flex-col items-end gap-1 sm:flex">
-                      <Clock className="h-4 w-4 text-gold" />
-                      <p className="text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-foreground/65">
+                    {/* time badge - inline horizontal */}
+                    <div className="hidden shrink-0 items-center gap-2 self-center rounded-full border border-gold/25 bg-gold/5 px-3 py-1.5 sm:flex">
+                      <Clock className="h-3.5 w-3.5 shrink-0 text-gold" />
+                      <span className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/85">
                         {d.time}
-                      </p>
+                      </span>
                     </div>
                   </div>
                 );
