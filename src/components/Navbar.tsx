@@ -96,8 +96,8 @@ export function Navbar() {
           removed from grid flow rather than reserving a cell — so at md the
           right-hand cluster would land in the middle 1fr column and the menu
           button would sit beside the logo instead of flush right. */}
-      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2.5 sm:px-8 sm:py-3 md:gap-3 md:px-4 md:py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-8 lg:px-10 lg:py-3.5 xl:px-14">
-        <div className="flex min-w-0 items-center gap-4 lg:gap-6">
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-2.5 sm:px-6 sm:py-3 md:gap-3 md:px-4 md:py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-4 lg:px-4 lg:py-3.5 xl:gap-6 xl:px-6 2xl:px-8">
+        <div className="flex min-w-0 items-center gap-3 lg:gap-4">
           <Link to="/" className="flex items-center" aria-label="TNPPL home">
             <img
               src={LOGO_SRC}
@@ -114,7 +114,7 @@ export function Navbar() {
 
         <nav
           aria-label="Primary"
-          className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden lg:flex lg:gap-x-3.5 xl:gap-x-5 2xl:gap-x-7"
+          className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden lg:flex lg:gap-x-2.5 xl:gap-x-4 2xl:gap-x-6"
         >
           {NAV_ITEMS.map((item) => (
             <Link
