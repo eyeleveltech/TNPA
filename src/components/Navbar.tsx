@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronRight, Menu, X, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
+import { Menu, X, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
 
 const SOCIAL_LINKS = [
   { label: "Instagram", Icon: Instagram, href: "https://www.instagram.com/tamilnadupickleball.assn/" },
@@ -96,9 +96,9 @@ export function Navbar() {
           removed from grid flow rather than reserving a cell — so at md the
           right-hand cluster would land in the middle 1fr column and the menu
           button would sit beside the logo instead of flush right. */}
-      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-2.5 sm:px-6 sm:py-3 md:gap-3 md:px-4 md:py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-4 lg:px-4 lg:py-3.5 xl:gap-6 xl:px-6 2xl:px-8">
-        <div className="flex min-w-0 items-center gap-3 lg:gap-4">
-          <Link to="/" className="flex items-center" aria-label="TNPPL home">
+      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-2.5 sm:px-6 sm:py-3 lg:gap-6 lg:px-8 lg:py-3.5 xl:gap-8 xl:px-12 2xl:px-14">
+        <div className="flex shrink-0 items-center">
+          <Link to="/" className="flex items-center shrink-0" aria-label="TNPPL home">
             <img
               src={LOGO_SRC}
               alt="Tamil Nadu Pickleball Premier League logo"
@@ -114,30 +114,40 @@ export function Navbar() {
 
         <nav
           aria-label="Primary"
-          className="hidden min-w-0 flex-nowrap items-center justify-center gap-x-2 overflow-hidden lg:flex lg:gap-x-2.5 xl:gap-x-4 2xl:gap-x-6"
+          className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-x-3.5 overflow-hidden px-2 lg:flex lg:gap-x-4.5 xl:gap-x-6 2xl:gap-x-7"
         >
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className={`nav-link whitespace-nowrap text-[9px] lg:text-[11px] xl:text-[12px] flex items-center gap-1.5 ${isActive(item) ? "nav-link-active" : ""}`}
+              className={`nav-link whitespace-nowrap text-[10px] lg:text-[11.5px] xl:text-[13px] flex items-center gap-1.5 ${isActive(item) ? "nav-link-active" : ""}`}
             >
-              {item.name === "Live" && (
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                </span>
-              )}
               {item.name}
             </Link>
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center justify-self-end gap-2 lg:gap-3">
-          {/* Social icons — xl and up only. Below 1280px the 8 nav items plus
-              the Brand Collaboration button already consume the row, and the
-              nav is whitespace-nowrap + overflow-hidden, so links would clip
-              rather than wrap. Mobile gets them inside the drawer instead. */}
+        <div className="flex shrink-0 items-center justify-end gap-2 lg:gap-3">
+          <div className="hidden items-center gap-2 lg:flex lg:gap-3">
+            <Link
+              to="/live"
+              className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 hover:text-white transition-all shadow-[0_0_10px_rgba(239,68,68,0.2)] xl:px-3.5"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              Watch Live
+            </Link>
+          </div>
+
+          <span
+            className="hidden h-5 w-px bg-foreground/15 xl:block"
+            aria-hidden="true"
+          />
+
+          {/* Social icons — xl and up only. Below 1280px the nav is whitespace-nowrap + overflow-hidden.
+              Mobile gets them inside the drawer instead. */}
           <ul className="hidden items-center gap-1 xl:flex">
             {SOCIAL_LINKS.map(({ label, Icon, href }) => (
               <li key={label}>
@@ -154,38 +164,6 @@ export function Navbar() {
             ))}
           </ul>
 
-          <span
-            className="hidden h-5 w-px bg-foreground/15 xl:block"
-            aria-hidden="true"
-          />
-
-          <div className="hidden items-center gap-2 lg:flex lg:gap-3">
-            <Link
-              to="/live"
-              className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 hover:text-white transition-all shadow-[0_0_10px_rgba(239,68,68,0.2)] xl:px-3.5"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-              </span>
-              Live
-            </Link>
-            <a
-              href="/#contact"
-              onClick={(e) => {
-                sessionStorage.setItem('focusCollab', 'true');
-                const el = document.getElementById('contact-name');
-                if (el) {
-                  setTimeout(() => el.focus({ preventScroll: true }), 50);
-                }
-              }}
-              className="btn-gold inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[9px] font-bold uppercase tracking-[0.06em] lg:gap-2 lg:px-5 lg:py-3 lg:text-[12px] lg:tracking-[0.08em] xl:px-6"
-            >
-              Brand Collaboration
-              <ChevronRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" aria-hidden="true" />
-            </a>
-          </div>
-
           <div className="lg:hidden flex items-center gap-2">
             <Link
               to="/live"
@@ -195,7 +173,7 @@ export function Navbar() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
               </span>
-              Live
+              Watch Live
             </Link>
             <button
               type="button"
@@ -238,23 +216,6 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-          <div className="mt-6 flex flex-col gap-3">
-            <a
-              href="/#contact"
-              onClick={(e) => {
-                setOpen(false);
-                sessionStorage.setItem('focusCollab', 'true');
-                const el = document.getElementById('contact-name');
-                if (el) {
-                  setTimeout(() => el.focus({ preventScroll: true }), 50);
-                }
-              }}
-              className="btn-gold inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[13px] font-bold uppercase tracking-[0.08em]"
-            >
-              Brand Collaboration
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </div>
 
           {/* Socials for every viewport below xl, where the header row hides them */}
           <ul className="mt-5 flex items-center justify-center gap-2 border-t border-border pt-5">

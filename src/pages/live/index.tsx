@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { LIVE_STREAM_CONFIG, isLiveActive, extractYouTubeId } from "@/config/liveStream";
 import { Radio, Tv } from "lucide-react";
-import LIVE_STUDIO_BG from "@/assets/live_studio_bg.webp";
+import LIVE_ARENA_BANNER from "@/assets/live_arena_banner.jpg";
 
 // Target Live Date: September 17, 2026, 08:00:00 AM IST
 const TARGET_LIVE_TIMESTAMP = new Date("2026-09-17T08:00:00+05:30").getTime();
@@ -163,115 +163,119 @@ export default function LivePage() {
           </div>
         ) : (
           /* ========================================================================= */
-          /* BANNER HERO SECTION: FULL-BLEED LIVE COUNTDOWN ARENA                      */
+          /* BANNER CARD SECTION: 16:9 UNCROPPED COUNTDOWN ARENA BANNER                */
           /* ========================================================================= */
-          <div className="relative flex w-full min-h-screen flex-col items-center justify-center px-4 pt-24 pb-12 sm:pt-28 sm:pb-16 text-center select-none overflow-hidden">
-            {/* Ultra HD Studio Background - Edge to Edge */}
-            <img
-              src={LIVE_STUDIO_BG}
-              alt="TNPPL Live Broadcast Arena"
-              width={1920}
-              height={1080}
-              loading="eager"
-              fetchPriority="high"
-              className="absolute inset-0 w-full h-full object-cover object-center -z-10"
-            />
-            {/* Subtle contrast overlay to keep glow balanced and elegant */}
-            <div className="absolute inset-0 bg-ink/30 pointer-events-none -z-10" />
+          <div className="mx-auto w-full max-w-5xl px-4 pt-24 pb-12 sm:pt-28 sm:pb-16 flex flex-col items-center justify-center">
+            {/* The Framed Banner Card with exact 16:9 aspect ratio - ZERO cropping */}
+            <div className="relative w-full aspect-video overflow-hidden rounded-2xl sm:rounded-3xl md:rounded-[36px] border border-red-500/30 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(239,68,68,0.2)] flex flex-col items-center justify-center text-center p-4 sm:p-8 md:p-12 lg:p-14 select-none">
+              {/* Ultra HD Banner Image - Exact 16:9 Uncut */}
+              <img
+                src={LIVE_ARENA_BANNER}
+                alt="TNPPL Live Broadcast Banner"
+                width={1920}
+                height={1080}
+                loading="eager"
+                fetchPriority="high"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0"
+              />
 
-            {/* 1. YouTube 3D Vector Icon (Compact & elegant) */}
-            <div className="relative mb-2 sm:mb-3 md:mb-4 flex items-center justify-center">
-              <div className="absolute h-9 w-12 sm:h-12 sm:w-16 md:h-14 md:w-20 rounded-full bg-red-600/20 blur-lg" />
-              <svg
-                className="relative h-8 w-auto sm:h-11 md:h-13 lg:h-14 drop-shadow-[0_4px_12px_rgba(239,68,68,0.3)]"
-                viewBox="0 0 120 84"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="120" height="84" rx="24" fill="url(#ytRedGrad)" />
-                <path d="M48 24L82 42L48 60V24Z" fill="white" />
-                <defs>
-                  <linearGradient id="ytRedGrad" x1="0" y1="0" x2="120" y2="84" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#FF1E27" />
-                    <stop offset="1" stopColor="#B80008" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            {/* 2. Razor-Sharp "Coming up soon" Title (Refined, proportional scale) */}
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] mb-3 sm:mb-5 md:mb-6 font-sans">
-              Coming up soon
-            </h1>
-
-            {/* 3. Sleek Luxury Glassmorphic Countdown Box (Toned-down glow) */}
-            <div className="w-[92%] sm:w-[80%] md:w-[65%] lg:w-[50%] xl:w-[44%] max-w-2xl bg-black/85 border border-red-500/35 ring-1 ring-white/10 rounded-2xl sm:rounded-3xl px-4 py-3 sm:px-6 sm:py-4 md:px-8 md:py-5 shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_16px_rgba(239,68,68,0.2)] flex flex-col items-center justify-center backdrop-blur-xl">
-              <span className="text-[9px] sm:text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.22em] text-white/90 uppercase mb-1.5 sm:mb-2">
-                {timeLeft.isLive ? "EVENT IS NOW LIVE" : "GOING LIVE IN"}
-              </span>
-
-              <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-5 lg:gap-6 text-white">
-                {/* Days */}
-                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                    {String(timeLeft.days).padStart(2, "0")}
-                  </span>
-                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                    DAYS
-                  </span>
+              {/* All Banner Content Elements placed on top of the image */}
+              <div className="relative z-10 flex flex-col items-center justify-center w-full">
+                {/* 1. YouTube 3D Vector Icon (Glow & Icon) */}
+                <div className="relative mb-2.5 sm:mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
+                  <div className="absolute h-10 w-14 sm:h-14 sm:w-20 md:h-16 md:w-24 rounded-full bg-red-600/40 blur-xl pointer-events-none" />
+                  <svg
+                    className="relative h-7 sm:h-10 md:h-12 lg:h-14 drop-shadow-[0_4px_16px_rgba(239,68,68,0.5)]"
+                    viewBox="0 0 120 84"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="120" height="84" rx="24" fill="url(#ytRedGrad)" />
+                    <path d="M48 24L82 42L48 60V24Z" fill="white" />
+                    <defs>
+                      <linearGradient id="ytRedGrad" x1="0" y1="0" x2="120" y2="84" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#FF1E27" />
+                        <stop offset="1" stopColor="#B80008" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
 
-                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
-                  :
-                </span>
+                {/* 2. Razor-Sharp "COMING UP SOON" Title */}
+                <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-[3.25rem] font-black text-white tracking-wide uppercase drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] mb-3 sm:mb-5 md:mb-7 font-sans">
+                  COMING UP SOON
+                </h1>
 
-                {/* Hours */}
-                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                    {String(timeLeft.hours).padStart(2, "0")}
+                {/* 3. Sleek Luxury Glassmorphic Countdown Box with spacious padding */}
+                <div className="w-[94%] sm:w-[88%] md:w-[80%] max-w-2xl bg-black/45 border border-red-500/40 ring-1 ring-white/10 rounded-xl sm:rounded-2xl md:rounded-3xl px-3.5 py-2.5 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(239,68,68,0.25)] flex flex-col items-center justify-center backdrop-blur-md">
+                  <span className="text-[9px] sm:text-xs md:text-sm font-bold tracking-[0.25em] text-white/90 uppercase mb-1 sm:mb-2 md:mb-3">
+                    {timeLeft.isLive ? "EVENT IS NOW LIVE" : "GOING LIVE IN"}
                   </span>
-                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                    HRS
-                  </span>
-                </div>
 
-                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
-                  :
-                </span>
+                  <div className="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 text-white">
+                    {/* Days */}
+                    <div className="flex flex-col items-center min-w-7 sm:min-w-11 md:min-w-14 lg:min-w-16">
+                      <span className="text-lg sm:text-3xl md:text-4xl lg:text-5xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        {String(timeLeft.days).padStart(2, "0")}
+                      </span>
+                      <span className="text-[7px] sm:text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#f59e0b] mt-0.5 sm:mt-1">
+                        DAYS
+                      </span>
+                    </div>
 
-                {/* Minutes */}
-                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                    {String(timeLeft.minutes).padStart(2, "0")}
-                  </span>
-                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                    MIN
-                  </span>
-                </div>
+                    <span className="text-sm sm:text-2xl md:text-3xl lg:text-4xl font-bold text-red-500/80 -translate-y-1.5 sm:-translate-y-2.5">
+                      :
+                    </span>
 
-                <span className="text-base sm:text-2xl md:text-4xl lg:text-5xl font-bold text-red-500/80 -translate-y-2 sm:-translate-y-3">
-                  :
-                </span>
+                    {/* Hours */}
+                    <div className="flex flex-col items-center min-w-7 sm:min-w-11 md:min-w-14 lg:min-w-16">
+                      <span className="text-lg sm:text-3xl md:text-4xl lg:text-5xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        {String(timeLeft.hours).padStart(2, "0")}
+                      </span>
+                      <span className="text-[7px] sm:text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#f59e0b] mt-0.5 sm:mt-1">
+                        HRS
+                      </span>
+                    </div>
 
-                {/* Seconds */}
-                <div className="flex flex-col items-center min-w-8 sm:min-w-12 md:min-w-16 lg:min-w-20">
-                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black font-mono tracking-tight text-[#ff4466] drop-shadow-[0_2px_8px_rgba(255,68,102,0.3)]">
-                    {String(timeLeft.seconds).padStart(2, "0")}
-                  </span>
-                  <span className="text-[7px] sm:text-[9px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-gold mt-0.5 sm:mt-1">
-                    SEC
-                  </span>
+                    <span className="text-sm sm:text-2xl md:text-3xl lg:text-4xl font-bold text-red-500/80 -translate-y-1.5 sm:-translate-y-2.5">
+                      :
+                    </span>
+
+                    {/* Minutes */}
+                    <div className="flex flex-col items-center min-w-7 sm:min-w-11 md:min-w-14 lg:min-w-16">
+                      <span className="text-lg sm:text-3xl md:text-4xl lg:text-5xl font-black font-mono tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        {String(timeLeft.minutes).padStart(2, "0")}
+                      </span>
+                      <span className="text-[7px] sm:text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#f59e0b] mt-0.5 sm:mt-1">
+                        MIN
+                      </span>
+                    </div>
+
+                    <span className="text-sm sm:text-2xl md:text-3xl lg:text-4xl font-bold text-red-500/80 -translate-y-1.5 sm:-translate-y-2.5">
+                      :
+                    </span>
+
+                    {/* Seconds */}
+                    <div className="flex flex-col items-center min-w-7 sm:min-w-11 md:min-w-14 lg:min-w-16">
+                      <span className="text-lg sm:text-3xl md:text-4xl lg:text-5xl font-black font-mono tracking-tight text-[#ff2a55] drop-shadow-[0_2px_12px_rgba(255,42,85,0.45)]">
+                        {String(timeLeft.seconds).padStart(2, "0")}
+                      </span>
+                      <span className="text-[7px] sm:text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#f59e0b] mt-0.5 sm:mt-1">
+                        SEC
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Subtle Footer Note */}
-            <div className="mt-8 sm:mt-10 border-t border-border/60 pt-6 w-full max-w-md">
-              <p className="display-title tracking-wider text-gold text-sm sm:text-base">
+            {/* Content text placed BELOW the banner */}
+            <div className="mt-6 sm:mt-8 text-center select-none">
+              <p className="text-sm sm:text-base md:text-lg font-black tracking-wider uppercase text-[#f59e0b] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 ONE GAME ONE FAMILY
               </p>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/50">
-                At Express Avenue Mall, Central Atrium, Chennai
+              <p className="mt-1 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.22em] text-[#7dd3fc]">
+                AT EXPRESS AVENUE MALL, CENTRAL ATRIUM, CHENNAI
               </p>
             </div>
           </div>
