@@ -22,7 +22,7 @@
   RewriteRule \.(js|mjs|css|map|json|xml|txt|webp|png|jpe?g|gif|svg|ico|mp4|webm|woff2?|ttf|otf|eot)$ - [L]
 
   # Everything else is a client-side route
-  RewriteRule ^ index.html [L]
+  RewriteRule ^ /index.html [L]
 </IfModule>
 
 # ─────────────────────────────────────────────
@@ -116,5 +116,5 @@ Options -Indexes
 #   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 # </IfModule>
 
-# ErrorDocument intentionally omitted — the SPA fallback above already
-# serves index.html for unknown routes, and react-router handles them.
+# Fallback: If Apache or LiteSpeed fails rewrite, serve index.html directly
+ErrorDocument 404 /index.html
