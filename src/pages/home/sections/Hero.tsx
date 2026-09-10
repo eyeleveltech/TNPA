@@ -12,7 +12,7 @@ import { useParallax } from "@/hooks/useParallax";
 import { getHeroTertiaryCta } from "@/lib/auction";
 
 import SPONSOR_CAVINS from "@/assets/sponsors/cavin.webp";
-import SPONSOR_BOOM from "@/assets/sponsors/boom.webp";
+import SPONSOR_BOOM from "@/assets/sponsors/boom_white.webp";
 import SPONSOR_GTB from "@/assets/sponsors/gtb.webp";
 import SPONSOR_INDIANBANK from "@/assets/sponsors/indian_bank.webp";
 import SPONSOR_NOVA from "@/assets/sponsors/nova.webp";
@@ -22,7 +22,7 @@ import SPONSOR_PIXEL from "@/assets/sponsors/pixel_edge.webp";
 import SPONSOR_SPECTON from "@/assets/sponsors/specton.webp";
 import SPONSOR_MIRCHI from "@/assets/sponsors/mirchi.webp";
 import SPONSOR_GEETHAM from "@/assets/sponsors/geetham.webp";
-import SPONSOR_RIGHTS from "@/assets/sponsors/right_hospitals.webp";
+import SPONSOR_RIGHTS from "@/assets/sponsors/rh_reversed_straight.webp";
 import SPONSOR_REFORGE from "@/assets/sponsors/reforge.webp";
 
 /* Dates and venue now live in the free-entry badge row above the strip —
@@ -47,8 +47,7 @@ const SPONSOR_ITEMS: {
       {
         name: "CavinKare",
         src: SPONSOR_CAVINS,
-        className:
-          "h-13 max-w-40 sm:h-15 sm:max-w-48 lg:h-17 lg:max-w-56",
+        className: "h-12 max-w-36 sm:h-14 sm:max-w-44 lg:h-16 lg:max-w-52",
       },
     ],
   },
@@ -58,12 +57,12 @@ const SPONSOR_ITEMS: {
       {
         name: "Boom Cars",
         src: SPONSOR_BOOM,
-        className: "h-9 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+        className: "h-10.5 max-w-36 sm:h-12 sm:max-w-42 lg:h-13.5 lg:max-w-48",
       },
       {
         name: "GTB",
         src: SPONSOR_GTB,
-        className: "h-9 max-w-32 sm:h-10 sm:max-w-38 lg:h-12 lg:max-w-44",
+        className: "h-9.5 max-w-32 sm:h-11 sm:max-w-38 lg:h-12.5 lg:max-w-46",
       },
     ],
   },
@@ -73,37 +72,12 @@ const SPONSOR_ITEMS: {
       {
         name: "Indian Bank",
         src: SPONSOR_INDIANBANK,
-        className: "h-8 max-w-36 sm:h-10 sm:max-w-42 lg:h-11 lg:max-w-48",
+        className: "h-8.5 max-w-32 sm:h-10 sm:max-w-38 lg:h-11.5 lg:max-w-44 rounded-[3px]",
       },
       {
         name: "NOVA",
         src: SPONSOR_NOVA,
-        className: "h-9 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
-      },
-    ],
-  },
-  {
-    label: "Associate Partners",
-    logos: [
-      {
-        name: "Turf Town",
-        src: SPONSOR_TURFTOWN,
-        className: "h-10 max-w-28 sm:h-11 sm:max-w-32 lg:h-13 lg:max-w-38",
-      },
-      {
-        name: "Raunaq",
-        src: SPONSOR_RAUNAQ,
-        className: "h-10 max-w-24 sm:h-11 sm:max-w-28 lg:h-13 lg:max-w-36",
-      },
-      {
-        name: "Pixel Edge",
-        src: SPONSOR_PIXEL,
-        className: "h-7 max-w-36 sm:h-8 sm:max-w-42 lg:h-10 lg:max-w-48",
-      },
-      {
-        name: "Specton",
-        src: SPONSOR_SPECTON,
-        className: "h-6 max-w-36 sm:h-7 sm:max-w-44 lg:h-8 lg:max-w-52",
+        className: "h-8 max-w-32 sm:h-9.5 sm:max-w-38 lg:h-11 lg:max-w-44",
       },
     ],
   },
@@ -113,22 +87,57 @@ const SPONSOR_ITEMS: {
       {
         name: "Radio Mirchi",
         src: SPONSOR_MIRCHI,
-        className: "h-10 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+        className: "h-16 max-w-48 sm:h-18 sm:max-w-56 lg:h-21 lg:max-w-64",
       },
+    ],
+  },
+  {
+    label: "",
+    logos: [
       {
         name: "Geetham",
         src: SPONSOR_GEETHAM,
-        className: "h-10 max-w-32 sm:h-11 sm:max-w-38 lg:h-13 lg:max-w-44",
+        className: "h-10 max-w-34 sm:h-11.5 sm:max-w-40 lg:h-13.5 lg:max-w-48",
       },
+    ],
+  },
+  {
+    label: "",
+    logos: [
       {
         name: "Right Hospitals",
         src: SPONSOR_RIGHTS,
-        className: "h-9 max-w-34 sm:h-10 sm:max-w-40 lg:h-12 lg:max-w-48",
+        className: "h-10.5 max-w-38 sm:h-12.5 sm:max-w-48 lg:h-14.5 lg:max-w-56",
       },
       {
         name: "Reforge",
         src: SPONSOR_REFORGE,
-        className: "h-9 max-w-32 sm:h-10 sm:max-w-38 lg:h-12 lg:max-w-44",
+        className: "h-8 max-w-30 sm:h-9.5 sm:max-w-38 lg:h-11 lg:max-w-44",
+      },
+    ],
+  },
+  {
+    label: "Associate Partners",
+    logos: [
+      {
+        name: "Turf Town",
+        src: SPONSOR_TURFTOWN,
+        className: "h-9.5 max-w-28 sm:h-11 sm:max-w-34 lg:h-12.5 lg:max-w-40",
+      },
+      {
+        name: "Raunaq",
+        src: SPONSOR_RAUNAQ,
+        className: "h-12 max-w-32 sm:h-13.5 sm:max-w-38 lg:h-15.5 lg:max-w-46",
+      },
+      {
+        name: "Pixel Edge",
+        src: SPONSOR_PIXEL,
+        className: "h-6 max-w-28 sm:h-7.5 sm:max-w-36 lg:h-8.5 lg:max-w-42",
+      },
+      {
+        name: "Specton",
+        src: SPONSOR_SPECTON,
+        className: "h-4.5 max-w-30 sm:h-5.5 sm:max-w-38 lg:h-6.5 lg:max-w-46",
       },
     ],
   },
@@ -458,7 +467,7 @@ export function Hero() {
             logos would widen that gap, not close it. max-w-300 (1200px) keeps
             the container under the period with ~110px to spare. */}
         <div
-          className="animate-fade-up mx-auto mt-8 w-full max-w-300 overflow-hidden rounded-xl"
+          className="group animate-fade-up mx-auto mt-8 w-full max-w-300 overflow-hidden rounded-xl cursor-default"
           style={{
             animationDelay: "1820ms",
             border:
@@ -478,7 +487,7 @@ export function Hero() {
                 gap off and the loop visibly jumps. Symmetric margins and dividers
                 make every item cost (width + divider), so half the track is exactly one set. */}
             <div
-              className="flex shrink-0 items-center"
+              className="flex shrink-0 items-center hover:paused group-hover:paused will-change-transform"
               style={{
                 animation: "sponsor-scroll 48s linear infinite",
               }}
@@ -493,7 +502,7 @@ export function Hero() {
                   >
                     <div className="flex shrink-0 flex-col items-center text-center px-6 sm:px-8 lg:px-10">
                       <span
-                        className="min-h-[14px] text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
+                        className="min-h-3.5 text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
                         style={{ fontFamily: "Arial, sans-serif" }}
                       >
                         {item.label || "\u00A0"}
