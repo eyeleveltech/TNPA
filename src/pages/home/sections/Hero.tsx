@@ -467,13 +467,12 @@ export function Hero() {
             logos would widen that gap, not close it. max-w-300 (1200px) keeps
             the container under the period with ~110px to spare. */}
         <div
-          className="group animate-fade-up mx-auto mt-8 w-full max-w-300 overflow-hidden rounded-xl cursor-default"
+          className="animate-fade-up mx-auto mt-8 w-full max-w-300 overflow-hidden rounded-xl cursor-default"
           style={{
             animationDelay: "1820ms",
             border:
-              "1px solid color-mix(in oklab, var(--gold) 12%, transparent)",
-            background: "color-mix(in oklab, var(--ink) 55%, transparent)",
-            backdropFilter: "blur(10px)",
+              "1px solid color-mix(in oklab, var(--gold) 15%, transparent)",
+            background: "rgba(1, 24, 55, 0.94)",
             maskImage:
               "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
             WebkitMaskImage:
@@ -481,57 +480,62 @@ export function Hero() {
           }}
         >
           <div className="flex items-center pt-3 pb-2.5 sm:pt-4 sm:pb-3">
-            {/* Spacing is per-item margin and divider, NOT container `gap` + `px`.
-                `gap` puts no space after the last child, so half the track's
-                width is never exactly one set — the -50% keyframe lands half a
-                gap off and the loop visibly jumps. Symmetric margins and dividers
-                make every item cost (width + divider), so half the track is exactly one set. */}
+            {/* Smooth hardware-accelerated 3D marquee track */}
             <div
-              className="flex shrink-0 items-center hover:paused group-hover:paused will-change-transform"
+              className="flex shrink-0 items-center"
               style={{
-                animation: "sponsor-scroll 48s linear infinite",
+                animation: "sponsor-scroll 50s linear infinite",
+                willChange: "transform",
+                transform: "translate3d(0, 0, 0)",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
               }}
             >
-              {/* 2 sets is the minimum for a -50% loop; 4 was double the DOM
-                  for an identical result. */}
-              {Array.from({ length: 2 }).flatMap((_, setIdx) =>
-                SPONSOR_ITEMS.map((item, i) => (
-                  <div
-                    key={`item-${setIdx}-${i}`}
-                    className="flex shrink-0 items-center"
-                  >
-                    <div className="flex shrink-0 flex-col items-center text-center px-6 sm:px-8 lg:px-10">
-                      <span
-                        className="min-h-3.5 text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
-                        style={{ fontFamily: "Arial, sans-serif" }}
-                      >
-                        {item.label || "\u00A0"}
-                      </span>
-                      {/* Uniform gap between logos in the same batch */}
-                      <div className="mt-2 flex h-16 items-center justify-center gap-7 sm:mt-2.5 sm:h-18 sm:gap-9 lg:h-22 lg:gap-11">
-                        {item.logos.map((logo) => (
-                          <div
-                            key={logo.name}
-                            className="flex shrink-0 items-center justify-center"
-                          >
-                            <img
-                              src={logo.src}
-                              alt={logo.name}
-                              loading="eager"
-                              className={`w-auto object-contain transition-opacity duration-300 ${logo.className}`}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {/* Subtle divider separating batches with perfect symmetry */}
+              {[0, 1].map((setIdx) => (
+                <div
+                  key={`sponsor-set-${setIdx}`}
+                  className="flex shrink-0 items-center"
+                  aria-hidden={setIdx === 1 ? "true" : undefined}
+                >
+                  {SPONSOR_ITEMS.map((item, i) => (
                     <div
-                      className="mt-3.5 h-8 w-px shrink-0 self-center bg-white/10"
-                      aria-hidden="true"
-                    />
-                  </div>
-                )),
-              )}
+                      key={`item-${setIdx}-${i}`}
+                      className="flex shrink-0 items-center"
+                    >
+                      <div className="flex shrink-0 flex-col items-center text-center px-6 sm:px-8 lg:px-10">
+                        <span
+                          className="min-h-3.5 text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/50 sm:text-[10px]"
+                          style={{ fontFamily: "Arial, sans-serif" }}
+                        >
+                          {item.label || "\u00A0"}
+                        </span>
+                        {/* Uniform gap between logos in the same batch */}
+                        <div className="mt-2 flex h-16 items-center justify-center gap-7 sm:mt-2.5 sm:h-18 sm:gap-9 lg:h-22 lg:gap-11">
+                          {item.logos.map((logo) => (
+                            <div
+                              key={logo.name}
+                              className="flex shrink-0 items-center justify-center"
+                            >
+                              <img
+                                src={logo.src}
+                                alt={logo.name}
+                                loading="eager"
+                                decoding="sync"
+                                className={`w-auto object-contain ${logo.className}`}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Subtle divider separating batches with perfect symmetry */}
+                      <div
+                        className="mt-3.5 h-8 w-px shrink-0 self-center bg-white/10"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>
