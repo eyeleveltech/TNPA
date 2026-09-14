@@ -132,7 +132,7 @@ const SPONSOR_ITEMS: {
       {
         name: "Pixel Edge",
         src: SPONSOR_PIXEL,
-        className: "h-6 max-w-28 sm:h-7.5 sm:max-w-36 lg:h-8.5 lg:max-w-42",
+        className: "h-7.5 max-w-38 sm:h-9 sm:max-w-48 lg:h-10.5 lg:max-w-56",
       },
       {
         name: "Specton",
