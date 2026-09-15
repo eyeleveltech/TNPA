@@ -5,7 +5,6 @@ import {
   Trophy,
   Users,
   Award,
-  Ticket,
   Youtube,
 } from "lucide-react";
 import { useParallax } from "@/hooks/useParallax";
@@ -355,13 +354,6 @@ export function Hero() {
               className="animate-fade-up mt-5 flex flex-wrap items-center gap-x-3 gap-y-2"
               style={{ animationDelay: "1220ms" }}
             >
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-gold"
-                style={{ fontFamily: "Arial, sans-serif" }}
-              >
-                <Ticket className="h-3.5 w-3.5" aria-hidden="true" />
-                Free Entry
-              </span>
               <span
                 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/70 sm:text-xs"
                 style={{ fontFamily: "Arial, sans-serif" }}
