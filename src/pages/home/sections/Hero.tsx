@@ -26,8 +26,7 @@ import SPONSOR_REFORGE from "@/assets/sponsors/reforge.webp";
 import SPONSOR_PADDLE from "@/assets/sponsors/paddle_partner.webp";
 import SPONSOR_RIZZFIT from "@/assets/sponsors/rizzfit.webp";
 
-/* Dates and venue now live in the free-entry badge row above the strip —
-   keeping them here too would state them twice. */
+/* Dates and venue live in the info row above the strip. */
 const STRIP = [
   { eyebrow: "Teams", value: "12 Franchises", icon: Trophy },
   { eyebrow: "Players", value: "168 Players", icon: Users },

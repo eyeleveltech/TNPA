@@ -10,7 +10,6 @@ import {
   LayoutGrid,
   ChevronRight,
   Youtube,
-  Ticket,
   Eye,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
@@ -365,32 +364,15 @@ export function Schedule() {
         </div>
         </Reveal>
 
-        {/* CTA strip. The free-entry line is a banner rather than fine print:
-            a ₹30L prize pool and spectator counts read as a ticketed, premium
-            event unless the opposite is stated loudly. Mirrors the hero badge. */}
+        {/* CTA strip */}
         <Reveal delay={400}>
         <div className="mt-10 text-center">
-          <div
-            className="mx-auto flex max-w-2xl flex-col items-center gap-3 rounded-2xl px-5 py-6 sm:flex-row sm:justify-center sm:gap-5 sm:px-8"
-            style={{
-              border: "1px solid color-mix(in oklab, var(--gold) 40%, transparent)",
-              background: "color-mix(in oklab, var(--gold) 8%, transparent)",
-            }}
+          <p
+            className="text-sm font-semibold text-foreground/80 sm:text-base"
+            style={{ fontFamily: "Arial, sans-serif" }}
           >
-            <span
-              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gold"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              <Ticket className="h-4 w-4" aria-hidden="true" />
-              Free Entry
-            </span>
-            <p
-              className="text-[13px] font-semibold text-foreground/85 sm:text-sm sm:text-left"
-              style={{ fontFamily: "Arial, sans-serif" }}
-            >
-              Open to all. No ticket needed. Come support your district franchise.
-            </p>
-          </div>
+            Come support your district franchise.
+          </p>
           <a
             href="#contact"
             onClick={() => {
@@ -401,7 +383,7 @@ export function Schedule() {
                 setTimeout(() => el.focus({ preventScroll: true }), 500);
               }
             }}
-            className="btn-gold mt-5 inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] sm:px-8 sm:py-3.5 sm:text-sm"
+            className="btn-gold mt-4 inline-flex w-auto items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] sm:px-8 sm:py-3.5 sm:text-sm"
           >
             Plan Your Visit
             <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />

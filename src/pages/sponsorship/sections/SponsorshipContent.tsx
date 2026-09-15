@@ -83,14 +83,13 @@ export const REACH = [
   { value: "12", label: "Franchise Cities", sub: "Across Tamil Nadu" },
   { value: "168", label: "Athletes", sub: "Competing players" },
   { value: "4", label: "Match Days", sub: "17–20 September 2026" },
-  { value: "Free", label: "Entry", sub: "Open to all audiences" },
 ];
 
 export const ASSOCIATION = [
   {
     icon: Megaphone,
     title: "Live Audience",
-    copy: "Central Atrium, Express Avenue Mall — one of Chennai's highest-footfall premium venues. Free entry means maximum crowd.",
+    copy: "Central Atrium, Express Avenue Mall — one of Chennai's highest-footfall premium venues, delivering maximum crowd and brand visibility.",
   },
   {
     icon: Users2,
@@ -111,7 +110,7 @@ export function SponsorshipContent() {
       <section className="border-y border-border bg-card/30 py-10">
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
           <Reveal delay={100}>
-            <ul className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-3 max-w-4xl mx-auto">
               {REACH.map((r) => (
                 <li key={r.label} className="text-center">
                   <h2 className="font-bold text-[clamp(2rem,5vw,3.5rem)] leading-none text-gold">
@@ -137,7 +136,7 @@ export function SponsorshipContent() {
             <h2 className="display-title text-[clamp(1.8rem,4.5vw,3rem)] text-foreground">
               Why Associate with{" "}
               <span className="text-gold-gradient">
-                TNPPL<span style={{ fontFamily: "Arial, sans-serif" }}>?</span>
+                TNPPL<span style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>?</span>
               </span>
             </h2>
           </div>
@@ -317,7 +316,7 @@ export function SponsorshipContent() {
             Ready to be part of{" "}
             <span className="text-gold-gradient">
               something bigger
-              <span style={{ fontFamily: "Arial, sans-serif" }}>?</span>
+              <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 900 }}>?</span>
             </span>
           </h2>
           <p

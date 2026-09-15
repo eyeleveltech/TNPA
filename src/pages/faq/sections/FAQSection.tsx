@@ -14,10 +14,7 @@ export const FAQS = [
         q: "When and where is TNPPL Season 2?",
         a: "TNPPL Season 2 takes place from 17 to 20 September 2026 at the Central Atrium, Express Avenue Mall, Royapettah, Chennai.",
       },
-      {
-        q: "Is entry free for spectators?",
-        a: "Yes — entry to all TNPPL Season 2 matches is completely free for the public. Come cheer for your district franchise.",
-      },
+
       {
         q: "Which governing body organizes TNPPL?",
         a: "TNPPL is organized by the Tamil Nadu Pickleball Association (TNPA) and is officially affiliated with SDAT (Sports Development Authority of Tamil Nadu).",
