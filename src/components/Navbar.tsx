@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
+import { Menu, X, Instagram, Facebook, Youtube, Twitter, LayoutGrid } from "lucide-react";
 
 const SOCIAL_LINKS = [
   { label: "Instagram", Icon: Instagram, href: "https://www.instagram.com/tamilnadupickleball.assn/" },
@@ -139,6 +139,14 @@ export function Navbar() {
               </span>
               Watch Live
             </Link>
+
+            <Link
+              to="/scoreboard"
+              className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-gold transition-all hover:bg-gold/20 hover:text-white xl:px-3.5"
+            >
+              <LayoutGrid className="h-3 w-3" aria-hidden="true" />
+              Scores
+            </Link>
           </div>
 
           <span
@@ -174,6 +182,14 @@ export function Navbar() {
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
               </span>
               Watch Live
+            </Link>
+            <Link
+              to="/scoreboard"
+              aria-label="Live scoreboard"
+              className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-gold/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-gold transition-all hover:bg-gold/20 hover:text-white"
+            >
+              <LayoutGrid className="h-3 w-3" aria-hidden="true" />
+              <span className="hidden min-[360px]:inline">Scores</span>
             </Link>
             <button
               type="button"
@@ -216,6 +232,15 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
+
+          <Link
+            to="/scoreboard"
+            onClick={() => setOpen(false)}
+            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-[13px] font-bold uppercase tracking-[0.08em] text-gold transition-colors hover:bg-gold/20"
+          >
+            <LayoutGrid className="h-4 w-4" aria-hidden="true" />
+            Live Scoreboard
+          </Link>
 
           {/* Socials for every viewport below xl, where the header row hides them */}
           <ul className="mt-5 flex items-center justify-center gap-2 border-t border-border pt-5">

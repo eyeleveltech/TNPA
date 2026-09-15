@@ -14,6 +14,7 @@ const html = fs.readFileSync(indexPath, 'utf8');
 // All React Router SPA routes that can be directly visited or scanned via QR
 const routes = [
   { path: 'live', title: 'Watch Live | Tamil Nadu Pickleball Premier League (TNPPL) Season 2' },
+  { path: 'scoreboard', title: 'Live Scoreboard | Tamil Nadu Pickleball Premier League (TNPPL) Season 2' },
   { path: 'faq', title: 'FAQ | Tamil Nadu Pickleball Premier League (TNPPL) Season 2' },
   { path: 'format', title: 'Tournament Format | Tamil Nadu Pickleball Premier League (TNPPL) Season 2' },
   { path: 'media-kit', title: 'Media Kit | Tamil Nadu Pickleball Premier League (TNPPL) Season 2' },

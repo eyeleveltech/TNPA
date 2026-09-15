@@ -1,0 +1,5 @@
+{
+  "message": "Tournament not found",
+  "error": "Not Found",
+  "statusCode": 404
+}

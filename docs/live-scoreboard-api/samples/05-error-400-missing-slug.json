@@ -1,0 +1,5 @@
+{
+  "message": "slug is required",
+  "error": "Bad Request",
+  "statusCode": 400
+}

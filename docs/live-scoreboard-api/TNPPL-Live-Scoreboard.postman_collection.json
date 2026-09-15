@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "TNPPL Live Scoreboard",
+    "description": "Requests for the Rizzfitt live scoreboard feed used by the /scoreboard page.\n\nREAD ONLY. Every request here fetches state. None of them changes a score. To change a score, someone must score on Rizzfitt's scoring/admin system; this feed then reports it, and the website picks it up on its next poll (every 5 seconds).\n\nSwitch environments by editing the `baseUrl` variable below. Nothing else needs to change.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://uattournament.rizzfitt.com",
+      "description": "UAT (test) host. Replace with the production host when Rizzfitt provides it."
+    },
+    {
+      "key": "slug",
+      "value": "tlpickleball",
+      "description": "Tournament slug. Resolves to 'TNPPL League' (tournament id 155)."
+    },
+    {
+      "key": "path",
+      "value": "/rizzapi/pickleball/matches/fetch-league-live-tv"
+    }
+  ],
+  "item": [
+    {
+      "name": "Court 1 - live singles match",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slug\": \"{{slug}}\",\n  \"courtId\": 1\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}{{path}}", "host": ["{{baseUrl}}{{path}}"] },
+        "description": "Expect HTTP 201 with a populated `data` object.\n\nNOTE: success is 201, NOT 200."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('status is 201 (not 200)', () => pm.response.to.have.status(201));",
+              "const b = pm.response.json();",
+              "pm.test('has a match', () => pm.expect(b.data).to.not.equal(null));",
+              "if (b.data) {",
+              "  console.log('Court', b.data.courtId, '|', b.data.displayAlias);",
+              "  console.log('Score:', b.data.teamAScore, '-', b.data.teamBScore);",
+              "  console.log('Teams:', b.data.tieFixture?.teamA?.name, 'vs', b.data.tieFixture?.teamB?.name);",
+              "  const srv = (b.data.matchPlayers || []).find(p => p.isServing);",
+              "  console.log('Serving:', srv ? srv.servePlayer?.name : 'nobody reported');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Court 2 - live doubles match",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slug\": \"{{slug}}\",\n  \"courtId\": 2\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}{{path}}", "host": ["{{baseUrl}}{{path}}"] },
+        "description": "Doubles differs from singles in three ways: two players per side instead of one, four `matchPlayers` entries instead of two, and `servePlayer` / `nonServePlayer` are different people rather than the same person."
+      }
+    },
+    {
+      "name": "Court 5 - idle court (empty state)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slug\": \"{{slug}}\",\n  \"courtId\": 5\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}{{path}}", "host": ["{{baseUrl}}{{path}}"] },
+        "description": "Expect HTTP 201 with `data: null` and the message 'No live match found for the specified court'.\n\nThis is the NORMAL empty state, not an error. Note it is identical to the response for a court that does not exist at all - which is why the court count cannot be derived from this API."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('idle court still returns 201', () => pm.response.to.have.status(201));",
+              "pm.test('data is null, not an error', () => pm.expect(pm.response.json().data).to.equal(null));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error - unknown tournament slug",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slug\": \"not-a-real-slug\",\n  \"courtId\": 1\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}{{path}}", "host": ["{{baseUrl}}{{path}}"] },
+        "description": "Expect HTTP 404 'Tournament not found'."
+      }
+    },
+    {
+      "name": "Error - missing slug",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}{{path}}", "host": ["{{baseUrl}}{{path}}"] },
+        "description": "Expect HTTP 400 'slug is required'."
+      }
+    }
+  ]
+}

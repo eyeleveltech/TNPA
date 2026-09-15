@@ -1,0 +1,381 @@
+{
+  "message": "Live TV matches fetched successfully",
+  "data": {
+    "id": 17387,
+    "courtId": 2,
+    "matchNo": 3,
+    "aliasName": "Doubles - Men's Open",
+    "displayAlias": "Doubles - Men's Open",
+    "matchTypeName": "Doubles",
+    "formatName": null,
+    "skillName": null,
+    "teamEventSequences": [],
+    "slotSwapMode": "combined",
+    "isLineupCycle": false,
+    "gameType": "service",
+    "teamAScore": 11,
+    "teamBScore": 2,
+    "isCompleted": false,
+    "hasStarted": true,
+    "hasEnded": false,
+    "isScheduled": false,
+    "maxSets": 1,
+    "currentSetNumber": 1,
+    "matchStage": null,
+    "activeLineupSlot": 1,
+    "liveScoreboardConfiguration": {
+      "id": 65,
+      "font_color": "#ffffff",
+      "background_color": "#FF007F",
+      "showlogo": true,
+      "showbackgroundimages": true,
+      "showteamlogo": true,
+      "showmatches": true,
+      "showsponsors": true,
+      "showplayerprofile": true,
+      "showplayers": true,
+      "created_at": "2026-09-08T09:54:37.389Z",
+      "updated_at": "2026-09-08T09:54:37.389Z",
+      "deletedAt": null,
+      "courtId": 2,
+      "templateMaster": {
+        "id": 6,
+        "template": "bento",
+        "font_color": "#ffffff",
+        "background_color": "#FF007F",
+        "showlogo": true,
+        "showbackgroundimages": true,
+        "showteamlogo": true,
+        "showmatches": true,
+        "showsponsors": true,
+        "showplayerprofile": true,
+        "showplayers": true,
+        "created_at": "2026-08-27T18:38:38.815Z",
+        "updated_at": "2026-08-27T18:38:38.815Z"
+      }
+    },
+    "tournamentTypeId": 2,
+    "tournamentType": {
+      "id": 2,
+      "name": "league"
+    },
+    "mapping": {
+      "id": 1,
+      "categoryId": 2,
+      "subcategoryId": 152,
+      "category": {
+        "id": 2,
+        "name": "Men's Doubles",
+        "participants": 2
+      },
+      "subCategory": {
+        "id": 152,
+        "name": "Open",
+        "position": null
+      }
+    },
+    "teamA": {
+      "id": 10006,
+      "name": "Vishal,Sai",
+      "capTeamName": "Vishal,Sai",
+      "teamAId": 533,
+      "teamAName": "SALEM SUPER SMASHERS",
+      "players": [
+        {
+          "id": 11302,
+          "pickleballPlayerId": 11302,
+          "name": "Vishal",
+          "middleName": " ",
+          "lastName": "Upendran",
+          "image": ""
+        },
+        {
+          "id": 11228,
+          "pickleballPlayerId": 11228,
+          "name": "Sai",
+          "middleName": " ",
+          "lastName": "swaroop",
+          "image": ""
+        }
+      ],
+      "lineupSlots": []
+    },
+    "teamB": {
+      "id": 10014,
+      "name": "Prem,Ranjith",
+      "capTeamName": "Prem,Ranjith",
+      "teamBId": 534,
+      "teamBName": "CHENNAI'S TAMIZH TITANS",
+      "players": [
+        {
+          "id": 11267,
+          "pickleballPlayerId": 11267,
+          "name": "Ranjith",
+          "middleName": " ",
+          "lastName": "Saravanan",
+          "image": ""
+        },
+        {
+          "id": 11227,
+          "pickleballPlayerId": 11227,
+          "name": "Prem",
+          "middleName": " ",
+          "lastName": "Premkumar",
+          "image": ""
+        }
+      ],
+      "lineupSlots": []
+    },
+    "toss": {
+      "id": 3131,
+      "tossWinner": null,
+      "tossCapWinner": {
+        "id": 10006,
+        "name": "Vishal,Sai"
+      }
+    },
+    "matchPlayers": [
+      {
+        "id": 10300,
+        "isServing": false,
+        "isReceiving": false,
+        "isRightSide": false,
+        "startingPosition": "left",
+        "serverNumber": null,
+        "servePlayer": {
+          "id": 11267,
+          "pickleballPlayerId": 11267,
+          "name": "Ranjith",
+          "middleName": " ",
+          "lastName": "Saravanan",
+          "image": ""
+        },
+        "nonServePlayer": {
+          "id": 11227,
+          "pickleballPlayerId": 11227,
+          "name": "Prem",
+          "middleName": " ",
+          "lastName": "Premkumar",
+          "image": ""
+        },
+        "team": {
+          "id": 10014,
+          "name": "Prem,Ranjith"
+        },
+        "capTeam": {
+          "id": 10014,
+          "name": "Prem,Ranjith"
+        }
+      },
+      {
+        "id": 10297,
+        "isServing": false,
+        "isReceiving": false,
+        "isRightSide": false,
+        "startingPosition": "left",
+        "serverNumber": null,
+        "servePlayer": {
+          "id": 11302,
+          "pickleballPlayerId": 11302,
+          "name": "Vishal",
+          "middleName": " ",
+          "lastName": "Upendran",
+          "image": ""
+        },
+        "nonServePlayer": {
+          "id": 11228,
+          "pickleballPlayerId": 11228,
+          "name": "Sai",
+          "middleName": " ",
+          "lastName": "swaroop",
+          "image": ""
+        },
+        "team": {
+          "id": 10006,
+          "name": "Vishal,Sai"
+        },
+        "capTeam": {
+          "id": 10006,
+          "name": "Vishal,Sai"
+        }
+      },
+      {
+        "id": 10298,
+        "isServing": true,
+        "isReceiving": false,
+        "isRightSide": true,
+        "startingPosition": "right",
+        "serverNumber": 1,
+        "servePlayer": {
+          "id": 11228,
+          "pickleballPlayerId": 11228,
+          "name": "Sai",
+          "middleName": " ",
+          "lastName": "swaroop",
+          "image": ""
+        },
+        "nonServePlayer": {
+          "id": 11302,
+          "pickleballPlayerId": 11302,
+          "name": "Vishal",
+          "middleName": " ",
+          "lastName": "Upendran",
+          "image": ""
+        },
+        "team": {
+          "id": 10006,
+          "name": "Vishal,Sai"
+        },
+        "capTeam": {
+          "id": 10006,
+          "name": "Vishal,Sai"
+        }
+      },
+      {
+        "id": 10299,
+        "isServing": false,
+        "isReceiving": true,
+        "isRightSide": true,
+        "startingPosition": "right",
+        "serverNumber": 1,
+        "servePlayer": {
+          "id": 11227,
+          "pickleballPlayerId": 11227,
+          "name": "Prem",
+          "middleName": " ",
+          "lastName": "Premkumar",
+          "image": ""
+        },
+        "nonServePlayer": {
+          "id": 11267,
+          "pickleballPlayerId": 11267,
+          "name": "Ranjith",
+          "middleName": " ",
+          "lastName": "Saravanan",
+          "image": ""
+        },
+        "team": {
+          "id": 10014,
+          "name": "Prem,Ranjith"
+        },
+        "capTeam": {
+          "id": 10014,
+          "name": "Prem,Ranjith"
+        }
+      }
+    ],
+    "winnerTeam": null,
+    "tournament": {
+      "id": 155,
+      "name": "TNPPL League",
+      "image": "https://uatadmin.rizzfitt.com/assets/tournament/logo/tnppl155/unnamed-1.jpg"
+    },
+    "sets": [
+      {
+        "id": 2961,
+        "setNumber": 1,
+        "teamAScore": 0,
+        "teamBScore": 0,
+        "isCompleted": false,
+        "hasEnded": false,
+        "winnerTeam": null,
+        "loserTeam": null
+      }
+    ],
+    "group": {
+      "id": 1188,
+      "name": "Group A"
+    },
+    "tieFixture": {
+      "id": 657,
+      "teamA": {
+        "id": 533,
+        "name": "SALEM SUPER SMASHERS",
+        "image": "https://uatadmin.rizzfitt.com/assets/league/tnpa155/teams/oyw6dfu5nhjya1stpnj1785594144276.webp",
+        "tieStage": "Tie 1"
+      },
+      "teamB": {
+        "id": 534,
+        "name": "CHENNAI'S TAMIZH TITANS",
+        "image": "https://uatadmin.rizzfitt.com/assets/league/tnpa155/teams/oyw67n2apjraucj1ipc1785594118754.png",
+        "tieStage": "Tie 1"
+      }
+    },
+    "tieScore": {
+      "teamA": 0,
+      "teamB": 0
+    },
+    "totalPoints": {
+      "teamA": 0,
+      "teamB": 0
+    },
+    "tournamentTotalPoints": {
+      "teamA": 7,
+      "teamB": 5
+    },
+    "groupName": "Group A",
+    "tieName": "Tie 1",
+    "tieFixtureMatches": [
+      {
+        "matchNumber": 1,
+        "teamAScore": 1,
+        "teamBScore": 11,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      },
+      {
+        "matchNumber": 2,
+        "teamAScore": 11,
+        "teamBScore": 0,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      },
+      {
+        "matchNumber": 3,
+        "teamAScore": 11,
+        "teamBScore": 2,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      },
+      {
+        "matchNumber": 4,
+        "teamAScore": 0,
+        "teamBScore": 0,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      },
+      {
+        "matchNumber": 7,
+        "teamAScore": 10,
+        "teamBScore": 25,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      },
+      {
+        "matchNumber": 8,
+        "teamAScore": 25,
+        "teamBScore": 14,
+        "isCompleted": false,
+        "hasStarted": true,
+        "hasEnded": false,
+        "isScheduled": false,
+        "winnerTeam": null
+      }
+    ]
+  }
+}
