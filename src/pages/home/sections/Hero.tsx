@@ -23,6 +23,8 @@ import SPONSOR_MIRCHI from "@/assets/sponsors/mirchi.webp";
 import SPONSOR_GEETHAM from "@/assets/sponsors/geetham.webp";
 import SPONSOR_RIGHTS from "@/assets/sponsors/rh_reversed_straight.webp";
 import SPONSOR_REFORGE from "@/assets/sponsors/reforge.webp";
+import SPONSOR_PADDLE from "@/assets/sponsors/paddle_partner.webp";
+import SPONSOR_RIZZFIT from "@/assets/sponsors/rizzfit.webp";
 
 /* Dates and venue now live in the free-entry badge row above the strip —
    keeping them here too would state them twice. */
@@ -137,6 +139,26 @@ const SPONSOR_ITEMS: {
         name: "Specton",
         src: SPONSOR_SPECTON,
         className: "h-4.5 max-w-30 sm:h-5.5 sm:max-w-38 lg:h-6.5 lg:max-w-46",
+      },
+    ],
+  },
+  {
+    label: "Paddle Partner",
+    logos: [
+      {
+        name: "DYSSC",
+        src: SPONSOR_PADDLE,
+        className: "h-11 max-w-32 sm:h-13 sm:max-w-38 lg:h-15.5 lg:max-w-44",
+      },
+    ],
+  },
+  {
+    label: "Tech Partner",
+    logos: [
+      {
+        name: "Rizzfit",
+        src: SPONSOR_RIZZFIT,
+        className: "h-5 max-w-26 sm:h-6 sm:max-w-32 lg:h-7 lg:max-w-38",
       },
     ],
   },
@@ -476,7 +498,7 @@ export function Hero() {
             <div
               className="flex shrink-0 items-center"
               style={{
-                animation: "sponsor-scroll 50s linear infinite",
+                animation: "sponsor-scroll 36s linear infinite",
                 willChange: "transform",
                 transform: "translate3d(0, 0, 0)",
                 backfaceVisibility: "hidden",
