@@ -187,11 +187,16 @@ const GET_BY_SLUG_PATH = "/rizzapi/tournament/get-by-slug";
 /**
  * Local start time on day one, as HH:mm.
  *
- * The API carries dates only, no times, so this fills the gap. The Schedule
- * section advertises 10:00 AM for the opening days. Override with
- * `VITE_LIVE_START_TIME` rather than editing this.
+ * The tournament API carries dates only, no times, so this fills the gap.
+ *
+ * 08:00 is not a guess: both of the official day-one YouTube streams carry a
+ * `scheduledStartTime` of 2026-09-17T08:00+05:30, and the /live page counts to
+ * the same instant. Keeping this aligned matters — two countdowns on one site
+ * showing different start times is worse than either being slightly off.
+ *
+ * Override with `VITE_LIVE_START_TIME` rather than editing this.
  */
-export const START_TIME_LOCAL = import.meta.env.VITE_LIVE_START_TIME ?? "10:00";
+export const START_TIME_LOCAL = import.meta.env.VITE_LIVE_START_TIME ?? "08:00";
 
 /** IST. The venue is in Chennai, and the audience that cares is there too. */
 const VENUE_UTC_OFFSET = "+05:30";

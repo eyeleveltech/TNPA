@@ -54,7 +54,7 @@ export default function LivePage() {
           className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-96 w-140 -translate-x-1/2 rounded-full bg-red-600/10 blur-3xl"
         />
 
-        {isLiveActive ? (
+        {isLiveActive && timeLeft.isLive ? (
           /* ========================================================================= */
           /* 2-VIDEO LIVE BROADCAST VIEW (Active when developer adds YouTube IDs)       */
           /* ========================================================================= */
