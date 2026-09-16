@@ -54,7 +54,7 @@ export default function LivePage() {
           className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-96 w-140 -translate-x-1/2 rounded-full bg-red-600/10 blur-3xl"
         />
 
-        {isLiveActive && timeLeft.isLive ? (
+        {isLiveActive ? (
           /* ========================================================================= */
           /* 2-VIDEO LIVE BROADCAST VIEW (Active when developer adds YouTube IDs)       */
           /* ========================================================================= */
@@ -99,7 +99,7 @@ export default function LivePage() {
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-ink/90 border border-border">
                   {court1Id ? (
                     <iframe
-                      src={`https://www.youtube.com/embed/${court1Id}?autoplay=1&mute=1&rel=0`}
+                      src={`https://www.youtube.com/embed/${court1Id}?rel=0`}
                       title={LIVE_STREAM_CONFIG.court1Title}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
