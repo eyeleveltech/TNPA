@@ -502,17 +502,14 @@ export interface FranchiseBrand {
   /**
    * Production franchise ids, once the draw exists.
    *
-   * Deliberately empty. Ids are per-tournament: the test server issued 533-544
-   * for its own tournament, and production (tournament 76) will issue its own
-   * set. Carrying the test ids over is worse than having none — a production
-   * id that happens to reuse one of those numbers for a DIFFERENT team would
-   * silently show the wrong crest, and a wrong logo is worse than a slightly
-   * lower-quality right one.
+   * Read from `fetch-league-leaderboard` with `{tournamentId: 76}` on 17 Sep
+   * 2026, once the draw was loaded. Ids are per-tournament — the test server
+   * issued 533-544 for its own — so these belong to THIS tournament only and
+   * must be re-read for season 3.
    *
-   * Until then, name matching below resolves all twelve teams on its own
-   * (verified against every spelling the feed sends). Fill these in from
-   * `fetch-league-leaderboard` with `{tournamentId: 76}` once Rizzfitt load the
-   * teams, and matching becomes exact and spelling-proof.
+   * With ids present, crest matching no longer depends on how the feed spells
+   * a team. The name and alias matching below stays as the fallback for a team
+   * whose id we have not seen.
    */
   ids?: number[];
   /** Alternative spellings seen (or plausibly sent) by the feed. */
@@ -525,6 +522,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Salem",
     logo: logoSalem,
     accent: "195 85% 55%",
+    ids: [146],
     aliases: ["Salem Super Smasher", "Salem Smashers"],
   },
   {
@@ -532,6 +530,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Chennai",
     logo: logoChennai,
     accent: "190 90% 62%",
+    ids: [154],
     aliases: ["Chennai's Tamizh Titans", "Chennais Tamizh Titans", "Chennai Titans"],
   },
   {
@@ -539,6 +538,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Kanchi",
     logo: logoKanchi,
     accent: "150 75% 52%",
+    ids: [152],
     aliases: ["Kanchi Black Bucks", "Kanchipuram Blackbucks"],
   },
   {
@@ -546,6 +546,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Hosur",
     logo: logoHosur,
     accent: "205 85% 62%",
+    ids: [149],
     aliases: ["Hosur Twin Eagles", "Twin Eagles"],
   },
   {
@@ -553,6 +554,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Coimbatore",
     logo: logoCoimbatore,
     accent: "15 90% 60%",
+    ids: [151],
     aliases: ["Kovai Smashers"],
   },
   {
@@ -560,12 +562,14 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Cuddalore",
     logo: logoCuddalore,
     accent: "270 80% 65%",
+    ids: [153],
   },
   {
     name: "Rockfort Terminatrz Trichy",
     short: "Trichy",
     logo: logoRockfort,
     accent: "22 85% 58%",
+    ids: [148],
     aliases: [
       "Rockfort Terminators Trichy",
       "Trichy Rockfort Terminatrz",
@@ -578,6 +582,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Ooty",
     logo: logoOoty,
     accent: "128 70% 52%",
+    ids: [150],
     aliases: ["Nilgiris Bisons"],
   },
   {
@@ -585,6 +590,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Ramnad",
     logo: logoRamnad,
     accent: "198 85% 58%",
+    ids: [145],
     aliases: ["Ramanathapuram Royals"],
   },
   {
@@ -592,6 +598,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Nellai",
     logo: logoNellai,
     accent: "175 80% 55%",
+    ids: [143],
     aliases: ["Tirunelveli Superstars", "Nellai Super Stars"],
   },
   {
@@ -599,6 +606,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Madurai",
     logo: logoMadurai,
     accent: "355 85% 58%",
+    ids: [147],
     aliases: ["Madurai Allstars"],
   },
   {
@@ -606,6 +614,7 @@ const FRANCHISES: FranchiseBrand[] = [
     short: "Kodai",
     logo: logoKodai,
     accent: "32 95% 60%",
+    ids: [144],
     aliases: ["Kodaikanal Tigers"],
   },
 ];
