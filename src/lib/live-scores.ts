@@ -733,6 +733,14 @@ export interface CourtResult {
   /** Server-supplied message, shown verbatim for empty courts. */
   message: string;
   error: string | null;
+  /**
+   * True when `match` is the last known score carried over because this
+   * cycle's request failed, rather than something the server just told us.
+   *
+   * Set by the polling hook, never by the fetch layer. The card shows it so a
+   * carried-over score is never passed off as current.
+   */
+  isStale?: boolean;
 }
 
 /**

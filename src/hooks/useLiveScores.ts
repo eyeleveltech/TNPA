@@ -48,9 +48,9 @@ export interface LiveScoresState {
  *  - Polling stops while the tab is hidden and fires immediately on return. A
  *    scoreboard left open in a background tab otherwise burns one request per
  *    court, forever, for nobody.
- *  - A failed cycle keeps the previous scores on screen. Blanking a live board
- *    because one poll timed out is worse than showing a slightly stale score,
- *    so the UI degrades to a warning instead.
+ *  - A failed cycle keeps the previous scores on screen, flagged `isStale`.
+ *    Blanking a live board because one poll timed out is worse than showing a
+ *    score a few seconds old, so the UI degrades to a warning instead.
  *  - The feed carries no timestamps of any kind, so freshness is measured here.
  */
 export function useLiveScores(
@@ -104,7 +104,22 @@ export function useLiveScores(
       const results = await fetchAllCourts(activeCourtIds, controller.signal);
       if (!mountedRef.current || controller.signal.aborted) return;
 
-      setCourts(results);
+      /* A court whose request FAILED keeps its last known match rather than
+         blanking. fetchCourt resolves errors instead of throwing, so without
+         this a single bad cycle — one dropped packet on venue wifi — replaces
+         every live score with an empty result and the whole board vanishes
+         until the next poll. That flicker is far worse than a score that is a
+         few seconds old, and it is what users actually reported.
+
+         Only errors are carried over. A court that genuinely reports no match
+         still empties, so a finished match does not linger for ever. */
+      setCourts((previous) =>
+        results.map((result) => {
+          if (result.error === null) return result;
+          const last = previous.find((p) => p.courtId === result.courtId);
+          return last?.match ? { ...result, match: last.match, isStale: true } : result;
+        }),
+      );
       setLastUpdated(new Date());
 
       // Only surface an error banner when NOTHING came back. A single court

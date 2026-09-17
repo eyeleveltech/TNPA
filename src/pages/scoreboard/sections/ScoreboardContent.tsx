@@ -318,11 +318,15 @@ function CourtCard({ result }: { result: CourtResult }) {
   const scoreB = isNum(match.teamBScore) ? match.teamBScore : null;
   const showScore = isNum(scoreA) && isNum(scoreB);
 
-  const badge = {
-    live: { label: "Live", color: "#ff3b3b" },
-    final: { label: "Final", color: "#4ade80" },
-    upcoming: { label: "Upcoming", color: "#94a3b8" },
-  }[state];
+  /* A carried-over score must not wear a pulsing LIVE badge — that would
+     claim it is current when the last request for this court failed. */
+  const badge = result.isStale
+    ? { label: "Reconnecting", color: "#f59e0b" }
+    : {
+        live: { label: "Live", color: "#ff3b3b" },
+        final: { label: "Final", color: "#4ade80" },
+        upcoming: { label: "Upcoming", color: "#94a3b8" },
+      }[state];
 
   const contextLine = [match.groupName, match.tieName]
     .filter(hasText)
@@ -396,7 +400,7 @@ function CourtCard({ result }: { result: CourtResult }) {
           }}
         >
           <span className="relative flex h-2 w-2">
-            {state === "live" && (
+            {state === "live" && !result.isStale && (
               <span
                 className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
                 style={{ background: badge.color }}
