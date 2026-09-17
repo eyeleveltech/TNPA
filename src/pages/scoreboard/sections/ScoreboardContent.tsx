@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   AlertTriangle,
   Disc,
@@ -662,32 +663,124 @@ function SkeletonCard() {
   );
 }
 
-function IdleCourtTile({ result }: { result: CourtResult }) {
-  const failed = hasText(result.error);
+
+/* ─────────────────────────────────────────────
+   COURT SWITCHER
+
+   With only two courts, stacking both cards pushed the second below the fold
+   on a phone. Tabs put one court on screen at a time and make switching one
+   tap, while the live dot still shows what is happening on the other court
+   without leaving the one you are watching.
+───────────────────────────────────────────── */
+
+function CourtTabs({
+  courts,
+  activeId,
+  onSelect,
+}: {
+  courts: CourtResult[];
+  activeId: number | null;
+  onSelect: (courtId: number) => void;
+}) {
+  // One court needs no switcher.
+  if (courts.length < 2) return null;
+
   return (
     <div
-      className="flex items-center gap-3 rounded-xl px-4 py-3"
+      role="tablist"
+      aria-label="Choose a court"
+      className="mb-5 inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5 sm:mb-6"
       style={{
         border: "1px solid var(--color-border)",
-        background: "color-mix(in oklab, var(--chalk) 3%, transparent)",
+        background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
       }}
     >
-      {failed ? (
-        <AlertTriangle className="h-4 w-4 shrink-0 text-amber-400/80" aria-hidden="true" />
-      ) : (
-        <LayoutGrid className="h-4 w-4 shrink-0 text-foreground/35" aria-hidden="true" />
-      )}
-      <div className="min-w-0">
-        <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-foreground/70">
-          Court {result.courtId}
-        </p>
-        <p
-          className="truncate text-[11px] text-foreground/45"
-          style={{ fontFamily: "Arial, sans-serif" }}
-        >
-          {failed ? result.error : "No match in play"}
-        </p>
-      </div>
+      {courts.map((court) => {
+        const isActive = court.courtId === activeId;
+        // A genuinely live match, not one being held through a changeover.
+        const isLive = court.match !== null && !court.isRecentlyFinished && !court.isStale;
+        return (
+          <button
+            key={court.courtId}
+            type="button"
+            role="tab"
+            aria-selected={isActive}
+            onClick={() => onSelect(court.courtId)}
+            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 sm:text-[13px] ${
+              isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
+            }`}
+            style={
+              isActive
+                ? { background: "var(--gold)" }
+                : { background: "transparent" }
+            }
+          >
+            <span className="relative flex h-2 w-2">
+              {isLive && !isActive && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+              )}
+              <span
+                className="relative inline-flex h-2 w-2 rounded-full"
+                style={{
+                  background: isLive
+                    ? isActive
+                      ? "color-mix(in oklab, var(--ink) 70%, transparent)"
+                      : "#ff3b3b"
+                    : isActive
+                      ? "color-mix(in oklab, var(--ink) 30%, transparent)"
+                      : "color-mix(in oklab, var(--chalk) 25%, transparent)",
+                }}
+              />
+            </span>
+            Court {court.courtId}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Shown in place of a card when the chosen court has nothing on it. */
+function EmptyCourtPanel({
+  result,
+  hasFixtures,
+}: {
+  result: CourtResult | null;
+  hasFixtures?: boolean | null;
+}) {
+  const failed = hasText(result?.error);
+  const heading = failed
+    ? "Court Unavailable"
+    : hasFixtures === false
+      ? "Fixtures Coming Soon"
+      : "No Match In Play";
+  const body = failed
+    ? `${result?.error}. The page keeps retrying.`
+    : hasFixtures === false
+      ? "The draw has not been published yet. Teams, fixtures and scores appear here automatically as soon as the organisers release them."
+      : "Nothing is on this court right now. The next match appears here automatically the moment it begins.";
+
+  return (
+    <div className="stat-card rounded-3xl px-6 py-14 text-center">
+      <span
+        className="mx-auto grid h-16 w-16 place-items-center rounded-full"
+        style={{
+          border: "1px solid color-mix(in oklab, var(--gold) 30%, transparent)",
+          background:
+            "radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--gold) 16%, transparent), transparent)",
+        }}
+      >
+        <LayoutGrid className="h-7 w-7 text-gold" strokeWidth={1.4} aria-hidden="true" />
+      </span>
+      <h2 className="display-title-extended mt-5 text-2xl text-foreground sm:text-3xl">
+        {heading}
+      </h2>
+      <p
+        className="mx-auto mt-3 max-w-md text-[13px] leading-relaxed text-foreground/60"
+        style={{ fontFamily: "Arial, sans-serif" }}
+      >
+        {body}
+      </p>
     </div>
   );
 }
@@ -706,8 +799,18 @@ export function ScoreboardContent({
 }) {
   const { courts, isInitialLoading, isRefreshing, error, refresh } = state;
 
-  const liveCourts = courts.filter((c) => c.match !== null);
-  const idleCourts = courts.filter((c) => c.match === null);
+  /* null means "follow the action". Once the viewer taps a court we respect
+     that and stop moving under them, which matters when both courts are live
+     and the other one finishes. */
+  const [picked, setPicked] = useState<number | null>(null);
+
+  const ordered = [...courts].sort((a, b) => a.courtId - b.courtId);
+  const firstLive = ordered.find((c) => c.match !== null)?.courtId;
+  const activeId =
+    picked !== null && ordered.some((c) => c.courtId === picked)
+      ? picked
+      : (firstLive ?? ordered[0]?.courtId ?? null);
+  const active = ordered.find((c) => c.courtId === activeId) ?? null;
 
   return (
     <section className="relative bg-ink pb-16 pt-2 sm:pb-20">
@@ -753,61 +856,20 @@ export function ScoreboardContent({
         {/* ── First load ── */}
         {isInitialLoading && <SkeletonCard />}
 
-        {/* ── Live boards. One court per row: the card is wide and symmetric,
-               and squeezing two into a row collapses the centre score panel. ── */}
-        {!isInitialLoading && hasList(liveCourts) && (
-          <div className="grid gap-5 sm:gap-6">
-            {liveCourts.map((result) => (
-              <CourtCard key={result.courtId} result={result} />
-            ))}
-          </div>
+        {/* ── Court switcher, then the chosen court ── */}
+        {!isInitialLoading && hasList(ordered) && (
+          <>
+            <CourtTabs courts={ordered} activeId={activeId} onSelect={setPicked} />
+            {active?.match ? (
+              <CourtCard result={active} />
+            ) : (
+              <Reveal delay={80}>
+                <EmptyCourtPanel result={active} hasFixtures={hasFixtures} />
+              </Reveal>
+            )}
+          </>
         )}
 
-        {/* ── Nothing on any court ── */}
-        {!isInitialLoading && !hasList(liveCourts) && !hasText(error) && (
-          <Reveal delay={80}>
-            <div className="stat-card rounded-3xl px-6 py-14 text-center">
-              <span
-                className="mx-auto grid h-16 w-16 place-items-center rounded-full"
-                style={{
-                  border: "1px solid color-mix(in oklab, var(--gold) 30%, transparent)",
-                  background:
-                    "radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--gold) 16%, transparent), transparent)",
-                }}
-              >
-                <LayoutGrid className="h-7 w-7 text-gold" strokeWidth={1.4} aria-hidden="true" />
-              </span>
-              {/* Two different empty states. "Fixtures not published" and
-                  "nothing on court right now" look identical on the board but
-                  mean completely different things to someone waiting. */}
-              <h2 className="display-title-extended mt-5 text-2xl text-foreground sm:text-3xl">
-                {hasFixtures === false ? "Fixtures Coming Soon" : "No Match In Play"}
-              </h2>
-              <p
-                className="mx-auto mt-3 max-w-md text-[13px] leading-relaxed text-foreground/60"
-                style={{ fontFamily: "Arial, sans-serif" }}
-              >
-                {hasFixtures === false
-                  ? "The draw has not been published yet. Teams, fixtures and scores appear here automatically as soon as the organisers release them."
-                  : "Nothing is on court right now. Scores appear here automatically the moment the next match begins."}
-              </p>
-            </div>
-          </Reveal>
-        )}
-
-        {/* ── Idle courts ── */}
-        {!isInitialLoading && hasList(idleCourts) && (
-          <div className={hasList(liveCourts) ? "mt-6" : ""}>
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-foreground/40">
-              {hasList(liveCourts) ? "Other Courts" : "Courts"}
-            </p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {idleCourts.map((result) => (
-                <IdleCourtTile key={result.courtId} result={result} />
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* ── Refresh. Icon only, stacked directly ABOVE the global back-to-top
