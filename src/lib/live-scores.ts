@@ -827,3 +827,163 @@ export async function fetchAllCourts(
 ): Promise<CourtResult[]> {
   return Promise.all(courtIds.map((id) => fetchCourt(id, signal)));
 }
+
+/* ─────────────────────────────────────────────
+   COMPLETED MATCHES
+
+   The live endpoint only ever describes what is on court now — a finished
+   match vanishes from it instantly. Results come instead from the group tree,
+   which carries every fixture with its final scores and winners, and costs a
+   single request for the whole tournament.
+───────────────────────────────────────────── */
+
+export interface MatchResult {
+  matchId: number;
+  matchNo: number;
+  courtId: number | null;
+  teamAId: number | null;
+  teamAName: string;
+  teamBId: number | null;
+  teamBName: string;
+  teamAScore: number;
+  teamBScore: number;
+  /** Franchise name as the feed reports it, or null if it did not say. */
+  winnerName: string | null;
+  playersA: string[];
+  playersB: string[];
+  isDoubles: boolean;
+}
+
+export interface TieResult {
+  tieId: number;
+  tieName: string;
+  groupName: string;
+  teamAId: number | null;
+  teamAName: string;
+  teamBId: number | null;
+  teamBName: string;
+  /** Matches won in this tie, as the feed counts them. */
+  winsA: number;
+  winsB: number;
+  /** Finished matches only, newest first. */
+  matches: MatchResult[];
+}
+
+/** Pull a readable name out of the feed's several shapes for one. */
+function nameOf(value: unknown): string | null {
+  if (typeof value === "string" && value.trim()) return value.trim();
+  if (value && typeof value === "object") {
+    const n = (value as { name?: unknown }).name;
+    if (typeof n === "string" && n.trim()) return n.trim();
+  }
+  return null;
+}
+
+function playersOf(side: unknown): string[] {
+  const mapping = (side as { matchTeamPlayerMapping?: unknown[] })?.matchTeamPlayerMapping;
+  if (!Array.isArray(mapping)) return [];
+  const out: string[] = [];
+  for (const entry of mapping) {
+    for (const key of ["player1", "player2"] as const) {
+      const p = (entry as Record<string, unknown>)?.[key] as
+        | { name?: string; lastName?: string }
+        | null
+        | undefined;
+      if (!p) continue;
+      const full = titleCaseName([p.name, p.lastName].map((x) => (x ?? "").trim()).filter(Boolean).join(" "));
+      if (full) out.push(full);
+    }
+  }
+  return out;
+}
+
+/**
+ * Every finished match, grouped by the tie it belongs to.
+ *
+ * Ties with nothing finished are dropped, so the caller can render the result
+ * directly without filtering empties. Returns null on failure rather than an
+ * empty list, so "could not load" stays distinguishable from "nothing yet".
+ */
+export async function fetchResults(
+  tournamentId: number = TOURNAMENT_ID,
+  signal?: AbortSignal,
+): Promise<TieResult[] | null> {
+  try {
+    const response = await fetch(`${API_BASE}${LEAGUE_GROUPS_PATH}/${tournamentId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isleaderboard: false }),
+      signal,
+    });
+    if (!response.ok) return null;
+
+    const body = (await response.json()) as { data?: unknown[] };
+    const groups = Array.isArray(body?.data) ? body.data : [];
+    const ties: TieResult[] = [];
+
+    for (const group of groups) {
+      const g = group as { name?: string; ties?: unknown[] };
+      for (const tie of g.ties ?? []) {
+        const t = tie as { id?: number; name?: string; tieFixtures?: unknown[] };
+        for (const fixture of t.tieFixtures ?? []) {
+          const f = fixture as {
+            teamA?: { id?: number; name?: string };
+            teamB?: { id?: number; name?: string };
+            teamAwinsCount?: number;
+            teamBwinsCount?: number;
+            matches?: unknown[];
+          };
+
+          const finished: MatchResult[] = [];
+          for (const match of f.matches ?? []) {
+            const m = match as Record<string, unknown>;
+            if (m.hasEnded !== true && m.isCompleted !== true) continue;
+
+            const a = m.teamA as Record<string, unknown> | undefined;
+            const b = m.teamB as Record<string, unknown> | undefined;
+            const playersA = playersOf(a);
+            const playersB = playersOf(b);
+
+            finished.push({
+              matchId: typeof m.matchId === "number" ? m.matchId : -1,
+              matchNo: typeof m.matchNo === "number" ? m.matchNo : 0,
+              courtId: typeof m.courtId === "number" ? m.courtId : null,
+              teamAId: typeof a?.teamAId === "number" ? a.teamAId : null,
+              teamAName: nameOf(a?.teamAName) ?? nameOf(f.teamA?.name) ?? "Team A",
+              teamBId: typeof b?.teamBId === "number" ? b.teamBId : null,
+              teamBName: nameOf(b?.teamBName) ?? nameOf(f.teamB?.name) ?? "Team B",
+              teamAScore: typeof m.teamAScore === "number" ? m.teamAScore : 0,
+              teamBScore: typeof m.teamBScore === "number" ? m.teamBScore : 0,
+              winnerName: nameOf(m.winnerTeam),
+              playersA,
+              playersB,
+              isDoubles: Math.max(playersA.length, playersB.length) > 1,
+            });
+          }
+
+          if (finished.length === 0) continue;
+
+          // Latest match first: people look for the most recent result.
+          finished.sort((x, y) => y.matchNo - x.matchNo);
+
+          ties.push({
+            tieId: typeof t.id === "number" ? t.id : -1,
+            tieName: nameOf(t.name) ?? "Tie",
+            groupName: nameOf(g.name) ?? "",
+            teamAId: typeof f.teamA?.id === "number" ? f.teamA.id : null,
+            teamAName: nameOf(f.teamA?.name) ?? "Team A",
+            teamBId: typeof f.teamB?.id === "number" ? f.teamB.id : null,
+            teamBName: nameOf(f.teamB?.name) ?? "Team B",
+            winsA: typeof f.teamAwinsCount === "number" ? f.teamAwinsCount : 0,
+            winsB: typeof f.teamBwinsCount === "number" ? f.teamBwinsCount : 0,
+            matches: finished,
+          });
+        }
+      }
+    }
+
+    return ties;
+  } catch {
+    return null;
+  }
+}

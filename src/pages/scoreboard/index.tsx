@@ -3,8 +3,10 @@ import { Footer } from "@/components/Footer";
 import { ScoreboardHero } from "./sections/ScoreboardHero";
 import { ScoreboardContent } from "./sections/ScoreboardContent";
 import { CountdownPanel, ConcludedPanel } from "./sections/CountdownPanel";
+import { ResultsSection } from "./sections/ResultsSection";
 import { useLiveScores } from "@/hooks/useLiveScores";
 import { useTournament } from "@/hooks/useTournament";
+import { useResults } from "@/hooks/useResults";
 
 /**
  * Live scoreboard.
@@ -25,6 +27,7 @@ import { useTournament } from "@/hooks/useTournament";
 export default function ScoreboardPage() {
   const tournament = useTournament();
   const scores = useLiveScores();
+  const results = useResults();
 
   const liveCount = scores.courts.filter((court) => court.match !== null).length;
   const { phase, info, startsAt, hasFixtures } = tournament;
@@ -66,6 +69,14 @@ export default function ScoreboardPage() {
       )}
 
       {showBoard && <ScoreboardContent state={scores} hasFixtures={hasFixtures} />}
+
+      {!showCountdown && (
+        <section className="relative bg-ink pb-16 sm:pb-20">
+          <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
+            <ResultsSection state={results} />
+          </div>
+        </section>
+      )}
 
       <Footer />
     </main>
