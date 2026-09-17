@@ -49,15 +49,16 @@ const LEAGUE_GROUPS_PATH = "/rizzapi/pickleball/matches/league-groups/fetchAll";
 /**
  * Courts polled each cycle.
  *
- * Six is not a guess: the production tournament record reports
- * `noOfCourts: 6`, and the live-scoreboard-configuration endpoint agrees.
- * `discoverCourtIds()` still reads the real ids from the fixture data once
- * the draw exists, and can only widen this list, never narrow it.
+ * Two, confirmed three ways on day one: the tournament record reports
+ * `noOfCourts: 2`, the live-scoreboard-configuration endpoint returns configs
+ * for courts 1 and 2 only, and all 16 published fixtures sit on those two.
+ * (The record said 6 before the draw was loaded; the organisers changed it.)
  *
- * The risk is one-sided — an extra id costs one wasted request, a missing one
- * silently loses a match — so widening is always the safe direction.
+ * This is only the starting list. `discoverCourtIds()` reads the real ids from
+ * the fixture data and can widen it, never narrow it, so a third court
+ * appearing mid-tournament is picked up without a deploy.
  */
-export const COURT_IDS = [1, 2, 3, 4, 5, 6] as const;
+export const COURT_IDS = [1, 2] as const;
 
 /**
  * The courts this tournament actually uses, read from the fixture data.
@@ -321,6 +322,20 @@ export const POLL_INTERVAL_SOCKET_MS = 20_000;
  * to a spectator while collapsing a burst into a single round trip.
  */
 export const SOCKET_REFRESH_THROTTLE_MS = 600;
+
+/**
+ * How long a finished match stays on its court card after the feed drops it.
+ *
+ * The live endpoint returns nothing for a court the instant its match ends, so
+ * between matches every court empties and the whole board collapses to "No
+ * Match In Play" — observed repeatedly on day one. Holding the last result for
+ * a few minutes keeps the board populated through the changeover and shows the
+ * final score, which is what a spectator wants in that gap anyway.
+ *
+ * Five minutes: long enough to cover a normal changeover, short enough that a
+ * real break is reported honestly rather than showing a stale match all lunch.
+ */
+export const RECENT_MATCH_MS = 5 * 60_000;
 
 /* ─────────────────────────────────────────────
    RESPONSE TYPES
@@ -741,6 +756,15 @@ export interface CourtResult {
    * carried-over score is never passed off as current.
    */
   isStale?: boolean;
+  /**
+   * True when the court now reports no match, but one finished here moments
+   * ago and is being held on screen briefly.
+   *
+   * Different from `isStale`: the feed is healthy and genuinely says the court
+   * is clear. We keep the result up so the board does not collapse in the gap
+   * between matches, and so spectators see how the last one ended.
+   */
+  isRecentlyFinished?: boolean;
 }
 
 /**

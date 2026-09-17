@@ -4,6 +4,7 @@ import {
   COURT_IDS,
   POLL_INTERVAL_MS,
   POLL_INTERVAL_SOCKET_MS,
+  RECENT_MATCH_MS,
   SOCKET_REFRESH_THROTTLE_MS,
   TOURNAMENT_SLUG,
   discoverCourtIds,
@@ -75,6 +76,8 @@ export function useLiveScores(
   const inFlightRef = useRef(false);
   // Timestamp of the last socket-triggered refetch, for throttling bursts.
   const lastSocketRefreshRef = useRef(0);
+  // Last real match seen on each court, for bridging the gap between matches.
+  const lastSeenRef = useRef(new Map<number, { match: NonNullable<CourtResult["match"]>; at: number }>());
 
   /* Discover the real court list once, in the background. Failure is silent:
      the fallback list keeps working, which matters because this uses an
@@ -104,6 +107,11 @@ export function useLiveScores(
       const results = await fetchAllCourts(activeCourtIds, controller.signal);
       if (!mountedRef.current || controller.signal.aborted) return;
 
+      const now = Date.now();
+      for (const result of results) {
+        if (result.match) lastSeenRef.current.set(result.courtId, { match: result.match, at: now });
+      }
+
       /* A court whose request FAILED keeps its last known match rather than
          blanking. fetchCourt resolves errors instead of throwing, so without
          this a single bad cycle — one dropped packet on venue wifi — replaces
@@ -115,9 +123,21 @@ export function useLiveScores(
          still empties, so a finished match does not linger for ever. */
       setCourts((previous) =>
         results.map((result) => {
-          if (result.error === null) return result;
-          const last = previous.find((p) => p.courtId === result.courtId);
-          return last?.match ? { ...result, match: last.match, isStale: true } : result;
+          if (result.match) return result;
+
+          // Request failed: hold the last score, flagged as not current.
+          if (result.error !== null) {
+            const last = previous.find((p) => p.courtId === result.courtId);
+            return last?.match ? { ...result, match: last.match, isStale: true } : result;
+          }
+
+          // Court genuinely clear, but a match ended here just now: keep it up
+          // through the changeover instead of collapsing the board.
+          const seen = lastSeenRef.current.get(result.courtId);
+          if (seen && now - seen.at < RECENT_MATCH_MS) {
+            return { ...result, match: seen.match, isRecentlyFinished: true };
+          }
+          return result;
         }),
       );
       setLastUpdated(new Date());

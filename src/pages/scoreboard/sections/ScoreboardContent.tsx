@@ -322,11 +322,13 @@ function CourtCard({ result }: { result: CourtResult }) {
      claim it is current when the last request for this court failed. */
   const badge = result.isStale
     ? { label: "Reconnecting", color: "#f59e0b" }
-    : {
+    : result.isRecentlyFinished
+      ? { label: "Final", color: "#4ade80" }
+      : {
         live: { label: "Live", color: "#ff3b3b" },
         final: { label: "Final", color: "#4ade80" },
         upcoming: { label: "Upcoming", color: "#94a3b8" },
-      }[state];
+        }[state];
 
   const contextLine = [match.groupName, match.tieName]
     .filter(hasText)
@@ -400,7 +402,7 @@ function CourtCard({ result }: { result: CourtResult }) {
           }}
         >
           <span className="relative flex h-2 w-2">
-            {state === "live" && !result.isStale && (
+            {state === "live" && !result.isStale && !result.isRecentlyFinished && (
               <span
                 className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
                 style={{ background: badge.color }}
@@ -794,10 +796,10 @@ export function ScoreboardContent({
         )}
 
         {/* ── Idle courts ── */}
-        {!isInitialLoading && hasList(idleCourts) && hasList(liveCourts) && (
-          <div className="mt-6">
+        {!isInitialLoading && hasList(idleCourts) && (
+          <div className={hasList(liveCourts) ? "mt-6" : ""}>
             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-foreground/40">
-              Other Courts
+              {hasList(liveCourts) ? "Other Courts" : "Courts"}
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {idleCourts.map((result) => (
