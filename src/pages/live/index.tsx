@@ -71,7 +71,7 @@ export default function LivePage() {
                     LIVE BROADCAST ARENA
                   </h1>
                   <p className="text-xs text-foreground/70">
-                    Cavin&apos;s TNPPL Season 2 • SDAT Tennis Stadium, Chennai
+                    Cavin&apos;s TNPPL Season 2
                   </p>
                 </div>
               </div>
