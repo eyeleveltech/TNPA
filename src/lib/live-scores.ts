@@ -47,18 +47,108 @@ export const TOURNAMENT_ID = Number(
 const LEAGUE_GROUPS_PATH = "/rizzapi/pickleball/matches/league-groups/fetchAll";
 
 /**
+ * How long one fetch of the group tree is reused.
+ *
+ * This endpoint is BY FAR the most expensive thing the page touches, and it
+ * grows as the tournament runs: 72KB and under a second on day one, 353KB and
+ * 9-21 seconds by the morning of day two, with two of four days still to play.
+ *
+ * Three separate callers need it — court discovery, the draw-published check,
+ * and the results list — and without sharing they each fetched it
+ * independently, pulling the same payload two or three times a minute per
+ * viewer. One request now serves all three.
+ */
+const GROUPS_CACHE_MS = 45_000;
+
+interface GroupsSnapshot {
+  groups: unknown[];
+  /** False when the server says the draw does not exist yet (400). */
+  published: boolean;
+}
+
+let groupsCache: { at: number; value: GroupsSnapshot } | null = null;
+let groupsInFlight: Promise<GroupsSnapshot | null> | null = null;
+
+/**
+ * Fetch the group tree, reusing a recent response and collapsing concurrent
+ * callers into one request.
+ *
+ * Deliberately does NOT take the caller's AbortSignal: the result is shared,
+ * so one component unmounting must not cancel a fetch another is waiting on.
+ * Callers check their own signal after awaiting instead.
+ */
+async function loadGroups(tournamentId: number): Promise<GroupsSnapshot | null> {
+  const now = Date.now();
+  if (groupsCache && now - groupsCache.at < GROUPS_CACHE_MS) return groupsCache.value;
+  if (groupsInFlight) return groupsInFlight;
+
+  groupsInFlight = (async (): Promise<GroupsSnapshot | null> => {
+    try {
+      const response = await fetch(`${API_BASE}${LEAGUE_GROUPS_PATH}/${tournamentId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isleaderboard: false }),
+      });
+
+      // "Groups not found" is a definite not-yet, not a failure.
+      if (response.status === 400) {
+        const value = { groups: [], published: false };
+        groupsCache = { at: Date.now(), value };
+        return value;
+      }
+      if (!response.ok) return null;
+
+      const body = (await response.json()) as { data?: unknown[] };
+      const value = {
+        groups: Array.isArray(body?.data) ? body.data : [],
+        published: Array.isArray(body?.data) && body.data.length > 0,
+      };
+      groupsCache = { at: Date.now(), value };
+      return value;
+    } catch {
+      return null;
+    } finally {
+      groupsInFlight = null;
+    }
+  })();
+
+  return groupsInFlight;
+}
+
+/** Walk the group tree and collect every distinct court id it references. */
+function courtIdsIn(groups: unknown[]): number[] {
+  const found = new Set<number>();
+  for (const group of groups) {
+    const g = group as { ties?: unknown[] };
+    for (const tie of g?.ties ?? []) {
+      const t = tie as { tieFixtures?: unknown[] };
+      for (const fixture of t?.tieFixtures ?? []) {
+        const f = fixture as { matches?: Array<{ courtId?: number | null }> };
+        for (const match of f?.matches ?? []) {
+          if (typeof match?.courtId === "number" && Number.isFinite(match.courtId)) {
+            found.add(match.courtId);
+          }
+        }
+      }
+    }
+  }
+  return [...found].sort((a, b) => a - b);
+}
+
+/**
  * Courts polled each cycle.
  *
- * Two, confirmed three ways on day one: the tournament record reports
- * `noOfCourts: 2`, the live-scoreboard-configuration endpoint returns configs
- * for courts 1 and 2 only, and all 16 published fixtures sit on those two.
- * (The record said 6 before the draw was loaded; the organisers changed it.)
+ * THIS NUMBER KEEPS MOVING. The tournament record said 6 before the draw was
+ * loaded, 2 on day one, and 3 by the morning of day two — court 3 appeared
+ * overnight with 3 fixtures on it. Treat any value here as already out of date.
  *
- * This is only the starting list. `discoverCourtIds()` reads the real ids from
- * the fixture data and can widen it, never narrow it, so a third court
- * appearing mid-tournament is picked up without a deploy.
+ * `discoverCourtIds()` reads the real ids from the fixture data and can widen
+ * this list, never narrow it, so a new court is picked up without a deploy.
+ * This list only matters when discovery fails — which is not hypothetical: the
+ * endpoint it reads 502'd for a spell on day two morning. So it is kept in step
+ * with the latest known count rather than left to rot.
  */
-export const COURT_IDS = [1, 2] as const;
+export const COURT_IDS = [1, 2, 3] as const;
 
 /**
  * The courts this tournament actually uses, read from the fixture data.
@@ -89,90 +179,25 @@ export interface DrawState {
 /** Read the draw: whether it exists, and which courts it uses. */
 export async function fetchDrawState(
   tournamentId: number = TOURNAMENT_ID,
-  signal?: AbortSignal,
+  _signal?: AbortSignal,
 ): Promise<DrawState> {
-  try {
-    const response = await fetch(`${API_BASE}${LEAGUE_GROUPS_PATH}/${tournamentId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isleaderboard: false }),
-      signal,
-    });
-
-    // The server answers "Groups not found" with 400 while the draw is unset.
-    // That is a definite "not published yet", not an unknown.
-    if (response.status === 400) return { courtIds: null, hasFixtures: false };
-    if (!response.ok) return { courtIds: null, hasFixtures: null };
-
-    const body = (await response.json()) as {
-      data?: Array<{
-        ties?: Array<{
-          tieFixtures?: Array<{ matches?: Array<{ courtId?: number | null }> }>;
-        }>;
-      }>;
-    };
-
-    const groups = body?.data ?? [];
-    const found = new Set<number>();
-    for (const group of groups) {
-      for (const tie of group?.ties ?? []) {
-        for (const fixture of tie?.tieFixtures ?? []) {
-          for (const match of fixture?.matches ?? []) {
-            if (typeof match?.courtId === "number" && Number.isFinite(match.courtId)) {
-              found.add(match.courtId);
-            }
-          }
-        }
-      }
-    }
-
-    return {
-      courtIds: found.size > 0 ? [...found].sort((a, b) => a - b) : null,
-      hasFixtures: groups.length > 0,
-    };
-  } catch {
-    return { courtIds: null, hasFixtures: null };
-  }
+  const snapshot = await loadGroups(tournamentId);
+  if (!snapshot) return { courtIds: null, hasFixtures: null };
+  const courts = courtIdsIn(snapshot.groups);
+  return {
+    courtIds: courts.length > 0 ? courts : null,
+    hasFixtures: snapshot.published,
+  };
 }
 
 export async function discoverCourtIds(
   tournamentId: number = TOURNAMENT_ID,
-  signal?: AbortSignal,
+  _signal?: AbortSignal,
 ): Promise<number[] | null> {
-  try {
-    const response = await fetch(`${API_BASE}${LEAGUE_GROUPS_PATH}/${tournamentId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isleaderboard: false }),
-      signal,
-    });
-    if (!response.ok) return null;
-
-    const body = (await response.json()) as {
-      data?: Array<{
-        ties?: Array<{
-          tieFixtures?: Array<{ matches?: Array<{ courtId?: number | null }> }>;
-        }>;
-      }>;
-    };
-
-    const found = new Set<number>();
-    for (const group of body?.data ?? []) {
-      for (const tie of group?.ties ?? []) {
-        for (const fixture of tie?.tieFixtures ?? []) {
-          for (const match of fixture?.matches ?? []) {
-            if (typeof match?.courtId === "number" && Number.isFinite(match.courtId)) {
-              found.add(match.courtId);
-            }
-          }
-        }
-      }
-    }
-
-    return found.size > 0 ? [...found].sort((a, b) => a - b) : null;
-  } catch {
-    return null;
-  }
+  const snapshot = await loadGroups(tournamentId);
+  if (!snapshot) return null;
+  const courts = courtIdsIn(snapshot.groups);
+  return courts.length > 0 ? courts : null;
 }
 
 /* ─────────────────────────────────────────────
@@ -906,19 +931,12 @@ function playersOf(side: unknown): string[] {
  */
 export async function fetchResults(
   tournamentId: number = TOURNAMENT_ID,
-  signal?: AbortSignal,
+  _signal?: AbortSignal,
 ): Promise<TieResult[] | null> {
   try {
-    const response = await fetch(`${API_BASE}${LEAGUE_GROUPS_PATH}/${tournamentId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isleaderboard: false }),
-      signal,
-    });
-    if (!response.ok) return null;
-
-    const body = (await response.json()) as { data?: unknown[] };
-    const groups = Array.isArray(body?.data) ? body.data : [];
+    const snapshot = await loadGroups(tournamentId);
+    if (!snapshot) return null;
+    const groups = snapshot.groups;
     const ties: TieResult[] = [];
 
     for (const group of groups) {

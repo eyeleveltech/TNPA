@@ -8,8 +8,15 @@ import {
   type TournamentPhase,
 } from "@/lib/live-scores";
 
-/** How often to re-check whether the draw has been published. */
-const DRAW_RECHECK_MS = 60_000;
+/**
+ * How often to re-check whether the draw has been published.
+ *
+ * This reads the group tree, which is the heaviest call the page makes and
+ * grows through the tournament — 353KB and up to 21 seconds by day two. The
+ * thing it watches for flips exactly once, from unpublished to published, so
+ * checking every five minutes is ample and a minute was wasteful.
+ */
+const DRAW_RECHECK_MS = 5 * 60_000;
 
 export interface TournamentState {
   info: TournamentInfo | null;

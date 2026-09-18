@@ -2,10 +2,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchResults, type TieResult } from "@/lib/live-scores";
 
 /**
- * Results change only when a match ends, so a slow poll is plenty. The live
+ * Results change only when a match ends, so a slow poll is plenty — the live
  * board already carries the fast-moving numbers.
+ *
+ * Three minutes, not one: this reads the group tree, the heaviest call the
+ * page makes, and it grows as the tournament runs (353KB and up to 21 seconds
+ * by day two). A finished match showing up a couple of minutes late costs
+ * nothing; hammering a slow endpoint from every open phone at the venue does.
  */
-const RESULTS_INTERVAL_MS = 60_000;
+const RESULTS_INTERVAL_MS = 3 * 60_000;
 
 export interface ResultsState {
   ties: TieResult[];
