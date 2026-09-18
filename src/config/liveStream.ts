@@ -35,8 +35,8 @@ export interface LiveStreamConfig {
 export const LIVE_STREAM_CONFIG: LiveStreamConfig = {
   // ─── DEVELOPER INPUT HERE ────────────────────────────────────────────────
   // Paste full YouTube URLs or just the Video IDs:
-  court1VideoId: "https://youtube.com/live/REBh6NZGZ6I?feature=share",
-  court2VideoId: "https://youtube.com/live/USLT5z4CU8Q?feature=share",
+  court1VideoId: "https://youtube.com/live/JG5DpHJWe4M?feature=share",
+  court2VideoId: "https://youtube.com/live/LhcvsB3bHJ0?feature=share",
 
   // Court details
   court1Title: "Court 1",
