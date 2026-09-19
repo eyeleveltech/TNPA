@@ -882,6 +882,15 @@ export interface MatchResult {
 export interface TieResult {
   tieId: number;
   tieName: string;
+  /**
+   * The tie's number within its group, for ordering.
+   *
+   * Parsed from the name ("Tie 12"), falling back to a match's
+   * `tiePosition`. The feed's own array order is arbitrary — Group A came
+   * back as 12, 1, 4, 7, 6, 9, ... — and the tie id does not track it
+   * either (id 167 is Tie 12, id 168 is Tie 15), so neither can be used.
+   */
+  tieNumber: number | null;
   groupName: string;
   teamAId: number | null;
   teamAName: string;
@@ -953,8 +962,12 @@ export async function fetchResults(
           };
 
           const finished: MatchResult[] = [];
+          let tiePosition: number | null = null;
           for (const match of f.matches ?? []) {
             const m = match as Record<string, unknown>;
+            if (tiePosition === null && typeof m.tiePosition === "number") {
+              tiePosition = m.tiePosition;
+            }
             if (m.hasEnded !== true && m.isCompleted !== true) continue;
 
             const a = m.teamA as Record<string, unknown> | undefined;
@@ -984,9 +997,14 @@ export async function fetchResults(
           // Latest match first: people look for the most recent result.
           finished.sort((x, y) => y.matchNo - x.matchNo);
 
+          const nameDigits = (nameOf(t.name) ?? "").match(/(\d+)/);
+          const parsed = nameDigits ? Number(nameDigits[1]) : tiePosition;
+
           ties.push({
             tieId: typeof t.id === "number" ? t.id : -1,
             tieName: nameOf(t.name) ?? "Tie",
+            tieNumber:
+              typeof parsed === "number" && Number.isFinite(parsed) ? parsed : null,
             groupName: nameOf(g.name) ?? "",
             teamAId: typeof f.teamA?.id === "number" ? f.teamA.id : null,
             teamAName: nameOf(f.teamA?.name) ?? "Team A",
@@ -999,6 +1017,12 @@ export async function fetchResults(
         }
       }
     }
+
+    /* Latest tie first. The order the feed returns is arbitrary, and by the
+       closing days there are 15 ties per group, so the one people want is
+       the most recent rather than whichever the server serialised first.
+       Ties with no number sink to the bottom instead of jumping to the top. */
+    ties.sort((a, b) => (b.tieNumber ?? -1) - (a.tieNumber ?? -1));
 
     return ties;
   } catch {
