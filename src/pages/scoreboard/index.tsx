@@ -54,7 +54,7 @@ export default function ScoreboardPage() {
 
       {showCountdown && (
         <section className="relative bg-ink pb-16 pt-2 sm:pb-20">
-          <div className="mx-auto max-w-[1100px] px-5 sm:px-8 lg:px-10">
+          <div className="mx-auto max-w-275 px-5 sm:px-8 lg:px-10">
             <CountdownPanel info={info} startsAt={startsAt} />
           </div>
         </section>
@@ -62,7 +62,7 @@ export default function ScoreboardPage() {
 
       {showConcluded && (
         <section className="relative bg-ink pb-16 pt-2 sm:pb-20">
-          <div className="mx-auto max-w-[1100px] px-5 sm:px-8 lg:px-10">
+          <div className="mx-auto max-w-275 px-5 sm:px-8 lg:px-10">
             <ConcludedPanel info={info} />
           </div>
         </section>
