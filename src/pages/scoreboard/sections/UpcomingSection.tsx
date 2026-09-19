@@ -53,7 +53,7 @@ function Matchup({
   bName: string;
 }) {
   return (
-    <div className="mt-2.5 flex items-center gap-2.5">
+    <div className="mt-2.5 flex min-w-0 items-center gap-2.5">
       <Crest id={aId} name={aName} />
       <span className="min-w-0 flex-1 text-[12px] font-bold uppercase leading-tight tracking-[0.04em] text-foreground/80 sm:truncate">
         {display(aId, aName)}
@@ -72,7 +72,7 @@ function Matchup({
 function NextMatchCard({ match }: { match: UpcomingMatch }) {
   return (
     <li
-      className="rounded-xl px-4 py-3.5"
+      className="min-w-0 rounded-xl px-4 py-3.5"
       style={{
         border: "1px solid var(--color-border)",
         background: "color-mix(in oklab, var(--chalk) 2%, transparent)",
@@ -103,7 +103,7 @@ function NextMatchCard({ match }: { match: UpcomingMatch }) {
 function UpcomingTieCard({ tie }: { tie: UpcomingTie }) {
   return (
     <li
-      className="rounded-xl px-4 py-3.5"
+      className="min-w-0 rounded-xl px-4 py-3.5"
       style={{
         border: "1px solid var(--color-border)",
         background: "color-mix(in oklab, var(--chalk) 2%, transparent)",

@@ -57,7 +57,7 @@ function ResultRow({ match }: { match: MatchResult }) {
     score: number,
     players: string[],
   ) => (
-    <div className="flex items-start gap-2.5">
+    <div className="flex min-w-0 items-start gap-2.5">
       <Crest id={id} name={name} size="sm" />
       <div className="min-w-0 flex-1">
         <p
@@ -69,7 +69,7 @@ function ResultRow({ match }: { match: MatchResult }) {
         </p>
         {players.length > 0 && (
           <p
-            className="mt-0.5 truncate text-[11px] text-foreground/45"
+            className="mt-0.5 text-[11px] leading-snug text-foreground/45 sm:truncate"
             style={{ fontFamily: "Arial, sans-serif" }}
           >
             {players.join(", ")}
@@ -90,7 +90,7 @@ function ResultRow({ match }: { match: MatchResult }) {
 
   return (
     <li
-      className="rounded-xl px-3.5 py-3"
+      className="min-w-0 rounded-xl px-3.5 py-3"
       style={{
         border: "1px solid var(--color-border)",
         background: "color-mix(in oklab, var(--chalk) 2%, transparent)",
@@ -106,7 +106,7 @@ function ResultRow({ match }: { match: MatchResult }) {
           </>
         )}
       </div>
-      <div className="space-y-2">
+      <div className="min-w-0 space-y-2">
         {side(aWon, match.teamAId, match.teamAName, match.teamAScore, match.playersA)}
         {side(bWon, match.teamBId, match.teamBName, match.teamBScore, match.playersB)}
       </div>
