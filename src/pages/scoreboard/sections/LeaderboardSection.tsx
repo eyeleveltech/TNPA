@@ -164,10 +164,10 @@ function StandingsTable({
                     {row.position}
                   </td>
                   <td className="px-1.5 py-3 sm:px-2">
-                    <div className="flex items-center gap-2 sm:gap-2.5">
+                    <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
                       <Crest id={row.teamId} name={row.teamName} />
                       <span
-                        className={`truncate text-[11px] font-bold uppercase leading-tight tracking-[0.02em] sm:text-[13px] sm:tracking-[0.04em] ${
+                        className={`text-[11px] font-bold uppercase leading-tight tracking-[0.02em] sm:truncate sm:text-[13px] sm:tracking-[0.04em] ${
                           row.qualifies ? "text-foreground" : "text-foreground/60"
                         }`}
                       >

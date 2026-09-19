@@ -55,13 +55,13 @@ function Matchup({
   return (
     <div className="mt-2.5 flex items-center gap-2.5">
       <Crest id={aId} name={aName} />
-      <span className="min-w-0 flex-1 truncate text-[12px] font-bold uppercase tracking-[0.04em] text-foreground/80">
+      <span className="min-w-0 flex-1 text-[12px] font-bold uppercase leading-tight tracking-[0.04em] text-foreground/80 sm:truncate">
         {display(aId, aName)}
       </span>
       <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-foreground/30">
         v
       </span>
-      <span className="min-w-0 flex-1 truncate text-right text-[12px] font-bold uppercase tracking-[0.04em] text-foreground/80">
+      <span className="min-w-0 flex-1 text-right text-[12px] font-bold uppercase leading-tight tracking-[0.04em] text-foreground/80 sm:truncate">
         {display(bId, bName)}
       </span>
       <Crest id={bId} name={bName} />

@@ -61,7 +61,7 @@ function ResultRow({ match }: { match: MatchResult }) {
       <Crest id={id} name={name} size="sm" />
       <div className="min-w-0 flex-1">
         <p
-          className={`truncate text-[12px] font-bold uppercase leading-tight tracking-[0.06em] ${
+          className={`text-[12px] font-bold uppercase leading-tight tracking-[0.06em] sm:truncate ${
             won ? "text-foreground" : "text-foreground/55"
           }`}
         >
@@ -147,10 +147,10 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
               [tie.teamAId, tie.teamAName, tie.winsA, aLeads] as const,
               [tie.teamBId, tie.teamBName, tie.winsB, bLeads] as const,
             ]).map(([id, name, wins, leads]) => (
-              <div key={String(id) + name} className="flex items-center gap-2.5">
+              <div key={String(id) + name} className="flex min-w-0 items-center gap-2.5">
                 <Crest id={id} name={name} size="sm" />
                 <span
-                  className={`min-w-0 flex-1 truncate text-[12px] font-bold uppercase tracking-[0.02em] ${
+                  className={`min-w-0 flex-1 text-[12px] font-bold uppercase leading-tight tracking-[0.02em] ${
                     leads ? "text-foreground" : "text-foreground/55"
                   }`}
                 >
