@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
-import { GroupSwitcher } from "./GroupSwitcher";
 import {
   initialsOf,
   resolveFranchise,
   type MatchResult,
   type TieResult,
 } from "@/lib/live-scores";
-import type { ResultsState } from "@/hooks/useResults";
 
 const GOLD_ACCENT = "45 90% 58%";
 
@@ -194,75 +191,22 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
    SECTION
 ───────────────────────────────────────────── */
 
-export function ResultsSection({
-  state,
-  activeGroup,
-  onGroupChange,
-}: {
-  state: ResultsState;
-  /** Shared with the standings section; null means "first group". */
-  activeGroup: string | null;
-  onGroupChange: (group: string) => void;
-}) {
-  const { ties, isLoading, failed } = state;
-
-  // Nothing to say until something has finished. No skeleton, no empty box —
-  // the section simply does not exist yet.
-  if (isLoading || ties.length === 0) return null;
-
-  /* Split by group, mirroring the standings. A flat list mixes two separate
-     round robins together, and by the closing days it is long enough that the
-     tie you want is well off the screen. */
-  const groupNames = [...new Set(ties.map((t) => t.groupName).filter(Boolean))].sort();
-  const activeName =
-    activeGroup !== null && groupNames.includes(activeGroup)
-      ? activeGroup
-      : (groupNames[0] ?? "");
-  // Ties with no group at all still show, rather than being filtered away.
-  const visible =
-    groupNames.length > 1 ? ties.filter((t) => t.groupName === activeName) : ties;
-  const matchCount = visible.reduce((n, t) => n + t.matches.length, 0);
-
+/**
+ * The finished ties for one group.
+ *
+ * Header, group switcher and view toggle live in MatchesSection; this renders
+ * only the list. Ties arrive already ordered newest-first.
+ */
+export function ResultsBody({ ties }: { ties: TieResult[] }) {
   return (
-    <Reveal delay={80}>
-      <section className="mt-10 sm:mt-12">
-        <div className="flex items-baseline gap-3">
-          <h2 className="inline-block text-[11px] font-black uppercase tracking-[0.22em] text-foreground">
-            Results
-            <span className="mt-1.5 block h-0.5 w-8 rounded-full bg-gold" aria-hidden="true" />
-          </h2>
-          <span
-            className="text-[11px] text-foreground/40"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            {matchCount} match{matchCount === 1 ? "" : "es"} completed
-          </span>
-        </div>
-
-        <div className="mt-4">
-          <GroupSwitcher
-            groups={groupNames}
-            active={activeName}
-            onChange={onGroupChange}
-            label="Choose a group for the results"
-          />
-        </div>
-
-        <div className="mt-4 grid gap-3">
-          {visible.map((tie, i) => (
-            <TieCard key={`${tie.tieId}-${tie.teamAId}-${tie.teamBId}`} tie={tie} defaultOpen={i === 0} />
-          ))}
-        </div>
-
-        {failed && (
-          <p
-            className="mt-3 text-[11px] text-foreground/40"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            Results could not be refreshed just now. Showing the last loaded set.
-          </p>
-        )}
-      </section>
-    </Reveal>
+    <div className="grid gap-3">
+      {ties.map((tie, i) => (
+        <TieCard
+          key={`${tie.tieId}-${tie.teamAId}-${tie.teamBId}`}
+          tie={tie}
+          defaultOpen={i === 0}
+        />
+      ))}
+    </div>
   );
 }

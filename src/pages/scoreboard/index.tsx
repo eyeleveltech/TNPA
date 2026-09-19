@@ -4,9 +4,8 @@ import { Footer } from "@/components/Footer";
 import { ScoreboardHero } from "./sections/ScoreboardHero";
 import { ScoreboardContent } from "./sections/ScoreboardContent";
 import { CountdownPanel, ConcludedPanel } from "./sections/CountdownPanel";
-import { ResultsSection } from "./sections/ResultsSection";
 import { LeaderboardSection } from "./sections/LeaderboardSection";
-import { UpcomingSection } from "./sections/UpcomingSection";
+import { MatchesSection } from "./sections/MatchesSection";
 import { useLiveScores } from "@/hooks/useLiveScores";
 import { useTournament } from "@/hooks/useTournament";
 import { useResults } from "@/hooks/useResults";
@@ -89,13 +88,9 @@ export default function ScoreboardPage() {
               activeGroup={activeGroup}
               onGroupChange={setActiveGroup}
             />
-            <UpcomingSection
-              state={upcoming}
-              activeGroup={activeGroup}
-              onGroupChange={setActiveGroup}
-            />
-            <ResultsSection
-              state={results}
+            <MatchesSection
+              upcoming={upcoming}
+              results={results}
               activeGroup={activeGroup}
               onGroupChange={setActiveGroup}
             />

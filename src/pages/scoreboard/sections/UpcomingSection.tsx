@@ -1,13 +1,11 @@
-import { CalendarClock, LayoutGrid } from "lucide-react";
-import { Reveal } from "@/components/Reveal";
-import { GroupSwitcher } from "./GroupSwitcher";
+import { LayoutGrid } from "lucide-react";
 import {
   initialsOf,
   resolveFranchise,
+  type GroupUpcoming,
   type UpcomingMatch,
   type UpcomingTie,
 } from "@/lib/live-scores";
-import type { UpcomingState } from "@/hooks/useUpcoming";
 
 const GOLD_ACCENT = "45 90% 58%";
 
@@ -125,104 +123,43 @@ function UpcomingTieCard({ tie }: { tie: UpcomingTie }) {
 }
 
 /**
- * What is still to be played.
+ * The two upcoming lists for one group.
  *
- * Two lists, because the feed knows two different amounts about them. Matches
- * already created carry a court, so they answer "what is on this court next".
- * Ties whose matches do not exist yet are only a pairing.
+ * Header, group switcher and view toggle live in MatchesSection, which owns
+ * the shared chrome; this renders only the content.
  *
- * Neither carries a time. The feed has no scheduling fields anywhere, so the
- * copy says "order of play" rather than implying a timetable we do not have.
+ * Two lists because the feed knows two different amounts. Matches already
+ * created carry a court, so they answer "what is on this court next". Ties
+ * whose matches do not exist yet are only a pairing.
  */
-export function UpcomingSection({
-  state,
-  activeGroup,
-  onGroupChange,
-}: {
-  state: UpcomingState;
-  /** Shared with the standings and results sections. */
-  activeGroup: string | null;
-  onGroupChange: (group: string) => void;
-}) {
-  const { groups, isLoading, failed } = state;
-
-  if (isLoading || groups.length === 0) return null;
-
-  const groupNames = groups.map((g) => g.groupName).filter(Boolean);
-  const activeName =
-    activeGroup !== null && groupNames.includes(activeGroup)
-      ? activeGroup
-      : (groupNames[0] ?? "");
-  const active = groups.find((g) => g.groupName === activeName) ?? groups[0];
-
-  // Everything in this group has been played.
-  if (active.nextMatches.length === 0 && active.ties.length === 0) return null;
-
+export function UpcomingBody({ group }: { group: GroupUpcoming }) {
   return (
-    <Reveal delay={80}>
-      <section className="mt-10 sm:mt-12">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-          <h2 className="inline-block text-[11px] font-black uppercase tracking-[0.22em] text-foreground">
-            Still To Play
-            <span className="mt-1.5 block h-0.5 w-8 rounded-full bg-gold" aria-hidden="true" />
-          </h2>
-          {/* Said plainly, because the feed carries no times and guessing one
-              would be worse than admitting there is none. */}
-          <span
-            className="inline-flex items-center gap-1.5 text-[11px] text-foreground/40"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            <CalendarClock className="h-3.5 w-3.5" aria-hidden="true" />
-            Order of play — start times are not published
-          </span>
-        </div>
-
-        <div className="mt-4">
-          <GroupSwitcher
-            groups={groupNames}
-            active={activeName}
-            onChange={onGroupChange}
-            label="Choose a group for upcoming matches"
-          />
-        </div>
-
-        <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          {active.nextMatches.length > 0 && (
-            <div className="stat-card rounded-2xl p-4 sm:p-5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/45">
-                Next on court
-              </p>
-              <ul className="mt-3 grid gap-2.5">
-                {active.nextMatches.map((m) => (
-                  <NextMatchCard key={m.matchId} match={m} />
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {active.ties.length > 0 && (
-            <div className="stat-card rounded-2xl p-4 sm:p-5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/45">
-                Later ties
-              </p>
-              <ul className="mt-3 grid gap-2.5">
-                {active.ties.map((t) => (
-                  <UpcomingTieCard key={`${t.tieId}-${t.teamAId}-${t.teamBId}`} tie={t} />
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {failed && (
-          <p
-            className="mt-3 text-[11px] text-foreground/40"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            This list could not be refreshed just now. Showing the last loaded set.
+    <div className="grid gap-4 lg:grid-cols-2">
+      {group.nextMatches.length > 0 && (
+        <div className="stat-card rounded-2xl p-4 sm:p-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/45">
+            Next on court
           </p>
-        )}
-      </section>
-    </Reveal>
+          <ul className="mt-3 grid gap-2.5">
+            {group.nextMatches.map((m) => (
+              <NextMatchCard key={m.matchId} match={m} />
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {group.ties.length > 0 && (
+        <div className="stat-card rounded-2xl p-4 sm:p-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/45">
+            Later ties
+          </p>
+          <ul className="mt-3 grid gap-2.5">
+            {group.ties.map((t) => (
+              <UpcomingTieCard key={`${t.tieId}-${t.teamAId}-${t.teamBId}`} tie={t} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
