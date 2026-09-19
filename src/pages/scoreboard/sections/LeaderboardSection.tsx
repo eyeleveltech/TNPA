@@ -94,7 +94,8 @@ function GroupTable({ group }: { group: GroupStandings }) {
   const has = (key: keyof GroupStandingRow) => group.rows.some((r) => r[key] !== null);
   const showPlayed = has("played");
   const showWins = has("wins");
-  const showLosses = has("losses");
+  const showFor = has("pointsFor");
+  const showAgainst = has("pointsAgainst");
   const showDiff = has("difference");
   const showPoints = has("points");
 
@@ -110,9 +111,13 @@ function GroupTable({ group }: { group: GroupStandings }) {
             <tr className="border-b border-border">
               <Th label="#" align="left" className="px-3 sm:px-4" />
               <Th label="Team" align="left" />
-              {showPlayed && <Th label="P" title="Matches played" />}
-              {showWins && <Th label="W" title="Matches won" />}
-              {showLosses && <Th label="L" title="Matches lost" className="hidden sm:table-cell" />}
+              {/* Tie-level, matching the organisers' own standings screen. */}
+              {showPlayed && <Th label="P" title="Ties played" />}
+              {showWins && <Th label="W" title="Ties won" />}
+              {showFor && <Th label="PF" title="Points for" className="hidden md:table-cell" />}
+              {showAgainst && (
+                <Th label="PA" title="Points against" className="hidden md:table-cell" />
+              )}
               {showDiff && (
                 <Th label="Diff" title="Points difference" className="hidden sm:table-cell" />
               )}
@@ -160,8 +165,14 @@ function GroupTable({ group }: { group: GroupStandings }) {
                   </td>
                   {showPlayed && <Num value={row.played} className="text-foreground/60" />}
                   {showWins && <Num value={row.wins} className="text-foreground/60" />}
-                  {showLosses && (
-                    <Num value={row.losses} className="hidden text-foreground/60 sm:table-cell" />
+                  {showFor && (
+                    <Num value={row.pointsFor} className="hidden text-foreground/60 md:table-cell" />
+                  )}
+                  {showAgainst && (
+                    <Num
+                      value={row.pointsAgainst}
+                      className="hidden text-foreground/60 md:table-cell"
+                    />
                   )}
                   {showDiff && (
                     <Num

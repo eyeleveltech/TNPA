@@ -1042,28 +1042,36 @@ function pickNumber(row: Record<string, unknown>, keys: string[]): number | null
 /* ─────────────────────────────────────────────
    GROUP STANDINGS
 
-   The league is two groups of six. Each group plays a full round robin — 15
-   ties, every pair once — and `advancePerGroup` teams go through to the
-   knockouts. A single combined table of twelve therefore misrepresents the
-   competition: a team is racing the five others in its own group, not the
-   eleven others in the tournament.
+   The league is two groups of six. Each plays a full round robin — 15 ties,
+   every pair once — and `advancePerGroup` teams go to the knockouts. A single
+   combined table of twelve misrepresents that: a team is racing the five
+   others in its group, not the eleven others in the tournament.
 
-   The per-group figures already exist inside the group tree, under
-   `group.teams`, so this costs no extra request — it reuses the same cached
-   snapshot as results and court discovery.
+   The figures are TIE-level, matching the organisers' own standings screen:
+   ties played, ties won, and league points. They come from the leaderboard
+   endpoint, which is cheap (~4KB) and carries exactly these.
 
-   Note the level shift: these `wins`/`losses` count individual MATCHES (a
-   team plays 8 per tie), whereas the combined leaderboard counts TIES won.
-   Both are true; they answer different questions.
+   Group membership comes from the cached group tree. Its `group.teams` block
+   also carries figures, but those count individual MATCHES — 32 played, not
+   4 ties — which is a different statistic and not the one a league table
+   shows.
+
+   ⚠ The leaderboard's field names move. On 18 Sep the wins column was
+   `tieWins` in the morning and `tieWinByMatchPoints` by the afternoon, so every
+   value is read from a list of candidate keys and a column that resolves to
+   nothing everywhere is hidden rather than shown empty.
 ───────────────────────────────────────────── */
+
+const LEADERBOARD_PATH = "/rizzapi/pickleball/matches/fetch-league-leaderboard";
 
 export interface GroupStandingRow {
   position: number;
   teamId: number | null;
   teamName: string;
+  /** Ties played, not matches. */
   played: number | null;
+  /** Ties won, not matches. */
   wins: number | null;
-  losses: number | null;
   points: number | null;
   pointsFor: number | null;
   pointsAgainst: number | null;
@@ -1081,19 +1089,60 @@ export interface GroupStandings {
   rows: GroupStandingRow[];
 }
 
+/** Tie-level figures for every team, keyed by team id. */
+async function fetchLeaderboardRows(
+  tournamentId: number,
+): Promise<Map<number, Omit<GroupStandingRow, "position" | "qualifies">> | null> {
+  try {
+    const response = await fetch(`${API_BASE}${LEADERBOARD_PATH}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tournamentId }),
+    });
+    if (!response.ok) return null;
+
+    const body = (await response.json()) as { data?: unknown[] };
+    if (!Array.isArray(body?.data)) return null;
+
+    const out = new Map<number, Omit<GroupStandingRow, "position" | "qualifies">>();
+    for (const entry of body.data) {
+      const r = entry as Record<string, unknown>;
+      const teamId = pickNumber(r, ["teamId", "id"]);
+      const teamName = typeof r.teamName === "string" ? r.teamName.trim() : "";
+      if (teamId === null || !teamName) continue;
+      out.set(teamId, {
+        teamId,
+        teamName,
+        played: pickNumber(r, ["tiePlayed", "tiesPlayed", "played"]),
+        wins: pickNumber(r, ["tieWinByMatchPoints", "tieWins", "tieWin", "wins"]),
+        points: pickNumber(r, ["netPoints", "points", "finalPoints"]),
+        pointsFor: pickNumber(r, ["pointsFor"]),
+        pointsAgainst: pickNumber(r, ["pointsAgainst"]),
+        difference: pickNumber(r, ["pointsDifference", "difference"]),
+      });
+    }
+    return out.size > 0 ? out : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Standings for each group, ranked.
  *
  * Ordered by league points, then points difference, then points scored — the
- * conventional tie-break ladder. The feed supplies no ranking at group level,
- * only at tournament level, so the order is computed here.
+ * conventional tie-break ladder. The leaderboard ranks across the whole
+ * tournament, so group order is computed here.
  */
 export async function fetchGroupStandings(
   tournamentId: number = TOURNAMENT_ID,
   _signal?: AbortSignal,
 ): Promise<GroupStandings[] | null> {
-  const snapshot = await loadGroups(tournamentId);
-  if (!snapshot) return null;
+  const [snapshot, byTeam] = await Promise.all([
+    loadGroups(tournamentId),
+    fetchLeaderboardRows(tournamentId),
+  ]);
+  if (!snapshot || !byTeam) return null;
 
   const out: GroupStandings[] = [];
 
@@ -1103,41 +1152,33 @@ export async function fetchGroupStandings(
       name?: string;
       advancePerGroup?: number;
       isGroupFinished?: boolean;
-      teams?: unknown[];
+      ties?: unknown[];
     };
 
-    const rows: Omit<GroupStandingRow, "position" | "qualifies">[] = [];
-    for (const team of g.teams ?? []) {
-      const t = team as Record<string, unknown>;
-      const league = t.leagueTeam as { id?: number; name?: string } | undefined;
-      const name = typeof league?.name === "string" ? league.name.trim() : "";
-      if (!name) continue;
-
-      const pointsFor = pickNumber(t, ["pointsFor"]);
-      const pointsAgainst = pickNumber(t, ["pointsAgainst"]);
-      rows.push({
-        teamId: typeof league?.id === "number" ? league.id : null,
-        teamName: name,
-        played: pickNumber(t, ["matchesPlayed", "tiePlayed", "played"]),
-        wins: pickNumber(t, ["wins", "tieWins"]),
-        losses: pickNumber(t, ["losses"]),
-        // `points` reads 0 while `netPoints` carries the real figure.
-        points: pickNumber(t, ["netPoints", "points"]),
-        pointsFor,
-        pointsAgainst,
-        difference:
-          pointsFor !== null && pointsAgainst !== null ? pointsFor - pointsAgainst : null,
-      });
+    /* Membership comes from the fixtures rather than `group.teams`, which
+       carries match-level figures we deliberately do not use here. */
+    const memberIds = new Set<number>();
+    for (const tie of g.ties ?? []) {
+      const t = tie as { tieFixtures?: unknown[] };
+      for (const fixture of t?.tieFixtures ?? []) {
+        const f = fixture as { teamA?: { id?: number }; teamB?: { id?: number } };
+        if (typeof f.teamA?.id === "number") memberIds.add(f.teamA.id);
+        if (typeof f.teamB?.id === "number") memberIds.add(f.teamB.id);
+      }
     }
+
+    const rows = [...memberIds]
+      .map((id) => byTeam.get(id))
+      .filter((r): r is NonNullable<typeof r> => r !== undefined);
 
     if (rows.length === 0) continue;
 
     rows.sort(
-      (a, b) =>
-        (b.points ?? 0) - (a.points ?? 0) ||
-        (b.difference ?? 0) - (a.difference ?? 0) ||
-        (b.pointsFor ?? 0) - (a.pointsFor ?? 0) ||
-        a.teamName.localeCompare(b.teamName),
+      (x, y) =>
+        (y.points ?? 0) - (x.points ?? 0) ||
+        (y.difference ?? 0) - (x.difference ?? 0) ||
+        (y.pointsFor ?? 0) - (x.pointsFor ?? 0) ||
+        x.teamName.localeCompare(y.teamName),
     );
 
     const advance =
@@ -1147,7 +1188,7 @@ export async function fetchGroupStandings(
 
     out.push({
       groupId: typeof g.id === "number" ? g.id : null,
-      groupName: typeof g.name === "string" && g.name.trim() ? g.name.trim() : "Group",
+      groupName: nameOf(g.name) ?? "Group",
       advanceCount: advance,
       isFinished: g.isGroupFinished === true,
       rows: rows.map((row, i) => ({
@@ -1158,10 +1199,9 @@ export async function fetchGroupStandings(
     });
   }
 
-  out.sort((a, b) => a.groupName.localeCompare(b.groupName));
+  out.sort((x, y) => x.groupName.localeCompare(y.groupName));
   return out;
 }
-
 /* ─────────────────────────────────────────────
    UPCOMING
 
