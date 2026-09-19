@@ -1161,3 +1161,132 @@ export async function fetchGroupStandings(
   out.sort((a, b) => a.groupName.localeCompare(b.groupName));
   return out;
 }
+
+/* ─────────────────────────────────────────────
+   UPCOMING
+
+   Two different kinds of "next", both read from the shared group snapshot:
+
+   1. Matches already created but not started, inside a tie in progress. These
+      carry a court number, so they answer "what is on this court after the
+      current match".
+   2. Ties whose matches do not exist yet. Only the two franchises are known.
+
+   Neither carries a date or a time. The feed has no scheduling fields at all —
+   every plausible name was checked — and not one match in the tournament is
+   flagged as scheduled. So this can say what is next, never when.
+───────────────────────────────────────────── */
+
+export interface UpcomingMatch {
+  matchId: number;
+  matchNo: number;
+  courtId: number | null;
+  tieName: string;
+  teamAId: number | null;
+  teamAName: string;
+  teamBId: number | null;
+  teamBName: string;
+}
+
+export interface UpcomingTie {
+  tieId: number;
+  tieName: string;
+  tieNumber: number | null;
+  teamAId: number | null;
+  teamAName: string;
+  teamBId: number | null;
+  teamBName: string;
+}
+
+export interface GroupUpcoming {
+  groupName: string;
+  /** Created but not started, in a tie already under way. Court known. */
+  nextMatches: UpcomingMatch[];
+  /** Ties with no matches created yet. Teams known, nothing else. */
+  ties: UpcomingTie[];
+}
+
+/** What is still to come, per group. Null on failure. */
+export async function fetchUpcoming(
+  tournamentId: number = TOURNAMENT_ID,
+  _signal?: AbortSignal,
+): Promise<GroupUpcoming[] | null> {
+  const snapshot = await loadGroups(tournamentId);
+  if (!snapshot) return null;
+
+  const out: GroupUpcoming[] = [];
+
+  for (const group of snapshot.groups) {
+    const g = group as { name?: string; ties?: unknown[] };
+    const groupName = nameOf(g.name) ?? "";
+
+    const nextMatches: UpcomingMatch[] = [];
+    const ties: UpcomingTie[] = [];
+
+    for (const tie of g.ties ?? []) {
+      const t = tie as { id?: number; name?: string; tieFixtures?: unknown[] };
+      const tieName = nameOf(t.name) ?? "Tie";
+      const digits = tieName.match(/(\d+)/);
+
+      for (const fixture of t.tieFixtures ?? []) {
+        const f = fixture as {
+          teamA?: { id?: number; name?: string };
+          teamB?: { id?: number; name?: string };
+          matches?: unknown[];
+          ties?: { position?: number };
+        };
+
+        const aId = typeof f.teamA?.id === "number" ? f.teamA.id : null;
+        const aName = nameOf(f.teamA?.name) ?? "Team A";
+        const bId = typeof f.teamB?.id === "number" ? f.teamB.id : null;
+        const bName = nameOf(f.teamB?.name) ?? "Team B";
+
+        const matches = f.matches ?? [];
+
+        // No matches at all: the tie itself is still to come.
+        if (matches.length === 0) {
+          const position =
+            typeof f.ties?.position === "number" ? f.ties.position : null;
+          ties.push({
+            tieId: typeof t.id === "number" ? t.id : -1,
+            tieName,
+            tieNumber: digits ? Number(digits[1]) : position,
+            teamAId: aId,
+            teamAName: aName,
+            teamBId: bId,
+            teamBName: bName,
+          });
+          continue;
+        }
+
+        for (const match of matches) {
+          const m = match as Record<string, unknown>;
+          if (m.hasStarted === true || m.hasEnded === true || m.isCompleted === true) {
+            continue;
+          }
+          nextMatches.push({
+            matchId: typeof m.matchId === "number" ? m.matchId : -1,
+            matchNo: typeof m.matchNo === "number" ? m.matchNo : 0,
+            courtId: typeof m.courtId === "number" ? m.courtId : null,
+            tieName,
+            teamAId: aId,
+            teamAName: aName,
+            teamBId: bId,
+            teamBName: bName,
+          });
+        }
+      }
+    }
+
+    if (nextMatches.length === 0 && ties.length === 0) continue;
+
+    // Next match first by number; ties in the order they will be played.
+    nextMatches.sort((a, b) => a.matchNo - b.matchNo || (a.courtId ?? 0) - (b.courtId ?? 0));
+    ties.sort((a, b) => (a.tieNumber ?? 0) - (b.tieNumber ?? 0));
+
+    out.push({ groupName, nextMatches, ties });
+  }
+
+  out.sort((a, b) => a.groupName.localeCompare(b.groupName));
+  return out;
+}

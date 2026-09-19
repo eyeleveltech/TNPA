@@ -6,10 +6,12 @@ import { ScoreboardContent } from "./sections/ScoreboardContent";
 import { CountdownPanel, ConcludedPanel } from "./sections/CountdownPanel";
 import { ResultsSection } from "./sections/ResultsSection";
 import { LeaderboardSection } from "./sections/LeaderboardSection";
+import { UpcomingSection } from "./sections/UpcomingSection";
 import { useLiveScores } from "@/hooks/useLiveScores";
 import { useTournament } from "@/hooks/useTournament";
 import { useResults } from "@/hooks/useResults";
 import { useGroupStandings } from "@/hooks/useGroupStandings";
+import { useUpcoming } from "@/hooks/useUpcoming";
 
 /**
  * Live scoreboard.
@@ -32,6 +34,7 @@ export default function ScoreboardPage() {
   const scores = useLiveScores();
   const results = useResults();
   const standings = useGroupStandings();
+  const upcoming = useUpcoming();
   /* One group choice for the whole page. Standings and results each show the
      switcher, but both write here, so the two tables can never disagree about
      which group you are looking at. */
@@ -83,6 +86,11 @@ export default function ScoreboardPage() {
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
             <LeaderboardSection
               state={standings}
+              activeGroup={activeGroup}
+              onGroupChange={setActiveGroup}
+            />
+            <UpcomingSection
+              state={upcoming}
               activeGroup={activeGroup}
               onGroupChange={setActiveGroup}
             />
