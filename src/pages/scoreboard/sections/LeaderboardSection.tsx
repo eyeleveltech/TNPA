@@ -16,7 +16,7 @@ function Crest({ id, name }: { id: number | null; name: string }) {
   const accent = brand?.accent ?? GOLD_ACCENT;
   return (
     <span
-      className="relative grid h-7 w-7 shrink-0 place-items-center overflow-hidden rounded-lg sm:h-8 sm:w-8"
+      className="relative grid h-6 w-6 shrink-0 place-items-center overflow-hidden rounded-md sm:h-8 sm:w-8 sm:rounded-lg"
       style={{
         border: `1px solid color-mix(in oklab, hsl(${accent}) 40%, transparent)`,
         background: `color-mix(in oklab, hsl(${accent}) 10%, transparent)`,
@@ -51,7 +51,7 @@ function Num({
 }) {
   return (
     <td
-      className={`px-2 py-3 text-right text-[13px] tabular-nums sm:px-3 ${className}`}
+      className={`px-1.5 py-3 text-right text-[12px] tabular-nums sm:px-3 sm:text-[13px] ${className}`}
       style={{ fontFamily: "Arial, sans-serif" }}
     >
       {value === null ? (
@@ -79,7 +79,7 @@ const Th = ({
   <th
     scope="col"
     title={title}
-    className={`px-2 py-3 text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-3 ${
+    className={`px-1.5 py-3 text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-3 ${
       align === "left" ? "text-left" : "text-right"
     } ${className}`}
   >
@@ -118,11 +118,11 @@ function StandingsTable({
   return (
     <div className="stat-card overflow-hidden rounded-2xl">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[460px] border-collapse">
+        <table className="w-full border-collapse">
           <caption className="sr-only">{caption}</caption>
           <thead>
             <tr className="border-b border-border">
-              <Th label="#" align="left" className="px-3 sm:px-4" />
+              <Th label="#" align="left" className="px-2 sm:px-4" />
               <Th label="Team" align="left" />
               {/* Tie-level, matching the organisers' own standings screen. */}
               {showPlayed && <Th label="P" title="Ties played" />}
@@ -156,18 +156,18 @@ function StandingsTable({
                   }`}
                 >
                   <td
-                    className={`px-3 py-3 text-left text-[13px] font-bold tabular-nums sm:px-4 ${
+                    className={`px-2 py-3 text-left text-[12px] font-bold tabular-nums sm:px-4 sm:text-[13px] ${
                       row.qualifies ? "text-gold" : "text-foreground/40"
                     }`}
                     style={{ fontFamily: "Arial, sans-serif" }}
                   >
                     {row.position}
                   </td>
-                  <td className="px-2 py-3">
-                    <div className="flex items-center gap-2.5">
+                  <td className="px-1.5 py-3 sm:px-2">
+                    <div className="flex items-center gap-2 sm:gap-2.5">
                       <Crest id={row.teamId} name={row.teamName} />
                       <span
-                        className={`truncate text-[12px] font-bold uppercase tracking-[0.04em] sm:text-[13px] ${
+                        className={`truncate text-[11px] font-bold uppercase leading-tight tracking-[0.02em] sm:text-[13px] sm:tracking-[0.04em] ${
                           row.qualifies ? "text-foreground" : "text-foreground/60"
                         }`}
                       >
@@ -320,12 +320,12 @@ export function LeaderboardSection({
 
         {/* Which board on the left, which group on the right — the group
             chooser only means anything in the groups view. */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-2 sm:justify-between sm:gap-3">
           {visibleTabs.length > 1 && (
             <div
               role="tablist"
               aria-label="Choose a standings table"
-              className="inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5"
+              className="inline-flex flex-wrap gap-1 rounded-xl p-1 sm:gap-1.5 sm:rounded-2xl sm:p-1.5"
               style={{
                 border: "1px solid var(--color-border)",
                 background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
@@ -340,7 +340,7 @@ export function LeaderboardSection({
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setPicked(tab.id)}
-                    className={`rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 ${
+                    className={`rounded-lg px-3 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] transition-colors sm:rounded-xl sm:px-5 sm:text-[13px] sm:tracking-[0.12em] ${
                       isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
                     }`}
                     style={{ background: isActive ? "var(--gold)" : "transparent" }}

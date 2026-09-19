@@ -156,7 +156,7 @@ function TeamSide({
     >
       {/* Crest */}
       <span
-        className="relative grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-2xl sm:h-20 sm:w-20"
+        className="relative grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-xl sm:h-20 sm:w-20 sm:rounded-2xl"
         style={{
           border: `1px solid color-mix(in oklab, hsl(${accent}) 45%, transparent)`,
           background: `color-mix(in oklab, hsl(${accent}) 12%, transparent)`,
@@ -183,7 +183,7 @@ function TeamSide({
 
       <div className="min-w-0 flex-1">
         <h3
-          className="text-xl font-black uppercase leading-[1.08] tracking-[0.02em] text-foreground sm:text-2xl lg:text-[1.75rem]"
+          className="text-lg font-black uppercase leading-[1.08] tracking-[0.02em] text-foreground min-[380px]:text-xl sm:text-2xl lg:text-[1.75rem]"
           style={{ textWrap: "balance" }}
         >
           {displayName}
@@ -273,9 +273,9 @@ function ScorePanel({
   label: string;
 }) {
   const cell = (value: number, leading: boolean) => (
-    <div className="flex flex-col items-center gap-1.5 px-5 sm:px-7">
+    <div className="flex flex-col items-center gap-1.5 px-4 min-[380px]:px-5 sm:px-7">
       <p
-        className={`text-5xl font-black leading-none sm:text-6xl ${
+        className={`text-4xl font-black leading-none min-[380px]:text-5xl sm:text-6xl ${
           leading ? "text-gold" : "text-foreground"
         }`}
         style={{ fontFamily: "Arial, sans-serif", fontVariantNumeric: "tabular-nums" }}
@@ -369,7 +369,7 @@ function CourtCard({ result }: { result: CourtResult }) {
 
   return (
     <article
-      className="stat-card relative overflow-hidden rounded-3xl p-5 sm:p-7 lg:p-8"
+      className="stat-card relative overflow-hidden rounded-2xl p-4 sm:rounded-3xl sm:p-7 lg:p-8"
       style={{
         background:
           "radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, var(--gold) 4%, transparent), transparent 70%), color-mix(in oklab, var(--chalk) 3%, transparent)",
@@ -650,7 +650,7 @@ function SkeletonCard() {
       <div className="mt-8 grid items-center gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
         {[0, 1].map((i) => (
           <div key={i} className={`flex items-center gap-5 ${i === 1 ? "md:order-3" : ""}`}>
-            <div className="h-16 w-16 shrink-0 rounded-2xl bg-foreground/10 sm:h-20 sm:w-20" />
+            <div className="h-14 w-14 shrink-0 rounded-xl bg-foreground/10 sm:h-20 sm:w-20 sm:rounded-2xl" />
             <div className="flex-1 space-y-2">
               <div className="h-5 w-3/4 rounded bg-foreground/10" />
               <div className="h-3 w-1/2 rounded bg-foreground/5" />

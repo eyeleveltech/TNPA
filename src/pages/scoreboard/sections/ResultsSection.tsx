@@ -133,17 +133,43 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={panelId}
-        className="flex w-full items-center gap-3 p-4 text-left transition-colors hover:bg-gold/5 sm:gap-4 sm:p-5"
+        className="flex w-full items-center gap-2 p-3.5 text-left transition-colors hover:bg-gold/5 sm:gap-4 sm:p-5"
       >
         <div className="min-w-0 flex-1">
           <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold">
             {[tie.groupName, tie.tieName].filter(Boolean).join("  ·  ")}
           </p>
 
-          <div className="mt-2.5 flex items-center gap-2.5 sm:gap-3">
+          {/* Stacked on a phone, facing each other from sm up. Five items in
+              one row left each team name about 60px at 360px wide. */}
+          <div className="mt-2.5 space-y-1.5 sm:hidden">
+            {([
+              [tie.teamAId, tie.teamAName, tie.winsA, aLeads] as const,
+              [tie.teamBId, tie.teamBName, tie.winsB, bLeads] as const,
+            ]).map(([id, name, wins, leads]) => (
+              <div key={String(id) + name} className="flex items-center gap-2.5">
+                <Crest id={id} name={name} size="sm" />
+                <span
+                  className={`min-w-0 flex-1 truncate text-[12px] font-bold uppercase tracking-[0.02em] ${
+                    leads ? "text-foreground" : "text-foreground/55"
+                  }`}
+                >
+                  {display(id, name)}
+                </span>
+                <span
+                  className={`shrink-0 text-base font-black ${leads ? "text-gold" : "text-foreground/55"}`}
+                  style={{ fontFamily: "Arial, sans-serif", fontVariantNumeric: "tabular-nums" }}
+                >
+                  {wins}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-2.5 hidden items-center gap-3 sm:flex">
             <Crest id={tie.teamAId} name={tie.teamAName} size="md" />
             <span
-              className={`min-w-0 flex-1 truncate text-[12px] font-bold uppercase tracking-[0.04em] sm:text-[13px] ${
+              className={`min-w-0 flex-1 truncate text-[13px] font-bold uppercase tracking-[0.04em] ${
                 aLeads ? "text-foreground" : "text-foreground/60"
               }`}
             >
@@ -151,7 +177,7 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
             </span>
 
             <span
-              className="shrink-0 text-base font-black text-foreground sm:text-lg"
+              className="shrink-0 text-lg font-black text-foreground"
               style={{ fontFamily: "Arial, sans-serif", fontVariantNumeric: "tabular-nums" }}
             >
               <span className={aLeads ? "text-gold" : undefined}>{tie.winsA}</span>
@@ -160,7 +186,7 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
             </span>
 
             <span
-              className={`min-w-0 flex-1 truncate text-right text-[12px] font-bold uppercase tracking-[0.04em] sm:text-[13px] ${
+              className={`min-w-0 flex-1 truncate text-right text-[13px] font-bold uppercase tracking-[0.04em] ${
                 bLeads ? "text-foreground" : "text-foreground/60"
               }`}
             >
@@ -176,7 +202,7 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
         />
       </button>
 
-      <div id={panelId} hidden={!open} className="border-t border-border p-4 sm:p-5">
+      <div id={panelId} hidden={!open} className="border-t border-border p-3 sm:p-5">
         <ul className="grid gap-2.5 sm:grid-cols-2">
           {tie.matches.map((m) => (
             <ResultRow key={m.matchId} match={m} />

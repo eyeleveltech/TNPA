@@ -123,7 +123,7 @@ export function MatchesSection({
 
         {/* Group on the left, view on the right: two different questions, so
             two controls, but one row rather than two stacked switchers. */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-2 sm:justify-between sm:gap-3">
           <GroupSwitcher
             groups={groupNames}
             active={activeGroupName}
@@ -135,7 +135,7 @@ export function MatchesSection({
             <div
               role="tablist"
               aria-label="Upcoming matches or results"
-              className="inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5"
+              className="inline-flex flex-wrap gap-1 rounded-xl p-1 sm:gap-1.5 sm:rounded-2xl sm:p-1.5"
               style={{
                 border: "1px solid var(--color-border)",
                 background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
@@ -150,7 +150,7 @@ export function MatchesSection({
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setPicked(tab.id)}
-                    className={`rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 ${
+                    className={`rounded-lg px-3 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] transition-colors sm:rounded-xl sm:px-5 sm:text-[13px] sm:tracking-[0.12em] ${
                       isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
                     }`}
                     style={{ background: isActive ? "var(--gold)" : "transparent" }}

@@ -22,7 +22,7 @@ function Unit({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <div
-        className="grid min-w-[4.25rem] place-items-center rounded-2xl px-3 py-4 sm:min-w-[5.5rem] sm:px-5 sm:py-5"
+        className="grid min-w-[3.25rem] place-items-center rounded-xl px-2 py-3.5 min-[380px]:min-w-[4.25rem] min-[380px]:px-3 min-[380px]:py-4 sm:min-w-[5.5rem] sm:rounded-2xl sm:px-5 sm:py-5"
         style={{
           border: "1px solid color-mix(in oklab, var(--gold) 28%, transparent)",
           background:
@@ -30,7 +30,7 @@ function Unit({ value, label }: { value: string; label: string }) {
         }}
       >
         <span
-          className="text-3xl font-black leading-none text-gold sm:text-5xl"
+          className="text-2xl font-black leading-none text-gold min-[380px]:text-3xl sm:text-5xl"
           style={{ fontFamily: "Arial, sans-serif", fontVariantNumeric: "tabular-nums" }}
         >
           {value}
@@ -126,7 +126,7 @@ export function CountdownPanel({
           </p>
 
           {left ? (
-            <div className="mt-6 flex flex-wrap items-start justify-center gap-3 sm:mt-8 sm:gap-5">
+            <div className="mt-6 flex flex-nowrap items-start justify-center gap-2 min-[380px]:gap-3 sm:mt-8 sm:gap-5">
               <Unit value={String(left.days)} label={left.days === 1 ? "Day" : "Days"} />
               <Unit value={pad(left.hours)} label="Hours" />
               <Unit value={pad(left.minutes)} label="Minutes" />
