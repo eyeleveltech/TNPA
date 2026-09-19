@@ -1089,10 +1089,10 @@ export interface GroupStandings {
   rows: GroupStandingRow[];
 }
 
-/** Tie-level figures for every team, keyed by team id. */
+/** Tie-level figures for every team, in the order the server ranks them. */
 async function fetchLeaderboardRows(
   tournamentId: number,
-): Promise<Map<number, Omit<GroupStandingRow, "position" | "qualifies">> | null> {
+): Promise<Array<Omit<GroupStandingRow, "position" | "qualifies">> | null> {
   try {
     const response = await fetch(`${API_BASE}${LEADERBOARD_PATH}`, {
       method: "POST",
@@ -1104,13 +1104,13 @@ async function fetchLeaderboardRows(
     const body = (await response.json()) as { data?: unknown[] };
     if (!Array.isArray(body?.data)) return null;
 
-    const out = new Map<number, Omit<GroupStandingRow, "position" | "qualifies">>();
+    const out: Array<Omit<GroupStandingRow, "position" | "qualifies">> = [];
     for (const entry of body.data) {
       const r = entry as Record<string, unknown>;
       const teamId = pickNumber(r, ["teamId", "id"]);
       const teamName = typeof r.teamName === "string" ? r.teamName.trim() : "";
       if (teamId === null || !teamName) continue;
-      out.set(teamId, {
+      out.push({
         teamId,
         teamName,
         played: pickNumber(r, ["tiePlayed", "tiesPlayed", "played"]),
@@ -1121,7 +1121,7 @@ async function fetchLeaderboardRows(
         difference: pickNumber(r, ["pointsDifference", "difference"]),
       });
     }
-    return out.size > 0 ? out : null;
+    return out.length > 0 ? out : null;
   } catch {
     return null;
   }
@@ -1138,11 +1138,13 @@ export async function fetchGroupStandings(
   tournamentId: number = TOURNAMENT_ID,
   _signal?: AbortSignal,
 ): Promise<GroupStandings[] | null> {
-  const [snapshot, byTeam] = await Promise.all([
+  const [snapshot, ranked] = await Promise.all([
     loadGroups(tournamentId),
     fetchLeaderboardRows(tournamentId),
   ]);
-  if (!snapshot || !byTeam) return null;
+  if (!snapshot || !ranked) return null;
+
+  const byTeam = new Map(ranked.map((r) => [r.teamId as number, r]));
 
   const out: GroupStandings[] = [];
 
@@ -1329,4 +1331,87 @@ export async function fetchUpcoming(
 
   out.sort((a, b) => a.groupName.localeCompare(b.groupName));
   return out;
+}
+
+/* ─────────────────────────────────────────────
+   OVERALL AND KNOCKOUT BOARDS
+
+   Three tables exist, and they are not the same question:
+
+     Groups   — how each team stands against the five in its own group,
+                which is what decides who advances.
+     Overall  — all twelve ranked together across the tournament.
+     Knockout — the bracket stage, which does not exist until the group
+                stage ends.
+
+   The knockout endpoint answers 200 with success:false and "Knockout
+   leaderboard not found for this tournament" while it is unbuilt, so a
+   missing bracket is reported as absent rather than as an error, and the
+   tab for it simply does not appear.
+───────────────────────────────────────────── */
+
+const KNOCKOUT_LEADERBOARD_PATH =
+  "/rizzapi/pickleball/matches/league-knockout/leaderboard";
+
+/** All twelve teams ranked together. Null on failure. */
+export async function fetchOverallStandings(
+  tournamentId: number = TOURNAMENT_ID,
+  _signal?: AbortSignal,
+): Promise<GroupStandingRow[] | null> {
+  const ranked = await fetchLeaderboardRows(tournamentId);
+  if (!ranked) return null;
+  // No qualification cut applies across the whole field.
+  return ranked.map((row, i) => ({ ...row, position: i + 1, qualifies: false }));
+}
+
+/**
+ * The knockout table.
+ *
+ * Returns null both when the request fails and when the bracket has not been
+ * created — the caller only needs to know there is nothing to show.
+ */
+export async function fetchKnockoutStandings(
+  tournamentId: number = TOURNAMENT_ID,
+  _signal?: AbortSignal,
+): Promise<GroupStandingRow[] | null> {
+  try {
+    const response = await fetch(
+      `${API_BASE}${KNOCKOUT_LEADERBOARD_PATH}/${tournamentId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tournamentId }),
+      },
+    );
+    if (!response.ok) return null;
+
+    const body = (await response.json()) as { success?: boolean; data?: unknown };
+    // "not found" arrives as a 200 with success:false, not as an error status.
+    if (body?.success === false || !Array.isArray(body?.data)) return null;
+
+    const rows: GroupStandingRow[] = [];
+    for (const entry of body.data) {
+      const r = entry as Record<string, unknown>;
+      const teamName = typeof r.teamName === "string" ? r.teamName.trim() : "";
+      if (!teamName) continue;
+      rows.push({
+        position: pickNumber(r, ["position", "rank"]) ?? rows.length + 1,
+        teamId: pickNumber(r, ["teamId", "id"]),
+        teamName,
+        played: pickNumber(r, ["tiePlayed", "tiesPlayed", "played", "matchesPlayed"]),
+        wins: pickNumber(r, ["tieWinByMatchPoints", "tieWins", "tieWin", "wins"]),
+        points: pickNumber(r, ["netPoints", "points", "finalPoints"]),
+        pointsFor: pickNumber(r, ["pointsFor"]),
+        pointsAgainst: pickNumber(r, ["pointsAgainst"]),
+        difference: pickNumber(r, ["pointsDifference", "difference"]),
+        qualifies: false,
+      });
+    }
+
+    if (rows.length === 0) return null;
+    rows.sort((a, b) => a.position - b.position);
+    return rows;
+  } catch {
+    return null;
+  }
 }

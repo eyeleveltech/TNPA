@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { GroupSwitcher } from "./GroupSwitcher";
 import {
@@ -90,8 +91,23 @@ const Th = ({
    ONE GROUP TABLE
 ───────────────────────────────────────────── */
 
-function GroupTable({ group }: { group: GroupStandings }) {
-  const has = (key: keyof GroupStandingRow) => group.rows.some((r) => r[key] !== null);
+/**
+ * One standings table.
+ *
+ * Shared by all three views. `advanceCount` draws the qualification line and
+ * is only meaningful for a group — the overall and knockout tables pass null,
+ * because there is no cut to draw across the whole field.
+ */
+function StandingsTable({
+  rows,
+  advanceCount,
+  caption,
+}: {
+  rows: GroupStandingRow[];
+  advanceCount: number | null;
+  caption: string;
+}) {
+  const has = (key: keyof GroupStandingRow) => rows.some((r) => r[key] !== null);
   const showPlayed = has("played");
   const showWins = has("wins");
   const showFor = has("pointsFor");
@@ -103,10 +119,7 @@ function GroupTable({ group }: { group: GroupStandings }) {
     <div className="stat-card overflow-hidden rounded-2xl">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[460px] border-collapse">
-          <caption className="sr-only">
-            {group.groupName} standings
-            {group.advanceCount !== null ? `, top ${group.advanceCount} advance` : ""}
-          </caption>
+          <caption className="sr-only">{caption}</caption>
           <thead>
             <tr className="border-b border-border">
               <Th label="#" align="left" className="px-3 sm:px-4" />
@@ -127,14 +140,13 @@ function GroupTable({ group }: { group: GroupStandings }) {
             </tr>
           </thead>
           <tbody>
-            {group.rows.map((row) => {
+            {rows.map((row) => {
               const brand = resolveFranchise(row.teamId, row.teamName);
               const name = brand?.name ?? row.teamName;
               /* The qualification cut is real information from the feed
                  (advancePerGroup), so it is drawn as a line rather than left
                  for the reader to count. */
-              const isCut =
-                group.advanceCount !== null && row.position === group.advanceCount;
+              const isCut = advanceCount !== null && row.position === advanceCount;
 
               return (
                 <tr
@@ -209,14 +221,19 @@ function GroupTable({ group }: { group: GroupStandings }) {
    SECTION
 ───────────────────────────────────────────── */
 
+type Board = "groups" | "overall" | "knockout";
+
 /**
- * Group standings.
+ * Standings, in three views.
  *
- * The league is two groups of six playing separate round robins, so one
- * combined table of twelve would misrepresent it — a team is racing the five
- * others in its group, not the eleven others in the tournament. One group is
- * shown at a time, chosen by a button, with the qualification cut drawn where
- * the feed's own `advancePerGroup` puts it.
+ *   Groups   — each team against the five in its own group, which is what
+ *              decides who advances, with the qualification cut drawn where
+ *              the feed puts it.
+ *   Overall  — all twelve ranked together.
+ *   Knockout — the bracket, which does not exist until the group stage ends
+ *              and so has no tab until the feed returns one.
+ *
+ * Figures are tie-level throughout, matching the organisers' own screen.
  */
 export function LeaderboardSection({
   state,
@@ -224,20 +241,57 @@ export function LeaderboardSection({
   onGroupChange,
 }: {
   state: GroupStandingsState;
-  /** Shared with the results section; null means "first group". */
+  /** Shared with the matches section; null means "first group". */
   activeGroup: string | null;
   onGroupChange: (group: string) => void;
 }) {
-  const { groups, isLoading, failed } = state;
+  const { groups, overall, knockout, isLoading, failed } = state;
+  const [picked, setPicked] = useState<Board | null>(null);
 
   // Nothing to show until standings exist. No skeleton, no empty frame.
-  if (isLoading || groups.length === 0) return null;
+  if (isLoading) return null;
 
+  const hasGroups = groups.length > 0;
+  const hasOverall = overall.length > 0;
+  const hasKnockout = knockout !== null && knockout.length > 0;
+  if (!hasGroups && !hasOverall && !hasKnockout) return null;
+
+  const tabs: Array<{ id: Board; label: string; show: boolean }> = [
+    { id: "groups", label: "Groups", show: hasGroups },
+    { id: "overall", label: "Overall", show: hasOverall },
+    { id: "knockout", label: "Knockout", show: hasKnockout },
+  ];
+  const visibleTabs = tabs.filter((t) => t.show);
+
+  /* Groups first: it is the table that decides who goes through. A tab whose
+     data has gone away cannot stay selected. */
+  const fallback: Board = hasGroups ? "groups" : hasOverall ? "overall" : "knockout";
+  const board: Board =
+    picked !== null && visibleTabs.some((t) => t.id === picked) ? picked : fallback;
+
+  const groupNames = groups.map((g) => g.groupName);
   const activeName =
-    activeGroup !== null && groups.some((g) => g.groupName === activeGroup)
+    activeGroup !== null && groupNames.includes(activeGroup)
       ? activeGroup
-      : groups[0].groupName;
-  const active = groups.find((g) => g.groupName === activeName) ?? groups[0];
+      : (groupNames[0] ?? "");
+  const activeGroupData = groups.find((g) => g.groupName === activeName) ?? groups[0];
+
+  const showingGroups = board === "groups" && activeGroupData;
+  const rows = showingGroups
+    ? activeGroupData.rows
+    : board === "knockout" && knockout
+      ? knockout
+      : overall;
+  const advanceCount = showingGroups ? activeGroupData.advanceCount : null;
+  const caption = showingGroups
+    ? `${activeGroupData.groupName} standings${
+        activeGroupData.advanceCount !== null
+          ? `, top ${activeGroupData.advanceCount} advance`
+          : ""
+      }`
+    : board === "knockout"
+      ? "Knockout standings"
+      : "Overall standings, all teams";
 
   return (
     <Reveal delay={80}>
@@ -247,27 +301,69 @@ export function LeaderboardSection({
             Standings
             <span className="mt-1.5 block h-0.5 w-8 rounded-full bg-gold" aria-hidden="true" />
           </h2>
-          {active.advanceCount !== null && (
+          {showingGroups && activeGroupData.advanceCount !== null ? (
             <span
               className="text-[11px] text-foreground/45"
               style={{ fontFamily: "Arial, sans-serif" }}
             >
-              Top {active.advanceCount} advance to the knockouts
+              Top {activeGroupData.advanceCount} advance to the knockouts
+            </span>
+          ) : (
+            <span
+              className="text-[11px] text-foreground/40"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              {rows.length} teams
             </span>
           )}
         </div>
 
-        <div className="mt-4">
-          <GroupSwitcher
-            groups={groups.map((g) => g.groupName)}
-            active={activeName}
-            onChange={onGroupChange}
-            label="Choose a group for the standings"
-          />
+        {/* Which board on the left, which group on the right — the group
+            chooser only means anything in the groups view. */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          {visibleTabs.length > 1 && (
+            <div
+              role="tablist"
+              aria-label="Choose a standings table"
+              className="inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5"
+              style={{
+                border: "1px solid var(--color-border)",
+                background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
+              }}
+            >
+              {visibleTabs.map((tab) => {
+                const isActive = tab.id === board;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setPicked(tab.id)}
+                    className={`rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 ${
+                      isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
+                    }`}
+                    style={{ background: isActive ? "var(--gold)" : "transparent" }}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {board === "groups" && (
+            <GroupSwitcher
+              groups={groupNames}
+              active={activeName}
+              onChange={onGroupChange}
+              label="Choose a group for the standings"
+            />
+          )}
         </div>
 
         <div className="mt-4">
-          <GroupTable group={active} />
+          <StandingsTable rows={rows} advanceCount={advanceCount} caption={caption} />
         </div>
 
         {failed && (
