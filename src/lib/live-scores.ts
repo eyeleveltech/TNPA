@@ -1005,3 +1005,91 @@ export async function fetchResults(
     return null;
   }
 }
+
+/* ─────────────────────────────────────────────
+   LEADERBOARD
+
+   Its own endpoint, and a cheap one: ~4KB in under a second, unlike the group
+   tree. Safe to poll on its own schedule.
+
+   ⚠ The field names here MOVE. On the morning of 18 Sep the wins column was
+   `tieWins`; by that afternoon the same endpoint called it
+   `tieWinByMatchPoints`, and the response message changed from "Tournament
+   overall points leaderboard" to "Tournament overall leaderboard
+   (config-driven)". Every value below is therefore read from a list of
+   candidate keys rather than one spelling, and a column that resolves to
+   nothing is hidden rather than shown empty. A rename mid-tournament must not
+   silently blank a column during the playoffs.
+───────────────────────────────────────────── */
+
+export interface LeaderboardRow {
+  position: number;
+  teamId: number | null;
+  teamName: string;
+  /** Null when the feed does not carry the figure under any known name. */
+  played: number | null;
+  wins: number | null;
+  points: number | null;
+  pointsFor: number | null;
+  pointsAgainst: number | null;
+  difference: number | null;
+}
+
+/** First key present with a finite number, else null. */
+function pickNumber(row: Record<string, unknown>, keys: string[]): number | null {
+  for (const key of keys) {
+    const value = row[key];
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+  }
+  return null;
+}
+
+const LEADERBOARD_PATH = "/rizzapi/pickleball/matches/fetch-league-leaderboard";
+
+/**
+ * Tournament standings, already ranked by the server.
+ *
+ * Returns null on failure so the caller can keep showing the last good table
+ * rather than replacing it with an empty one.
+ */
+export async function fetchLeaderboard(
+  tournamentId: number = TOURNAMENT_ID,
+  signal?: AbortSignal,
+): Promise<LeaderboardRow[] | null> {
+  try {
+    const response = await fetch(`${API_BASE}${LEADERBOARD_PATH}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tournamentId }),
+      signal,
+    });
+    if (!response.ok) return null;
+
+    const body = (await response.json()) as { data?: unknown[] };
+    if (!Array.isArray(body?.data)) return null;
+
+    const rows: LeaderboardRow[] = [];
+    for (const entry of body.data) {
+      const r = entry as Record<string, unknown>;
+      const name = typeof r.teamName === "string" ? r.teamName.trim() : "";
+      if (!name) continue;
+      rows.push({
+        position: pickNumber(r, ["position", "rank"]) ?? rows.length + 1,
+        teamId: pickNumber(r, ["teamId", "id"]),
+        teamName: name,
+        played: pickNumber(r, ["tiePlayed", "played", "matchesPlayed"]),
+        wins: pickNumber(r, ["tieWinByMatchPoints", "tieWins", "wins", "matchWins"]),
+        points: pickNumber(r, ["netPoints", "points", "finalPoints", "totalPoints"]),
+        pointsFor: pickNumber(r, ["pointsFor", "for"]),
+        pointsAgainst: pickNumber(r, ["pointsAgainst", "against"]),
+        difference: pickNumber(r, ["pointsDifference", "difference", "diff"]),
+      });
+    }
+
+    // Trust the server's order, but keep it stable if position is missing.
+    rows.sort((a, b) => a.position - b.position);
+    return rows;
+  } catch {
+    return null;
+  }
+}
