@@ -8,7 +8,7 @@ import { LeaderboardSection } from "./sections/LeaderboardSection";
 import { useLiveScores } from "@/hooks/useLiveScores";
 import { useTournament } from "@/hooks/useTournament";
 import { useResults } from "@/hooks/useResults";
-import { useLeaderboard } from "@/hooks/useLeaderboard";
+import { useGroupStandings } from "@/hooks/useGroupStandings";
 
 /**
  * Live scoreboard.
@@ -30,7 +30,7 @@ export default function ScoreboardPage() {
   const tournament = useTournament();
   const scores = useLiveScores();
   const results = useResults();
-  const leaderboard = useLeaderboard();
+  const standings = useGroupStandings();
 
   const liveCount = scores.courts.filter((court) => court.match !== null).length;
   const { phase, info, startsAt, hasFixtures } = tournament;
@@ -76,7 +76,7 @@ export default function ScoreboardPage() {
       {!showCountdown && (
         <section className="relative bg-ink pb-16 sm:pb-20">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-            <LeaderboardSection state={leaderboard} />
+            <LeaderboardSection state={standings} />
             <ResultsSection state={results} />
           </div>
         </section>

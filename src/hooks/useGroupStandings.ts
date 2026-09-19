@@ -1,36 +1,36 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { fetchLeaderboard, type LeaderboardRow } from "@/lib/live-scores";
+import { fetchGroupStandings, type GroupStandings } from "@/lib/live-scores";
 
 /**
- * Standings shift only when a tie concludes, so this is deliberately slow.
+ * Standings move only when a tie concludes.
  *
- * It is cheap enough to poll faster — ~4KB on its own endpoint, unlike the
- * group tree — but there is nothing to gain from it.
+ * This reads the shared group-tree snapshot, the same one results and court
+ * discovery use, so most refreshes cost nothing at all.
  */
-const LEADERBOARD_INTERVAL_MS = 2 * 60_000;
+const STANDINGS_INTERVAL_MS = 2 * 60_000;
 
-export interface LeaderboardState {
-  rows: LeaderboardRow[];
+export interface GroupStandingsState {
+  groups: GroupStandings[];
   isLoading: boolean;
   /** Distinguishes "could not load" from "no standings yet". */
   failed: boolean;
 }
 
-/** Tournament standings, refreshed in the background. */
-export function useLeaderboard(): LeaderboardState {
-  const [rows, setRows] = useState<LeaderboardRow[]>([]);
+/** Per-group league tables, refreshed in the background. */
+export function useGroupStandings(): GroupStandingsState {
+  const [groups, setGroups] = useState<GroupStandings[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const mountedRef = useRef(true);
 
   const load = useCallback(async (signal?: AbortSignal) => {
-    const result = await fetchLeaderboard(undefined, signal);
+    const result = await fetchGroupStandings(undefined, signal);
     if (!mountedRef.current || signal?.aborted) return;
     if (result === null) {
-      // Keep the last good table rather than wiping it on one bad refresh.
+      // Keep the last good tables rather than wiping them on one bad refresh.
       setFailed(true);
     } else {
-      setRows(result);
+      setGroups(result);
       setFailed(false);
     }
     setIsLoading(false);
@@ -43,7 +43,7 @@ export function useLeaderboard(): LeaderboardState {
 
     const start = () => {
       if (timer === null) {
-        timer = setInterval(() => void load(controller.signal), LEADERBOARD_INTERVAL_MS);
+        timer = setInterval(() => void load(controller.signal), STANDINGS_INTERVAL_MS);
       }
     };
     const stop = () => {
@@ -70,5 +70,5 @@ export function useLeaderboard(): LeaderboardState {
     };
   }, [load]);
 
-  return { rows, isLoading, failed };
+  return { groups, isLoading, failed };
 }

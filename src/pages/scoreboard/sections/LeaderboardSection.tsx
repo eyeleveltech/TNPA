@@ -1,6 +1,12 @@
+import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
-import { initialsOf, resolveFranchise, type LeaderboardRow } from "@/lib/live-scores";
-import type { LeaderboardState } from "@/hooks/useLeaderboard";
+import {
+  initialsOf,
+  resolveFranchise,
+  type GroupStandingRow,
+  type GroupStandings,
+} from "@/lib/live-scores";
+import type { GroupStandingsState } from "@/hooks/useGroupStandings";
 
 const GOLD_ACCENT = "45 90% 58%";
 
@@ -58,159 +64,214 @@ function Num({
   );
 }
 
-/**
- * Tournament standings.
- *
- * Columns are driven by what the feed actually returns. The leaderboard has
- * already renamed a column mid-tournament once — `tieWins` became
- * `tieWinByMatchPoints` between morning and afternoon on day two — so any
- * column where every row is empty is dropped entirely rather than rendered as
- * a stripe of dashes.
- */
-export function LeaderboardSection({ state }: { state: LeaderboardState }) {
-  const { rows, isLoading, failed } = state;
+const Th = ({
+  label,
+  title,
+  align = "right",
+  className = "",
+}: {
+  label: string;
+  title?: string;
+  align?: "left" | "right";
+  className?: string;
+}) => (
+  <th
+    scope="col"
+    title={title}
+    className={`px-2 py-3 text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-3 ${
+      align === "left" ? "text-left" : "text-right"
+    } ${className}`}
+  >
+    {label}
+  </th>
+);
 
-  // Nothing to show until standings exist. No skeleton, no empty frame.
-  if (isLoading || rows.length === 0) return null;
+/* ─────────────────────────────────────────────
+   ONE GROUP TABLE
+───────────────────────────────────────────── */
 
-  const has = (key: keyof LeaderboardRow) => rows.some((r) => r[key] !== null);
+function GroupTable({ group }: { group: GroupStandings }) {
+  const has = (key: keyof GroupStandingRow) => group.rows.some((r) => r[key] !== null);
   const showPlayed = has("played");
   const showWins = has("wins");
-  const showPoints = has("points");
+  const showLosses = has("losses");
   const showDiff = has("difference");
+  const showPoints = has("points");
+
+  return (
+    <div className="stat-card overflow-hidden rounded-2xl">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[460px] border-collapse">
+          <caption className="sr-only">
+            {group.groupName} standings
+            {group.advanceCount !== null ? `, top ${group.advanceCount} advance` : ""}
+          </caption>
+          <thead>
+            <tr className="border-b border-border">
+              <Th label="#" align="left" className="px-3 sm:px-4" />
+              <Th label="Team" align="left" />
+              {showPlayed && <Th label="P" title="Matches played" />}
+              {showWins && <Th label="W" title="Matches won" />}
+              {showLosses && <Th label="L" title="Matches lost" className="hidden sm:table-cell" />}
+              {showDiff && (
+                <Th label="Diff" title="Points difference" className="hidden sm:table-cell" />
+              )}
+              {showPoints && (
+                <Th label="Pts" title="League points" className="px-3 text-gold sm:px-4" />
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {group.rows.map((row) => {
+              const brand = resolveFranchise(row.teamId, row.teamName);
+              const name = brand?.name ?? row.teamName;
+              /* The qualification cut is real information from the feed
+                 (advancePerGroup), so it is drawn as a line rather than left
+                 for the reader to count. */
+              const isCut =
+                group.advanceCount !== null && row.position === group.advanceCount;
+
+              return (
+                <tr
+                  key={row.teamId ?? row.teamName}
+                  className={`last:border-0 ${
+                    isCut ? "border-b-2 border-gold/35" : "border-b border-border"
+                  }`}
+                >
+                  <td
+                    className={`px-3 py-3 text-left text-[13px] font-bold tabular-nums sm:px-4 ${
+                      row.qualifies ? "text-gold" : "text-foreground/40"
+                    }`}
+                    style={{ fontFamily: "Arial, sans-serif" }}
+                  >
+                    {row.position}
+                  </td>
+                  <td className="px-2 py-3">
+                    <div className="flex items-center gap-2.5">
+                      <Crest id={row.teamId} name={row.teamName} />
+                      <span
+                        className={`truncate text-[12px] font-bold uppercase tracking-[0.04em] sm:text-[13px] ${
+                          row.qualifies ? "text-foreground" : "text-foreground/60"
+                        }`}
+                      >
+                        {name}
+                      </span>
+                    </div>
+                  </td>
+                  {showPlayed && <Num value={row.played} className="text-foreground/60" />}
+                  {showWins && <Num value={row.wins} className="text-foreground/60" />}
+                  {showLosses && (
+                    <Num value={row.losses} className="hidden text-foreground/60 sm:table-cell" />
+                  )}
+                  {showDiff && (
+                    <Num
+                      value={row.difference}
+                      signed
+                      className={`hidden sm:table-cell ${
+                        row.difference !== null && row.difference > 0
+                          ? "text-emerald-400/80"
+                          : row.difference !== null && row.difference < 0
+                            ? "text-red-400/70"
+                            : "text-foreground/60"
+                      }`}
+                    />
+                  )}
+                  {showPoints && (
+                    <Num
+                      value={row.points}
+                      className={`px-3 font-black sm:px-4 ${
+                        row.qualifies ? "text-gold" : "text-foreground/85"
+                      }`}
+                    />
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   SECTION
+───────────────────────────────────────────── */
+
+/**
+ * Group standings.
+ *
+ * The league is two groups of six playing separate round robins, so one
+ * combined table of twelve would misrepresent it — a team is racing the five
+ * others in its group, not the eleven others in the tournament. One group is
+ * shown at a time, chosen by a button, with the qualification cut drawn where
+ * the feed's own `advancePerGroup` puts it.
+ */
+export function LeaderboardSection({ state }: { state: GroupStandingsState }) {
+  const { groups, isLoading, failed } = state;
+  const [picked, setPicked] = useState<string | null>(null);
+
+  // Nothing to show until standings exist. No skeleton, no empty frame.
+  if (isLoading || groups.length === 0) return null;
+
+  const activeName =
+    picked !== null && groups.some((g) => g.groupName === picked)
+      ? picked
+      : groups[0].groupName;
+  const active = groups.find((g) => g.groupName === activeName) ?? groups[0];
 
   return (
     <Reveal delay={80}>
       <section className="mt-10 sm:mt-12">
-        <div className="flex items-baseline gap-3">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
           <h2 className="inline-block text-[11px] font-black uppercase tracking-[0.22em] text-foreground">
             Standings
             <span className="mt-1.5 block h-0.5 w-8 rounded-full bg-gold" aria-hidden="true" />
           </h2>
-          <span
-            className="text-[11px] text-foreground/40"
-            style={{ fontFamily: "Arial, sans-serif" }}
-          >
-            {rows.length} teams
-          </span>
+          {active.advanceCount !== null && (
+            <span
+              className="text-[11px] text-foreground/45"
+              style={{ fontFamily: "Arial, sans-serif" }}
+            >
+              Top {active.advanceCount} advance to the knockouts
+            </span>
+          )}
         </div>
 
-        <div className="stat-card mt-4 overflow-hidden rounded-2xl">
-          {/* The table is the one thing allowed to scroll sideways, and only
-              inside its own container, so the page body never does. */}
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[480px] border-collapse">
-              <thead>
-                <tr className="border-b border-border">
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-4"
-                  >
-                    #
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-2 py-3 text-left text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40"
-                  >
-                    Team
-                  </th>
-                  {showPlayed && (
-                    <th
-                      scope="col"
-                      title="Ties played"
-                      className="px-2 py-3 text-right text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-3"
-                    >
-                      P
-                    </th>
-                  )}
-                  {showWins && (
-                    <th
-                      scope="col"
-                      title="Ties won"
-                      className="px-2 py-3 text-right text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:px-3"
-                    >
-                      W
-                    </th>
-                  )}
-                  {showDiff && (
-                    <th
-                      scope="col"
-                      title="Points difference"
-                      className="hidden px-2 py-3 text-right text-[9px] font-bold uppercase tracking-[0.16em] text-foreground/40 sm:table-cell sm:px-3"
-                    >
-                      Diff
-                    </th>
-                  )}
-                  {showPoints && (
-                    <th
-                      scope="col"
-                      title="League points"
-                      className="px-3 py-3 text-right text-[9px] font-bold uppercase tracking-[0.16em] text-gold sm:px-4"
-                    >
-                      Pts
-                    </th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => {
-                  const brand = resolveFranchise(row.teamId, row.teamName);
-                  const name = brand?.name ?? row.teamName;
-                  const isTop = row.position === 1;
-                  return (
-                    <tr
-                      key={`${row.teamId ?? row.teamName}`}
-                      className="border-b border-border last:border-0"
-                    >
-                      <td
-                        className={`px-3 py-3 text-left text-[13px] font-bold tabular-nums sm:px-4 ${
-                          isTop ? "text-gold" : "text-foreground/45"
-                        }`}
-                        style={{ fontFamily: "Arial, sans-serif" }}
-                      >
-                        {row.position}
-                      </td>
-                      <td className="px-2 py-3">
-                        <div className="flex items-center gap-2.5">
-                          <Crest id={row.teamId} name={row.teamName} />
-                          <span
-                            className={`truncate text-[12px] font-bold uppercase tracking-[0.04em] sm:text-[13px] ${
-                              isTop ? "text-foreground" : "text-foreground/75"
-                            }`}
-                          >
-                            {name}
-                          </span>
-                        </div>
-                      </td>
-                      {showPlayed && <Num value={row.played} className="text-foreground/60" />}
-                      {showWins && <Num value={row.wins} className="text-foreground/60" />}
-                      {showDiff && (
-                        <Num
-                          value={row.difference}
-                          signed
-                          className={`hidden sm:table-cell ${
-                            row.difference !== null && row.difference > 0
-                              ? "text-emerald-400/80"
-                              : row.difference !== null && row.difference < 0
-                                ? "text-red-400/70"
-                                : "text-foreground/60"
-                          }`}
-                        />
-                      )}
-                      {showPoints && (
-                        <Num
-                          value={row.points}
-                          className={`px-3 font-black sm:px-4 ${
-                            isTop ? "text-gold" : "text-foreground"
-                          }`}
-                        />
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        {/* Group switcher. Hidden when there is only one group to show. */}
+        {groups.length > 1 && (
+          <div
+            role="tablist"
+            aria-label="Choose a group"
+            className="mt-4 inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5"
+            style={{
+              border: "1px solid var(--color-border)",
+              background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
+            }}
+          >
+            {groups.map((g) => {
+              const isActive = g.groupName === activeName;
+              return (
+                <button
+                  key={g.groupName}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setPicked(g.groupName)}
+                  className={`rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 sm:text-[13px] ${
+                    isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
+                  }`}
+                  style={{ background: isActive ? "var(--gold)" : "transparent" }}
+                >
+                  {g.groupName}
+                </button>
+              );
+            })}
           </div>
+        )}
+
+        <div className="mt-4">
+          <GroupTable group={active} />
         </div>
 
         {failed && (
@@ -218,7 +279,7 @@ export function LeaderboardSection({ state }: { state: LeaderboardState }) {
             className="mt-3 text-[11px] text-foreground/40"
             style={{ fontFamily: "Arial, sans-serif" }}
           >
-            Standings could not be refreshed just now. Showing the last loaded table.
+            Standings could not be refreshed just now. Showing the last loaded tables.
           </p>
         )}
       </section>
