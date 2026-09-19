@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ScoreboardHero } from "./sections/ScoreboardHero";
@@ -31,6 +32,10 @@ export default function ScoreboardPage() {
   const scores = useLiveScores();
   const results = useResults();
   const standings = useGroupStandings();
+  /* One group choice for the whole page. Standings and results each show the
+     switcher, but both write here, so the two tables can never disagree about
+     which group you are looking at. */
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
 
   const liveCount = scores.courts.filter((court) => court.match !== null).length;
   const { phase, info, startsAt, hasFixtures } = tournament;
@@ -76,8 +81,16 @@ export default function ScoreboardPage() {
       {!showCountdown && (
         <section className="relative bg-ink pb-16 sm:pb-20">
           <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-10 xl:px-14">
-            <LeaderboardSection state={standings} />
-            <ResultsSection state={results} />
+            <LeaderboardSection
+              state={standings}
+              activeGroup={activeGroup}
+              onGroupChange={setActiveGroup}
+            />
+            <ResultsSection
+              state={results}
+              activeGroup={activeGroup}
+              onGroupChange={setActiveGroup}
+            />
           </div>
         </section>
       )}

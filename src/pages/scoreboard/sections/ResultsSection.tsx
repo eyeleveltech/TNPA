@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { GroupSwitcher } from "./GroupSwitcher";
 import {
   initialsOf,
   resolveFranchise,
@@ -193,14 +194,34 @@ function TieCard({ tie, defaultOpen }: { tie: TieResult; defaultOpen: boolean })
    SECTION
 ───────────────────────────────────────────── */
 
-export function ResultsSection({ state }: { state: ResultsState }) {
+export function ResultsSection({
+  state,
+  activeGroup,
+  onGroupChange,
+}: {
+  state: ResultsState;
+  /** Shared with the standings section; null means "first group". */
+  activeGroup: string | null;
+  onGroupChange: (group: string) => void;
+}) {
   const { ties, isLoading, failed } = state;
 
   // Nothing to say until something has finished. No skeleton, no empty box —
   // the section simply does not exist yet.
   if (isLoading || ties.length === 0) return null;
 
-  const matchCount = ties.reduce((n, t) => n + t.matches.length, 0);
+  /* Split by group, mirroring the standings. A flat list mixes two separate
+     round robins together, and by the closing days it is long enough that the
+     tie you want is well off the screen. */
+  const groupNames = [...new Set(ties.map((t) => t.groupName).filter(Boolean))].sort();
+  const activeName =
+    activeGroup !== null && groupNames.includes(activeGroup)
+      ? activeGroup
+      : (groupNames[0] ?? "");
+  // Ties with no group at all still show, rather than being filtered away.
+  const visible =
+    groupNames.length > 1 ? ties.filter((t) => t.groupName === activeName) : ties;
+  const matchCount = visible.reduce((n, t) => n + t.matches.length, 0);
 
   return (
     <Reveal delay={80}>
@@ -218,8 +239,17 @@ export function ResultsSection({ state }: { state: ResultsState }) {
           </span>
         </div>
 
+        <div className="mt-4">
+          <GroupSwitcher
+            groups={groupNames}
+            active={activeName}
+            onChange={onGroupChange}
+            label="Choose a group for the results"
+          />
+        </div>
+
         <div className="mt-4 grid gap-3">
-          {ties.map((tie, i) => (
+          {visible.map((tie, i) => (
             <TieCard key={`${tie.tieId}-${tie.teamAId}-${tie.teamBId}`} tie={tie} defaultOpen={i === 0} />
           ))}
         </div>

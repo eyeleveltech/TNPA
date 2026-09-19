@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import { GroupSwitcher } from "./GroupSwitcher";
 import {
   initialsOf,
   resolveFranchise,
@@ -207,16 +207,24 @@ function GroupTable({ group }: { group: GroupStandings }) {
  * shown at a time, chosen by a button, with the qualification cut drawn where
  * the feed's own `advancePerGroup` puts it.
  */
-export function LeaderboardSection({ state }: { state: GroupStandingsState }) {
+export function LeaderboardSection({
+  state,
+  activeGroup,
+  onGroupChange,
+}: {
+  state: GroupStandingsState;
+  /** Shared with the results section; null means "first group". */
+  activeGroup: string | null;
+  onGroupChange: (group: string) => void;
+}) {
   const { groups, isLoading, failed } = state;
-  const [picked, setPicked] = useState<string | null>(null);
 
   // Nothing to show until standings exist. No skeleton, no empty frame.
   if (isLoading || groups.length === 0) return null;
 
   const activeName =
-    picked !== null && groups.some((g) => g.groupName === picked)
-      ? picked
+    activeGroup !== null && groups.some((g) => g.groupName === activeGroup)
+      ? activeGroup
       : groups[0].groupName;
   const active = groups.find((g) => g.groupName === activeName) ?? groups[0];
 
@@ -238,37 +246,14 @@ export function LeaderboardSection({ state }: { state: GroupStandingsState }) {
           )}
         </div>
 
-        {/* Group switcher. Hidden when there is only one group to show. */}
-        {groups.length > 1 && (
-          <div
-            role="tablist"
-            aria-label="Choose a group"
-            className="mt-4 inline-flex flex-wrap gap-1.5 rounded-2xl p-1.5"
-            style={{
-              border: "1px solid var(--color-border)",
-              background: "color-mix(in oklab, var(--chalk) 4%, transparent)",
-            }}
-          >
-            {groups.map((g) => {
-              const isActive = g.groupName === activeName;
-              return (
-                <button
-                  key={g.groupName}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setPicked(g.groupName)}
-                  className={`rounded-xl px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition-colors sm:px-5 sm:text-[13px] ${
-                    isActive ? "text-ink" : "text-foreground/60 hover:text-foreground"
-                  }`}
-                  style={{ background: isActive ? "var(--gold)" : "transparent" }}
-                >
-                  {g.groupName}
-                </button>
-              );
-            })}
-          </div>
-        )}
+        <div className="mt-4">
+          <GroupSwitcher
+            groups={groups.map((g) => g.groupName)}
+            active={activeName}
+            onChange={onGroupChange}
+            label="Choose a group for the standings"
+          />
+        </div>
 
         <div className="mt-4">
           <GroupTable group={active} />
